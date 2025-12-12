@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+**/node_modules
+**/dist
+**/.env
+**/.env.local
+**/.env.development
+**/.env.test
+**/.DS_Store
+**/*.log
+uploads
+

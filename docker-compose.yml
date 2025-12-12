@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: ${DATABASE_URL:-file:/app/prisma/data/prod.db}
+      PROVIDER_ADMIN_EMAIL: ${PROVIDER_ADMIN_EMAIL:-provider.admin@faithconnect.local}
+      PROVIDER_ADMIN_PASSWORD: ${PROVIDER_ADMIN_PASSWORD:-ProviderAdmin123!}
+      PROVIDER_ADMIN_NAME: ${PROVIDER_ADMIN_NAME:-Provider Admin}
+      BACKUP_INTERVAL_MINUTES: ${BACKUP_INTERVAL_MINUTES:-60}
+      BACKUP_DIR: ${BACKUP_DIR:-/app/backend/prisma/backups}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      SMS_PROVIDER: ${SMS_PROVIDER:-console}
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
+      TWILIO_FROM_NUMBER: ${TWILIO_FROM_NUMBER:-}
+      SMS_DEFAULT_COUNTRY_CODE: ${SMS_DEFAULT_COUNTRY_CODE:-}
+    command: ["sh", "-lc", "npx prisma migrate deploy && node dist/index.js"]
+    volumes:
+      - backend-db:/app/prisma/data
+      - backend-uploads:/app/uploads
+      - backend-backups:/app/backend/prisma/backups
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend-db:
+  backend-uploads:
+  backend-backups:
