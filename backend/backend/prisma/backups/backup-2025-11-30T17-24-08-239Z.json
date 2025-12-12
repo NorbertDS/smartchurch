@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "createdAt": "2025-11-30T17:24:08.239Z",
+    "version": "1.0"
+  },
+  "settings": [],
+  "users": [
+    {
+      "id": 1,
+      "email": "provider.admin@faithconnect.local",
+      "passwordHash": "$2b$10$TsUCkqJBsZ4TguHHGB7HMeR2zjYUHunP8nEptkL3iTRyCq6jddmTS",
+      "name": "Provider Admin",
+      "role": "PROVIDER_ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T14:37:31.360Z",
+      "updatedAt": "2025-11-30T14:39:07.236Z",
+      "tenantId": null
+    },
+    {
+      "id": 2,
+      "email": "admin@sda.faithconnect.local",
+      "passwordHash": "$2b$10$JqP6t8G3YRD.z2Gc0eDe5e8NJIj6ZJwdpTcYHL8gMQ1FBjb1aS0Ii",
+      "name": "Admin",
+      "role": "ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T14:59:15.953Z",
+      "updatedAt": "2025-11-30T16:07:56.322Z",
+      "tenantId": 2
+    },
+    {
+      "id": 3,
+      "email": "admin@default.faithconnect.local",
+      "passwordHash": "$2b$10$gwdUJGTOtzr1YXu/Pu8AYuGyxatBiSNvFg59MgdqBugFK77rJoOZm",
+      "name": "Admin",
+      "role": "ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T15:16:55.604Z",
+      "updatedAt": "2025-11-30T15:16:55.604Z",
+      "tenantId": 1
+    }
+  ],
+  "members": [],
+  "departments": [],
+  "events": [],
+  "announcements": [],
+  "sermons": [],
+  "finance": [],
+  "attendanceRecords": [],
+  "councils": [],
+  "committees": [],
+  "boardMinutes": [],
+  "businessMinutes": [],
+  "programs": [],
+  "cellGroups": [],
+  "cellGroupMemberships": []
+}

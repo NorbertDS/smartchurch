@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "createdAt": "2025-11-12T22:56:15.254Z",
+    "version": "1.0"
+  },
+  "settings": [],
+  "users": [
+    {
+      "id": 1,
+      "email": "jaco@gmail.com",
+      "passwordHash": "$2b$10$PaxvK/XA9W3I41VZ7tOx.u59ROUwdWyPrI2l6UYrJIO1fOcgFpbvy",
+      "name": "Jack Oriaro",
+      "role": "MEMBER",
+      "createdAt": "2025-11-12T21:40:31.818Z",
+      "updatedAt": "2025-11-12T21:40:31.818Z"
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "firstName": "Jack",
+      "lastName": "Oriaro",
+      "gender": "MALE",
+      "demographicGroup": "AMM",
+      "dob": null,
+      "contact": "07018273742",
+      "address": "79200",
+      "spiritualStatus": "New Convert",
+      "dateJoined": "2025-11-12T21:40:31.840Z",
+      "photoUrl": null,
+      "baptized": false,
+      "dedicated": false,
+      "weddingDate": null,
+      "userId": 1,
+      "ministryId": null,
+      "membershipNumber": null,
+      "membershipStatus": "ACTIVE",
+      "profession": null,
+      "talents": null,
+      "abilities": null,
+      "groupAffiliations": null,
+      "deletedAt": null,
+      "deletedById": null,
+      "createdAt": "2025-11-12T21:40:31.840Z",
+      "updatedAt": "2025-11-12T21:41:56.286Z"
+    }
+  ],
+  "ministries": [],
+  "events": [],
+  "announcements": [],
+  "sermons": [],
+  "finance": [],
+  "attendanceRecords": [],
+  "councils": [],
+  "committees": [],
+  "boardMinutes": [],
+  "businessMinutes": [],
+  "programs": [],
+  "cellGroups": [
+    {
+      "id": 1,
+      "name": "Ruaraka Naivas",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 2,
+      "name": "Huruma Kariobangi",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 3,
+      "name": "Lucky Summer",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 4,
+      "name": "Diaspora",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 5,
+      "name": "Area 1",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 6,
+      "name": "Area 2",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 7,
+      "name": "Area 3",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    },
+    {
+      "id": 8,
+      "name": "Area 4",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-12T21:41:36.870Z",
+      "updatedAt": "2025-11-12T21:41:36.870Z"
+    }
+  ],
+  "cellGroupMemberships": [
+    {
+      "id": 1,
+      "groupId": 1,
+      "memberId": 1,
+      "registeredAt": "2025-11-12T21:41:56.263Z",
+      "registeredById": 1,
+      "notes": null,
+      "leftAt": null
+    }
+  ]
+}

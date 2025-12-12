@@ -1,0 +1,14 @@
+/* Accessibility helpers: focus styles and skip link */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: -999px;
+  background: #111827; /* gray-900 */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  z-index: 1000;
+}
+.skip-link:focus { left: 8px; top: 8px; outline: 2px solid #2563eb; }
+
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }

@@ -1,0 +1,506 @@
+{
+  "meta": {
+    "createdAt": "2025-11-16T20:06:19.296Z",
+    "version": "1.0"
+  },
+  "settings": [
+    {
+      "id": 1,
+      "key": "church_info",
+      "value": "{\"name\":\"Mathare North SDA Church\",\"sidebarName\":\"FAITHCONNECT\",\"logoUrl\":\"data:image/png;base64,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\",\"contact\":\"\",\"location\":\"\"}",
+      "updatedAt": "2025-11-15T11:26:08.957Z"
+    },
+    {
+      "id": 2,
+      "key": "title_churchbusiness",
+      "value": "\"Church Business\"",
+      "updatedAt": "2025-11-15T15:02:51.500Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@faithconnect.local",
+      "passwordHash": "$2b$10$pMYSHEV7VwUI/D7mLGxvgOacYVoX01hdrK9KyIzfPGkDUGEgH7kXC",
+      "name": "Admin",
+      "role": "ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": "IIQDI7DDE4HRGL3Q",
+      "createdAt": "2025-11-14T19:04:05.937Z",
+      "updatedAt": "2025-11-15T21:10:57.227Z"
+    },
+    {
+      "id": 2,
+      "email": "washk@faithconnect.loca",
+      "passwordHash": "$2b$10$lhpgC9hV8P/2qsAPlx6iSOP3wlgQwa3r9O0RMNIv4pcB2eyEtp9Q6",
+      "name": "Washy Khasera",
+      "role": "MEMBER",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-15T11:37:52.887Z",
+      "updatedAt": "2025-11-16T13:10:09.991Z"
+    },
+    {
+      "id": 3,
+      "email": "mikoch@gmail.com",
+      "passwordHash": "$2b$10$p60QICoBpf9sFHgbbi19ieedpvhs6erCjHhG7L04VAiNeEPnIRtju",
+      "name": "Michael Ochieng",
+      "role": "MEMBER",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-16T13:13:14.489Z",
+      "updatedAt": "2025-11-16T13:13:14.489Z"
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "gender": "MALE",
+      "demographicGroup": "AMM",
+      "dob": null,
+      "contact": "555-0001",
+      "address": "123 Main St",
+      "spiritualStatus": "Baptized",
+      "dateJoined": "2025-11-14T00:00:00.000Z",
+      "photoUrl": null,
+      "baptized": false,
+      "dedicated": false,
+      "weddingDate": null,
+      "userId": null,
+      "departmentId": 6,
+      "membershipNumber": null,
+      "membershipStatus": "Visitor",
+      "profession": null,
+      "talents": null,
+      "abilities": null,
+      "groupAffiliations": null,
+      "deletedAt": null,
+      "deletedById": null,
+      "createdAt": "2025-11-14T19:04:34.431Z",
+      "updatedAt": "2025-11-15T10:43:41.612Z"
+    },
+    {
+      "id": 2,
+      "firstName": "Mary",
+      "lastName": "Smith",
+      "gender": "FEMALE",
+      "demographicGroup": "AWM",
+      "dob": null,
+      "contact": "555-0002",
+      "address": "42 Grace Rd",
+      "spiritualStatus": "New Convert",
+      "dateJoined": "2025-11-14T00:00:00.000Z",
+      "photoUrl": null,
+      "baptized": false,
+      "dedicated": false,
+      "weddingDate": null,
+      "userId": null,
+      "departmentId": 5,
+      "membershipNumber": null,
+      "membershipStatus": "Active Member",
+      "profession": null,
+      "talents": null,
+      "abilities": null,
+      "groupAffiliations": null,
+      "deletedAt": null,
+      "deletedById": null,
+      "createdAt": "2025-11-14T19:04:34.444Z",
+      "updatedAt": "2025-11-15T10:43:26.036Z"
+    },
+    {
+      "id": 3,
+      "firstName": "Washy",
+      "lastName": "Khasera",
+      "gender": "MALE",
+      "demographicGroup": "AMM",
+      "dob": null,
+      "contact": "0793158759",
+      "address": "79200",
+      "spiritualStatus": "Baptized",
+      "dateJoined": "2025-11-15T00:00:00.000Z",
+      "photoUrl": null,
+      "baptized": false,
+      "dedicated": false,
+      "weddingDate": null,
+      "userId": 2,
+      "departmentId": 1,
+      "membershipNumber": null,
+      "membershipStatus": "Active Member",
+      "profession": null,
+      "talents": null,
+      "abilities": null,
+      "groupAffiliations": null,
+      "deletedAt": null,
+      "deletedById": null,
+      "createdAt": "2025-11-15T11:37:52.961Z",
+      "updatedAt": "2025-11-15T15:14:24.739Z"
+    },
+    {
+      "id": 4,
+      "firstName": "Michael",
+      "lastName": "Ochieng",
+      "gender": "MALE",
+      "demographicGroup": "YOUTHS",
+      "dob": null,
+      "contact": "070883242",
+      "address": "79200",
+      "spiritualStatus": "New Convert",
+      "dateJoined": "2025-11-16T13:13:14.508Z",
+      "photoUrl": null,
+      "baptized": false,
+      "dedicated": false,
+      "weddingDate": null,
+      "userId": 3,
+      "departmentId": null,
+      "membershipNumber": null,
+      "membershipStatus": "APPROVED",
+      "profession": null,
+      "talents": null,
+      "abilities": null,
+      "groupAffiliations": null,
+      "deletedAt": null,
+      "deletedById": null,
+      "createdAt": "2025-11-16T13:13:14.508Z",
+      "updatedAt": "2025-11-16T13:29:16.044Z"
+    }
+  ],
+  "departments": [
+    {
+      "id": 1,
+      "name": "Pastorate",
+      "description": "Church elders",
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.358Z",
+      "updatedAt": "2025-11-15T08:43:01.422Z"
+    },
+    {
+      "id": 2,
+      "name": "Church Choir",
+      "description": null,
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.365Z",
+      "updatedAt": "2025-11-14T19:04:34.365Z"
+    },
+    {
+      "id": 3,
+      "name": "Deaconry",
+      "description": null,
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.373Z",
+      "updatedAt": "2025-11-14T19:04:34.373Z"
+    },
+    {
+      "id": 4,
+      "name": "Youth",
+      "description": null,
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.382Z",
+      "updatedAt": "2025-11-14T19:04:34.382Z"
+    },
+    {
+      "id": 5,
+      "name": "AWM",
+      "description": "All Women Department",
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.390Z",
+      "updatedAt": "2025-11-15T08:43:01.456Z"
+    },
+    {
+      "id": 6,
+      "name": "AMM",
+      "description": "All Men Department",
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.397Z",
+      "updatedAt": "2025-11-15T08:43:01.470Z"
+    },
+    {
+      "id": 7,
+      "name": "Children",
+      "description": null,
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.404Z",
+      "updatedAt": "2025-11-14T19:04:34.404Z"
+    },
+    {
+      "id": 8,
+      "name": "Communication",
+      "description": "Digital (livestreaming and media) and technical",
+      "leaderId": null,
+      "createdAt": "2025-11-14T19:04:34.414Z",
+      "updatedAt": "2025-11-15T08:43:01.495Z"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Sunday Service",
+      "description": "Weekly worship",
+      "date": "2025-11-21T19:04:34.458Z",
+      "location": "Main Sanctuary",
+      "departmentId": null,
+      "createdAt": "2025-11-14T19:04:34.462Z",
+      "updatedAt": "2025-11-14T19:04:34.462Z"
+    }
+  ],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "YOUTH TO MISSION",
+      "content": "Youth will be going to Simotwo Crusade from November 23, 2025 to December 6, 2025. Please pray for them.",
+      "audience": "ALL",
+      "createdById": null,
+      "createdAt": "2025-11-16T13:08:23.143Z"
+    }
+  ],
+  "sermons": [],
+  "finance": [
+    {
+      "id": 1,
+      "type": "OFFERING",
+      "amount": 5000,
+      "date": "2025-11-15T10:47:19.476Z",
+      "description": "mich",
+      "memberId": null,
+      "category": null,
+      "createdById": null
+    },
+    {
+      "id": 2,
+      "type": "EXPENSE",
+      "amount": 2000,
+      "date": "2025-11-15T10:47:42.370Z",
+      "description": "",
+      "memberId": null,
+      "category": "Utilities",
+      "createdById": null
+    },
+    {
+      "id": 3,
+      "type": "PLEDGE",
+      "amount": 7000,
+      "date": "2025-11-15T10:47:55.901Z",
+      "description": "",
+      "memberId": null,
+      "category": null,
+      "createdById": null
+    },
+    {
+      "id": 4,
+      "type": "OFFERING",
+      "amount": 10000,
+      "date": "2025-11-16T12:20:14.438Z",
+      "description": "chiwo",
+      "memberId": null,
+      "category": null,
+      "createdById": null
+    }
+  ],
+  "attendanceRecords": [
+    {
+      "id": 1,
+      "date": "2025-11-15T00:00:00.000Z",
+      "serviceType": "SUNDAY_SERVICE",
+      "departmentId": null,
+      "createdAt": "2025-11-15T10:17:09.248Z",
+      "entries": [
+        {
+          "id": 1,
+          "attendanceRecordId": 1,
+          "memberId": 2,
+          "eventId": null,
+          "present": true
+        },
+        {
+          "id": 2,
+          "attendanceRecordId": 1,
+          "memberId": 1,
+          "eventId": null,
+          "present": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2025-11-15T00:00:00.000Z",
+      "serviceType": "SUNDAY_SERVICE",
+      "departmentId": null,
+      "createdAt": "2025-11-15T10:31:25.103Z",
+      "entries": [
+        {
+          "id": 3,
+          "attendanceRecordId": 2,
+          "memberId": 2,
+          "eventId": null,
+          "present": true
+        },
+        {
+          "id": 4,
+          "attendanceRecordId": 2,
+          "memberId": 1,
+          "eventId": null,
+          "present": true
+        }
+      ]
+    }
+  ],
+  "councils": [],
+  "committees": [],
+  "boardMinutes": [
+    {
+      "id": 1,
+      "title": "test",
+      "meetingDate": "2025-01-01T00:00:00.000Z",
+      "agendaTopics": "5. A Church Board Minutes depository only accessible to the Church Clerk and Pastor.\r\n6. A Church Business, Minutes depository only accessible to the Church Clerk and Pastor.\r\n7. List of all Councils \r\n8. List of all church committees\r\n9. Reports Corner - to contain all Church Board and Church Business-approved reports only.",
+      "filePath": "/uploads/minutes/board/1763243259303-epizx7fjqa6.pdf",
+      "format": "pdf",
+      "textContent": "5. A Church Board Minutes depository only accessible to the Church Clerk and Pastor.\r\n6. A Church Business, Minutes depository only accessible to the Church Clerk and Pastor.\r\n7. List of all Councils \r\n8. List of all church committees\r\n9. Reports Corner - to contain all Church Board and Church Business-approved reports only.",
+      "version": 1,
+      "approved": true,
+      "approvedAt": "2025-11-15T21:56:08.403Z",
+      "approvedById": 1,
+      "approvalSignature": "hjjh",
+      "expiresAt": null,
+      "archivedAt": null,
+      "createdById": 1,
+      "updatedById": 1,
+      "createdAt": "2025-11-15T21:47:39.311Z",
+      "updatedAt": "2025-11-15T21:56:08.405Z",
+      "versions": [
+        {
+          "id": 1,
+          "minuteId": 1,
+          "version": 1,
+          "filePath": "/uploads/minutes/board/1763243259303-epizx7fjqa6.pdf",
+          "changeNote": "Initial upload",
+          "createdById": 1,
+          "createdAt": "2025-11-15T21:47:39.311Z"
+        }
+      ]
+    }
+  ],
+  "businessMinutes": [],
+  "programs": [],
+  "cellGroups": [
+    {
+      "id": 1,
+      "name": "Ruaraka Naivas",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 2,
+      "name": "Huruma Kariobangi",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 3,
+      "name": "Lucky Summer",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 4,
+      "name": "Diaspora",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 5,
+      "name": "Area 1",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 6,
+      "name": "Area 2",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 7,
+      "name": "Area 3",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 8,
+      "name": "Area 4",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-15T10:16:42.359Z",
+      "updatedAt": "2025-11-15T10:16:42.359Z"
+    },
+    {
+      "id": 9,
+      "name": "Youth & Ambassadors",
+      "description": "This involves all youth ministry",
+      "location": "Mathare North",
+      "createdById": 1,
+      "createdAt": "2025-11-16T12:27:27.734Z",
+      "updatedAt": "2025-11-16T12:27:27.734Z"
+    }
+  ],
+  "cellGroupMemberships": [
+    {
+      "id": 1,
+      "groupId": 4,
+      "memberId": 2,
+      "registeredAt": "2025-11-15T10:43:26.022Z",
+      "registeredById": 1,
+      "notes": null,
+      "leftAt": null
+    },
+    {
+      "id": 2,
+      "groupId": 3,
+      "memberId": 1,
+      "registeredAt": "2025-11-15T10:43:41.599Z",
+      "registeredById": 1,
+      "notes": null,
+      "leftAt": null
+    },
+    {
+      "id": 3,
+      "groupId": 4,
+      "memberId": 3,
+      "registeredAt": "2025-11-15T11:40:40.336Z",
+      "registeredById": 2,
+      "notes": null,
+      "leftAt": null
+    },
+    {
+      "id": 4,
+      "groupId": 3,
+      "memberId": 4,
+      "registeredAt": "2025-11-16T13:29:16.019Z",
+      "registeredById": 3,
+      "notes": null,
+      "leftAt": "2025-11-16T13:30:06.153Z"
+    }
+  ]
+}

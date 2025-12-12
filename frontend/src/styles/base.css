@@ -1,0 +1,22 @@
+/* Base styles for consistent typography, color, and spacing */
+:root {
+  --fc-font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --fc-color-text: #1f2937; /* gray-800 */
+  --fc-color-muted: #6b7280; /* gray-500 */
+  --fc-space-1: 4px;
+  --fc-space-2: 8px;
+  --fc-space-3: 12px;
+  --fc-space-4: 16px;
+  --fc-space-5: 20px;
+}
+
+body { font-family: var(--fc-font-sans); color: var(--fc-color-text); }
+
+/* Heading rhythm */
+h1 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; }
+h2 { font-size: 1.125rem; line-height: 1.5rem; font-weight: 600; }
+h3 { font-size: 1rem; line-height: 1.5rem; font-weight: 600; }
+
+/* Spacing utilities */
+.space-y-3 > * + * { margin-top: var(--fc-space-4); }
+.space-y-4 > * + * { margin-top: calc(var(--fc-space-4) + var(--fc-space-1)); }

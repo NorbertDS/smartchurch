@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "createdAt": "2025-12-01T05:36:59.562Z",
+    "version": "1.0"
+  },
+  "settings": [
+    {
+      "id": 1,
+      "key": "landing_config",
+      "value": "{\"heroTitle\":\"Connect, organize, and grow your church community\",\"heroSubtitle\":\"A modern, secure church management system that streamlines membership, events, communication, and reporting — accessible anywhere.\",\"ctaMemberLabel\":\"Member Login\",\"ctaAdminLabel\":\"Admin Login\",\"features\":[{\"title\":\"Unified Dashboard\",\"description\":\"Clear insights into membership, finance, events, sermons, and attendance.\",\"icon\":\"📊\"},{\"title\":\"Smart Member Management\",\"description\":\"Import, segment, and track member growth and participation.\",\"icon\":\"🗂️\"},{\"title\":\"Communication Tools\",\"description\":\"Announcements, SMS, and suggestion box to keep everyone connected.\",\"icon\":\"📣\"}],\"testimonials\":[{\"quote\":\"“FaithConnect helped us centralize our operations and engage our members more meaningfully.”\",\"author\":\"Church Administrator\"},{\"quote\":\"“The dashboard and attendance tracking saved hours every week.”\",\"author\":\"Pastoral Team\"}],\"heroImagePath\":\"\"}",
+      "updatedAt": "2025-11-30T19:11:34.106Z",
+      "tenantId": 3
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "provider.admin@faithconnect.local",
+      "passwordHash": "$2b$10$TsUCkqJBsZ4TguHHGB7HMeR2zjYUHunP8nEptkL3iTRyCq6jddmTS",
+      "name": "Provider Admin",
+      "role": "PROVIDER_ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T14:37:31.360Z",
+      "updatedAt": "2025-11-30T14:39:07.236Z",
+      "tenantId": null
+    },
+    {
+      "id": 2,
+      "email": "admin@sda.faithconnect.local",
+      "passwordHash": "$2b$10$JqP6t8G3YRD.z2Gc0eDe5e8NJIj6ZJwdpTcYHL8gMQ1FBjb1aS0Ii",
+      "name": "Admin",
+      "role": "ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T14:59:15.953Z",
+      "updatedAt": "2025-11-30T16:07:56.322Z",
+      "tenantId": 2
+    },
+    {
+      "id": 3,
+      "email": "admin@default.faithconnect.local",
+      "passwordHash": "$2b$10$gwdUJGTOtzr1YXu/Pu8AYuGyxatBiSNvFg59MgdqBugFK77rJoOZm",
+      "name": "Admin",
+      "role": "ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T15:16:55.604Z",
+      "updatedAt": "2025-11-30T15:16:55.604Z",
+      "tenantId": 1
+    },
+    {
+      "id": 4,
+      "email": "admin@chch.faithconnect.local",
+      "passwordHash": "$2b$10$pp6ldc115esY4/sy.vYfG.cztQbAYaLbP74rTHONgyBbh6Gj0IVYK",
+      "name": "Admin",
+      "role": "ADMIN",
+      "twoFactorEnabled": false,
+      "twoFactorSecret": null,
+      "createdAt": "2025-11-30T18:46:51.376Z",
+      "updatedAt": "2025-11-30T18:46:51.376Z",
+      "tenantId": 3
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "firstName": "Jacklyne",
+      "lastName": "Winnie",
+      "gender": "FEMALE",
+      "demographicGroup": null,
+      "dob": null,
+      "contact": "0701274458",
+      "address": "79200",
+      "spiritualStatus": "Baptized",
+      "dateJoined": "2025-11-30T21:01:23.367Z",
+      "photoUrl": null,
+      "baptized": false,
+      "dedicated": false,
+      "weddingDate": null,
+      "userId": null,
+      "departmentId": null,
+      "membershipNumber": null,
+      "membershipStatus": null,
+      "profession": null,
+      "talents": null,
+      "abilities": null,
+      "groupAffiliations": null,
+      "deletedAt": null,
+      "deletedById": null,
+      "createdAt": "2025-11-30T21:01:23.367Z",
+      "updatedAt": "2025-11-30T21:01:23.367Z",
+      "tenantId": 3
+    }
+  ],
+  "departments": [],
+  "events": [],
+  "announcements": [],
+  "sermons": [],
+  "finance": [],
+  "attendanceRecords": [],
+  "councils": [],
+  "committees": [],
+  "boardMinutes": [],
+  "businessMinutes": [],
+  "programs": [],
+  "cellGroups": [
+    {
+      "id": 1,
+      "name": "Ruaraka Naivas",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 2,
+      "name": "Huruma Kariobangi",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 3,
+      "name": "Lucky Summer",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 4,
+      "name": "Diaspora",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 5,
+      "name": "Area 1",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 6,
+      "name": "Area 2",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 7,
+      "name": "Area 3",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    },
+    {
+      "id": 8,
+      "name": "Area 4",
+      "description": null,
+      "location": null,
+      "createdById": null,
+      "createdAt": "2025-11-30T20:58:19.105Z",
+      "updatedAt": "2025-11-30T20:58:19.105Z",
+      "tenantId": 2
+    }
+  ],
+  "cellGroupMemberships": []
+}

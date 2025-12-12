@@ -1,0 +1,576 @@
+// FaithConnect Church Management System Prisma schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CLERK
+  PASTOR
+  MEMBER
+  PROVIDER_ADMIN
+}
+
+enum FinanceType {
+  TITHE
+  OFFERING
+  DONATION
+  PLEDGE
+  EXPENSE
+}
+
+enum SermonType {
+  TEXT
+  AUDIO
+  VIDEO
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// Comprehensive demographic groups
+enum DemographicGroup {
+  AMM
+  AWM
+  YOUTHS
+  AMBASSADORS
+  CHILDREN
+}
+
+model User {
+  id                             Int                     @id @default(autoincrement())
+  email                          String
+  passwordHash                   String
+  name                           String
+  role                           Role
+  twoFactorEnabled               Boolean                 @default(false)
+  twoFactorSecret                String?
+  createdAt                      DateTime                @default(now())
+  updatedAt                      DateTime                @updatedAt
+  auditLogs                      AuditLog[]
+  announcementsCreated           Announcement[]          @relation("AnnouncementCreatedBy")
+  financeRecordsCreated          FinanceRecord[]         @relation("FinanceCreatedBy")
+  ministriesLed                  Department[]
+  programsCreated                Program[]               @relation("ProgramCreatedBy")
+  cellGroupsCreated              CellGroup[]             @relation("CellGroupCreatedBy")
+  cellGroupMembershipsRegistered CellGroupMembership[]   @relation("MembershipRegisteredBy")
+  cellGroupContributionsCreated  CellGroupContribution[] @relation("ContributionCreatedBy")
+  // Minutes relations
+  boardMinutesApproved           BoardMinute[]           @relation("BoardMinuteApprovedBy")
+  boardMinutesCreated            BoardMinute[]           @relation("BoardMinuteCreatedBy")
+  boardMinutesUpdated            BoardMinute[]           @relation("BoardMinuteUpdatedBy")
+  businessMinutesApproved        BusinessMinute[]        @relation("BusinessMinuteApprovedBy")
+  businessMinutesCreated         BusinessMinute[]        @relation("BusinessMinuteCreatedBy")
+  businessMinutesUpdated         BusinessMinute[]        @relation("BusinessMinuteUpdatedBy")
+  boardMinuteVersionsCreated     BoardMinuteVersion[]    @relation("BoardMinuteVersionCreatedBy")
+  businessMinuteVersionsCreated  BusinessMinuteVersion[] @relation("BusinessMinuteVersionCreatedBy")
+  suggestionsCreated             Suggestion[]            @relation("SuggestionCreatedBy")
+  member                         Member?
+  tenant                         Tenant?                 @relation(fields: [tenantId], references: [id])
+  tenantId                       Int?
+
+  @@unique([tenantId, email])
+}
+
+model Member {
+  id                   Int                   @id @default(autoincrement())
+  firstName            String
+  lastName             String
+  gender               Gender
+  demographicGroup     DemographicGroup?
+  dob                  DateTime?
+  contact              String?
+  address              String?
+  spiritualStatus      String? // e.g., New Convert, Baptized, Dedicated
+  dateJoined           DateTime              @default(now())
+  photoUrl             String?
+  baptized             Boolean               @default(false)
+  dedicated            Boolean               @default(false)
+  weddingDate          DateTime?
+  // Relations
+  user                 User?                 @relation(fields: [userId], references: [id])
+  userId               Int?                  @unique
+  department           Department?           @relation(fields: [departmentId], references: [id])
+  departmentId         Int?
+  attendances          AttendanceEntry[]
+  contributions        FinanceRecord[]
+  registrations        EventRegistration[]
+  // New: multi-department membership links
+  memberDepartments    MemberDepartment[]
+  // Membership tracking
+  membershipNumber     String?               @unique
+  membershipStatus     String?
+  // Extended profile
+  profession           String?
+  talents              Json?
+  abilities            Json?
+  // Group affiliations snapshot for quick profile display
+  groupAffiliations    Json?
+  // Soft-delete
+  deletedAt            DateTime?
+  deletedById          Int?
+  // Family relations
+  parents              FamilyRelation[]      @relation("ParentRelations")
+  children             FamilyRelation[]      @relation("ChildRelations")
+  // Cell Groups
+  cellGroupMemberships CellGroupMembership[]
+  // Councils & Committees
+  councilMemberships   CouncilMember[]
+  committeeMemberships CommitteeMember[]
+  committeesChaired    Committee[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  tenant               Tenant                @relation(fields: [tenantId], references: [id])
+  tenantId             Int
+}
+
+model Department {
+  id                Int                @id @default(autoincrement())
+  name              String
+  description       String?
+  leader            User?              @relation(fields: [leaderId], references: [id])
+  leaderId          Int?
+  members           Member[]
+  events            Event[]
+  attendanceRecords AttendanceRecord[]
+  // New: multi-department membership links
+  memberDepartments MemberDepartment[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  tenant            Tenant             @relation(fields: [tenantId], references: [id])
+  tenantId          Int
+
+  @@unique([tenantId, name])
+}
+
+model Event {
+  id                Int                 @id @default(autoincrement())
+  title             String
+  description       String?
+  date              DateTime
+  location          String?
+  department        Department?         @relation(fields: [departmentId], references: [id])
+  departmentId      Int?
+  registrations     EventRegistration[]
+  attendanceEntries AttendanceEntry[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  tenant            Tenant              @relation(fields: [tenantId], references: [id])
+  tenantId          Int
+}
+
+// Church Programs (separate from Events)
+model Program {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  status      String? // e.g., Planned, Ongoing, Completed
+  createdBy   User?     @relation("ProgramCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+}
+
+// Cell Groups and Memberships
+model CellGroup {
+  id          Int                   @id @default(autoincrement())
+  name        String
+  description String?
+  location    String?
+  memberships CellGroupMembership[]
+  createdBy   User?                 @relation("CellGroupCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  tenant      Tenant                @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+
+  @@unique([tenantId, name])
+}
+
+model CellGroupMembership {
+  id             Int                     @id @default(autoincrement())
+  group          CellGroup               @relation(fields: [groupId], references: [id])
+  groupId        Int
+  member         Member                  @relation(fields: [memberId], references: [id])
+  memberId       Int
+  registeredAt   DateTime                @default(now())
+  registeredBy   User?                   @relation("MembershipRegisteredBy", fields: [registeredById], references: [id])
+  registeredById Int?
+  notes          String?
+  leftAt         DateTime?
+  contributions  CellGroupContribution[]
+  tenant         Tenant                  @relation(fields: [tenantId], references: [id])
+  tenantId       Int
+}
+
+model CellGroupContribution {
+  id           Int                 @id @default(autoincrement())
+  membership   CellGroupMembership @relation(fields: [membershipId], references: [id])
+  membershipId Int
+  amount       Float
+  date         DateTime            @default(now())
+  notes        String?
+  createdBy    User?               @relation("ContributionCreatedBy", fields: [createdById], references: [id])
+  createdById  Int?
+  tenant       Tenant              @relation(fields: [tenantId], references: [id])
+  tenantId     Int
+}
+
+model EventRegistration {
+  id        Int      @id @default(autoincrement())
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   Int
+  member    Member   @relation(fields: [memberId], references: [id])
+  memberId  Int
+  status    String? // e.g., Registered, Attended, Cancelled
+  createdAt DateTime @default(now())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+}
+
+model AttendanceRecord {
+  id           Int               @id @default(autoincrement())
+  date         DateTime
+  serviceType  String? // e.g., Sunday Service, Prayer Meeting
+  department   Department?       @relation(fields: [departmentId], references: [id])
+  departmentId Int?
+  entries      AttendanceEntry[]
+  createdAt    DateTime          @default(now())
+  tenant       Tenant            @relation(fields: [tenantId], references: [id])
+  tenantId     Int
+}
+
+model AttendanceEntry {
+  id                 Int              @id @default(autoincrement())
+  attendanceRecord   AttendanceRecord @relation(fields: [attendanceRecordId], references: [id])
+  attendanceRecordId Int
+  member             Member?          @relation(fields: [memberId], references: [id])
+  memberId           Int?
+  event              Event?           @relation(fields: [eventId], references: [id])
+  eventId            Int?
+  present            Boolean          @default(true)
+  tenant             Tenant           @relation(fields: [tenantId], references: [id])
+  tenantId           Int
+}
+
+model FinanceRecord {
+  id          Int         @id @default(autoincrement())
+  type        FinanceType
+  amount      Float
+  date        DateTime    @default(now())
+  description String?
+  member      Member?     @relation(fields: [memberId], references: [id])
+  memberId    Int?
+  category    String?
+  createdBy   User?       @relation("FinanceCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+}
+
+model Announcement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  audience    String? // e.g., All, Youth, Choir
+  createdBy   User?    @relation("AnnouncementCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  createdAt   DateTime @default(now())
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+}
+
+model Sermon {
+  id          Int        @id @default(autoincrement())
+  title       String
+  speaker     String?
+  date        DateTime   @default(now())
+  type        SermonType @default(TEXT)
+  contentUrl  String?
+  textContent String?
+  createdAt   DateTime   @default(now())
+  tenant      Tenant     @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     Int?
+  action     String
+  entityType String?
+  entityId   Int?
+  timestamp  DateTime @default(now())
+  tenant     Tenant?  @relation(fields: [tenantId], references: [id])
+  tenantId   Int?
+}
+
+// New explicit join table for multi-department membership
+model MemberDepartment {
+  member       Member     @relation(fields: [memberId], references: [id])
+  memberId     Int
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  role         String?
+  joinedAt     DateTime   @default(now())
+
+  @@id([memberId, departmentId])
+}
+
+// System Settings key-value store for configuration
+model Setting {
+  id        Int      @id @default(autoincrement())
+  key       String
+  value     String // JSON string for complex settings
+  updatedAt DateTime @updatedAt
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+
+  @@unique([tenantId, key])
+}
+
+// Parent-child family relations between members
+model FamilyRelation {
+  parent    Member   @relation("ParentRelations", fields: [parentId], references: [id])
+  parentId  Int
+  child     Member   @relation("ChildRelations", fields: [childId], references: [id])
+  childId   Int
+  createdAt DateTime @default(now())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+
+  @@id([parentId, childId])
+}
+
+// Church Board Minutes repository with versioning
+model BoardMinute {
+  id                Int                  @id @default(autoincrement())
+  title             String
+  meetingDate       DateTime
+  agendaTopics      String?
+  filePath          String
+  format            String // pdf | docx | txt
+  textContent       String?
+  version           Int                  @default(1)
+  approved          Boolean              @default(false)
+  approvedAt        DateTime?
+  approvedBy        User?                @relation("BoardMinuteApprovedBy", fields: [approvedById], references: [id])
+  approvedById      Int?
+  approvalSignature String?
+  expiresAt         DateTime?
+  archivedAt        DateTime?
+  createdBy         User?                @relation("BoardMinuteCreatedBy", fields: [createdById], references: [id])
+  createdById       Int?
+  updatedBy         User?                @relation("BoardMinuteUpdatedBy", fields: [updatedById], references: [id])
+  updatedById       Int?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  versions          BoardMinuteVersion[]
+  tenant            Tenant               @relation(fields: [tenantId], references: [id])
+  tenantId          Int
+}
+
+model BoardMinuteVersion {
+  id          Int         @id @default(autoincrement())
+  minute      BoardMinute @relation(fields: [minuteId], references: [id])
+  minuteId    Int
+  version     Int
+  filePath    String
+  changeNote  String?
+  createdBy   User?       @relation("BoardMinuteVersionCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  createdAt   DateTime    @default(now())
+  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+}
+
+// Church Business Minutes repository with versioning
+model BusinessMinute {
+  id                Int                     @id @default(autoincrement())
+  title             String
+  meetingDate       DateTime
+  agendaTopics      String?
+  filePath          String
+  format            String // pdf | docx | txt
+  textContent       String?
+  version           Int                     @default(1)
+  approved          Boolean                 @default(false)
+  approvedAt        DateTime?
+  approvedBy        User?                   @relation("BusinessMinuteApprovedBy", fields: [approvedById], references: [id])
+  approvedById      Int?
+  approvalSignature String?
+  businessType      String? // financial, operational, etc.
+  expiresAt         DateTime?
+  archivedAt        DateTime?
+  createdBy         User?                   @relation("BusinessMinuteCreatedBy", fields: [createdById], references: [id])
+  createdById       Int?
+  updatedBy         User?                   @relation("BusinessMinuteUpdatedBy", fields: [updatedById], references: [id])
+  updatedById       Int?
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  versions          BusinessMinuteVersion[]
+  tenant            Tenant                  @relation(fields: [tenantId], references: [id])
+  tenantId          Int
+}
+
+model BusinessMinuteVersion {
+  id          Int            @id @default(autoincrement())
+  minute      BusinessMinute @relation(fields: [minuteId], references: [id])
+  minuteId    Int
+  version     Int
+  filePath    String
+  changeNote  String?
+  createdBy   User?          @relation("BusinessMinuteVersionCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  createdAt   DateTime       @default(now())
+  tenant      Tenant         @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+}
+
+// Councils directory
+model Council {
+  id              Int             @id @default(autoincrement())
+  name            String
+  description     String?
+  contact         String?
+  meetingSchedule String?
+  members         CouncilMember[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  tenant          Tenant          @relation(fields: [tenantId], references: [id])
+  tenantId        Int
+
+  @@unique([tenantId, name])
+}
+
+model CouncilMember {
+  id        Int      @id @default(autoincrement())
+  council   Council  @relation(fields: [councilId], references: [id])
+  councilId Int
+  member    Member   @relation(fields: [memberId], references: [id])
+  memberId  Int
+  role      String?
+  joinedAt  DateTime @default(now())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+
+  @@unique([councilId, memberId])
+}
+
+// Committees directory
+model Committee {
+  id               Int               @id @default(autoincrement())
+  name             String
+  responsibilities String?
+  meetingFrequency String?
+  chair            Member?           @relation(fields: [chairMemberId], references: [id])
+  chairMemberId    Int?
+  members          CommitteeMember[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  tenant           Tenant            @relation(fields: [tenantId], references: [id])
+  tenantId         Int
+
+  @@unique([tenantId, name])
+}
+
+model CommitteeMember {
+  id          Int       @id @default(autoincrement())
+  committee   Committee @relation(fields: [committeeId], references: [id])
+  committeeId Int
+  member      Member    @relation(fields: [memberId], references: [id])
+  memberId    Int
+  role        String?
+  joinedAt    DateTime  @default(now())
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId    Int
+
+  @@unique([committeeId, memberId])
+}
+
+// Suggestions submitted by users (Suggestion Box)
+model Suggestion {
+  id             Int      @id @default(autoincrement())
+  title          String
+  category       String?
+  contentHtml    String
+  attachmentPath String?
+  status         String? // e.g., NEW, REVIEWED, ARCHIVED
+  createdBy      User?    @relation("SuggestionCreatedBy", fields: [createdById], references: [id])
+  createdById    Int?
+  createdAt      DateTime @default(now())
+  tenant         Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId       Int
+}
+
+// QR code links for public/member dashboards
+model QRCodeLink {
+  id            Int       @id @default(autoincrement())
+  url           String
+  title         String
+  active        Boolean   @default(false)
+  qrImagePath   String?
+  scanCount     Int       @default(0)
+  lastScannedAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId      Int
+
+  @@unique([tenantId, title])
+}
+
+model Tenant {
+  id         Int       @id @default(autoincrement())
+  name       String
+  slug       String    @unique
+  status     String    @default("ACTIVE")
+  config     Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  archivedAt DateTime?
+
+  users                  User[]
+  members                Member[]
+  departments            Department[]
+  events                 Event[]
+  programs               Program[]
+  cellGroups             CellGroup[]
+  attendance             AttendanceRecord[]
+  finance                FinanceRecord[]
+  announcements          Announcement[]
+  sermons                Sermon[]
+  auditLogs              AuditLog[]
+  settings               Setting[]
+  councils               Council[]
+  committees             Committee[]
+  suggestions            Suggestion[]
+  qrLinks                QRCodeLink[]
+  cellGroupMemberships   CellGroupMembership[]
+  cellGroupContributions CellGroupContribution[]
+  eventRegistrations     EventRegistration[]
+  attendanceEntries      AttendanceEntry[]
+  familyRelations        FamilyRelation[]
+  councilMembers         CouncilMember[]
+  committeeMembers       CommitteeMember[]
+  boardMinutes           BoardMinute[]
+  businessMinutes        BusinessMinute[]
+  boardMinuteVersions    BoardMinuteVersion[]
+  businessMinuteVersions BusinessMinuteVersion[]
+}
