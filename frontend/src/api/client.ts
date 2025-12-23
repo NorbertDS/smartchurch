@@ -6,13 +6,23 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const url = config.url || '';
-  const publicEndpoints = ['/auth/tenant-resolve', '/auth/public-cell-groups', '/landing', '/church-info'];
+  const publicEndpoints = [
+    '/auth/tenant-resolve',
+    '/auth/public-cell-groups',
+    '/auth/provider-forgot-password',
+    '/auth/provider-reset-password',
+    '/landing',
+    '/church-info',
+  ];
   const isPublic = publicEndpoints.some(pe => url.startsWith(pe));
   if (!isPublic) {
     const token = localStorage.getItem('fc_token');
     if (token) (config.headers as any).Authorization = `Bearer ${token}`;
+    const csrf = localStorage.getItem('fc_csrf');
+    if (csrf && !(config.headers as any)['x-csrf-token']) (config.headers as any)['x-csrf-token'] = csrf;
   } else {
     if ((config.headers as any).Authorization) delete (config.headers as any).Authorization;
+    if ((config.headers as any)['x-csrf-token']) delete (config.headers as any)['x-csrf-token'];
   }
   const hasTenantHeader = (config.headers as any)['x-tenant-id'];
   if (!hasTenantHeader) {
@@ -44,11 +54,19 @@ api.interceptors.response.use(
     const reqUrl = (error?.config?.url || '') as string;
     const isPublic = reqUrl.includes('/landing') || window.location.pathname === '/';
     if (status === 401 && hadToken && (message.includes('Invalid token') || message.includes('Missing Authorization') || message.includes('Unauthenticated')) && !isPublic) {
-      try { localStorage.removeItem('fc_token'); } catch {}
+      const role = localStorage.getItem('fc_role');
+      try {
+        localStorage.removeItem('fc_token');
+        localStorage.removeItem('fc_csrf');
+        localStorage.removeItem('fc_role');
+        localStorage.removeItem('fc_tenant_id');
+        localStorage.removeItem('fc_token_exp');
+      } catch {}
       const current = window.location.pathname + window.location.search;
-      const redirect = `/login?next=${encodeURIComponent(current)}`;
+      const redirectBase = role === 'PROVIDER_ADMIN' ? '/provider/login' : '/login';
+      const redirect = `${redirectBase}?next=${encodeURIComponent(current)}`;
       try { console.info('[Auth Redirect]', { reason: message, from: current, to: redirect, reqUrl }); } catch {}
-      if (window.location.pathname !== '/login') window.location.href = redirect;
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/provider/login') window.location.href = redirect;
     }
     // Friendly default message for network/server errors
     if (isNetwork) {

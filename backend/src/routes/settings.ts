@@ -4,7 +4,7 @@ import multer from 'multer';
 import path from 'path';
 import { prisma } from '../config/prisma';
 import { exportFullBackup, writeBackupToDisk, listBackups, restoreNonDestructive, validateConsistency } from '../services/backup';
-import { authenticate, requireRole } from '../middleware/auth';
+import { authenticate, requireRole, invalidateTenantSettingCache } from '../middleware/auth';
 import { tenantContext, requireTenant } from '../middleware/tenant';
 
 const router = Router();
@@ -500,6 +500,7 @@ router.post('/role-permissions', requireRole(['ADMIN']), requireTenant, async (r
   const exists = await prisma.setting.findFirst({ where: { tenantId: tid, key: 'role_permissions' } });
   if (exists) await prisma.setting.update({ where: { id: exists.id }, data: { value: str } });
   else await prisma.setting.create({ data: { key: 'role_permissions', value: str, tenantId: tid } });
+  invalidateTenantSettingCache(tid, 'role_permissions');
   res.json({ status: 'ok' });
 });
 

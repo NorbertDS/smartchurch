@@ -99,6 +99,11 @@ export type MemberDepartment = $Result.DefaultSelection<Prisma.$MemberDepartment
  */
 export type Setting = $Result.DefaultSelection<Prisma.$SettingPayload>
 /**
+ * Model SystemSetting
+ * 
+ */
+export type SystemSetting = $Result.DefaultSelection<Prisma.$SystemSettingPayload>
+/**
  * Model FamilyRelation
  * 
  */
@@ -158,6 +163,31 @@ export type QRCodeLink = $Result.DefaultSelection<Prisma.$QRCodeLinkPayload>
  * 
  */
 export type Tenant = $Result.DefaultSelection<Prisma.$TenantPayload>
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = $Result.DefaultSelection<Prisma.$SubscriptionPayload>
+/**
+ * Model UsageEvent
+ * 
+ */
+export type UsageEvent = $Result.DefaultSelection<Prisma.$UsageEventPayload>
+/**
+ * Model ApiMetric
+ * 
+ */
+export type ApiMetric = $Result.DefaultSelection<Prisma.$ApiMetricPayload>
+/**
+ * Model DynamicPage
+ * 
+ */
+export type DynamicPage = $Result.DefaultSelection<Prisma.$DynamicPagePayload>
+/**
+ * Model DynamicPageVersion
+ * 
+ */
+export type DynamicPageVersion = $Result.DefaultSelection<Prisma.$DynamicPageVersionPayload>
 
 /**
  * Enums
@@ -213,6 +243,15 @@ export const DemographicGroup: {
 
 export type DemographicGroup = (typeof DemographicGroup)[keyof typeof DemographicGroup]
 
+
+export const SubscriptionPlan: {
+  BASIC: 'BASIC',
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE'
+};
+
+export type SubscriptionPlan = (typeof SubscriptionPlan)[keyof typeof SubscriptionPlan]
+
 }
 
 export type Role = $Enums.Role
@@ -234,6 +273,10 @@ export const Gender: typeof $Enums.Gender
 export type DemographicGroup = $Enums.DemographicGroup
 
 export const DemographicGroup: typeof $Enums.DemographicGroup
+
+export type SubscriptionPlan = $Enums.SubscriptionPlan
+
+export const SubscriptionPlan: typeof $Enums.SubscriptionPlan
 
 /**
  * ##  Prisma Client ʲˢ
@@ -524,6 +567,16 @@ export class PrismaClient<
   get setting(): Prisma.SettingDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.systemSetting`: Exposes CRUD operations for the **SystemSetting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SystemSettings
+    * const systemSettings = await prisma.systemSetting.findMany()
+    * ```
+    */
+  get systemSetting(): Prisma.SystemSettingDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.familyRelation`: Exposes CRUD operations for the **FamilyRelation** model.
     * Example usage:
     * ```ts
@@ -642,6 +695,56 @@ export class PrismaClient<
     * ```
     */
   get tenant(): Prisma.TenantDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.subscription`: Exposes CRUD operations for the **Subscription** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Subscriptions
+    * const subscriptions = await prisma.subscription.findMany()
+    * ```
+    */
+  get subscription(): Prisma.SubscriptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.usageEvent`: Exposes CRUD operations for the **UsageEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UsageEvents
+    * const usageEvents = await prisma.usageEvent.findMany()
+    * ```
+    */
+  get usageEvent(): Prisma.UsageEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.apiMetric`: Exposes CRUD operations for the **ApiMetric** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApiMetrics
+    * const apiMetrics = await prisma.apiMetric.findMany()
+    * ```
+    */
+  get apiMetric(): Prisma.ApiMetricDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dynamicPage`: Exposes CRUD operations for the **DynamicPage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DynamicPages
+    * const dynamicPages = await prisma.dynamicPage.findMany()
+    * ```
+    */
+  get dynamicPage(): Prisma.DynamicPageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dynamicPageVersion`: Exposes CRUD operations for the **DynamicPageVersion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DynamicPageVersions
+    * const dynamicPageVersions = await prisma.dynamicPageVersion.findMany()
+    * ```
+    */
+  get dynamicPageVersion(): Prisma.DynamicPageVersionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1100,6 +1203,7 @@ export namespace Prisma {
     AuditLog: 'AuditLog',
     MemberDepartment: 'MemberDepartment',
     Setting: 'Setting',
+    SystemSetting: 'SystemSetting',
     FamilyRelation: 'FamilyRelation',
     BoardMinute: 'BoardMinute',
     BoardMinuteVersion: 'BoardMinuteVersion',
@@ -1111,7 +1215,12 @@ export namespace Prisma {
     CommitteeMember: 'CommitteeMember',
     Suggestion: 'Suggestion',
     QRCodeLink: 'QRCodeLink',
-    Tenant: 'Tenant'
+    Tenant: 'Tenant',
+    Subscription: 'Subscription',
+    UsageEvent: 'UsageEvent',
+    ApiMetric: 'ApiMetric',
+    DynamicPage: 'DynamicPage',
+    DynamicPageVersion: 'DynamicPageVersion'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1130,7 +1239,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "member" | "department" | "event" | "program" | "cellGroup" | "cellGroupMembership" | "cellGroupContribution" | "eventRegistration" | "attendanceRecord" | "attendanceEntry" | "financeRecord" | "announcement" | "sermon" | "auditLog" | "memberDepartment" | "setting" | "familyRelation" | "boardMinute" | "boardMinuteVersion" | "businessMinute" | "businessMinuteVersion" | "council" | "councilMember" | "committee" | "committeeMember" | "suggestion" | "qRCodeLink" | "tenant"
+      modelProps: "user" | "member" | "department" | "event" | "program" | "cellGroup" | "cellGroupMembership" | "cellGroupContribution" | "eventRegistration" | "attendanceRecord" | "attendanceEntry" | "financeRecord" | "announcement" | "sermon" | "auditLog" | "memberDepartment" | "setting" | "systemSetting" | "familyRelation" | "boardMinute" | "boardMinuteVersion" | "businessMinute" | "businessMinuteVersion" | "council" | "councilMember" | "committee" | "committeeMember" | "suggestion" | "qRCodeLink" | "tenant" | "subscription" | "usageEvent" | "apiMetric" | "dynamicPage" | "dynamicPageVersion"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2392,6 +2501,80 @@ export namespace Prisma {
           }
         }
       }
+      SystemSetting: {
+        payload: Prisma.$SystemSettingPayload<ExtArgs>
+        fields: Prisma.SystemSettingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SystemSettingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SystemSettingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          findFirst: {
+            args: Prisma.SystemSettingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SystemSettingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          findMany: {
+            args: Prisma.SystemSettingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>[]
+          }
+          create: {
+            args: Prisma.SystemSettingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          createMany: {
+            args: Prisma.SystemSettingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SystemSettingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>[]
+          }
+          delete: {
+            args: Prisma.SystemSettingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          update: {
+            args: Prisma.SystemSettingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          deleteMany: {
+            args: Prisma.SystemSettingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SystemSettingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SystemSettingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>[]
+          }
+          upsert: {
+            args: Prisma.SystemSettingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          aggregate: {
+            args: Prisma.SystemSettingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSystemSetting>
+          }
+          groupBy: {
+            args: Prisma.SystemSettingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SystemSettingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SystemSettingCountArgs<ExtArgs>
+            result: $Utils.Optional<SystemSettingCountAggregateOutputType> | number
+          }
+        }
+      }
       FamilyRelation: {
         payload: Prisma.$FamilyRelationPayload<ExtArgs>
         fields: Prisma.FamilyRelationFieldRefs
@@ -3280,6 +3463,376 @@ export namespace Prisma {
           }
         }
       }
+      Subscription: {
+        payload: Prisma.$SubscriptionPayload<ExtArgs>
+        fields: Prisma.SubscriptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubscriptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubscriptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+          }
+          findFirst: {
+            args: Prisma.SubscriptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubscriptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+          }
+          findMany: {
+            args: Prisma.SubscriptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+          }
+          create: {
+            args: Prisma.SubscriptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+          }
+          createMany: {
+            args: Prisma.SubscriptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubscriptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+          }
+          delete: {
+            args: Prisma.SubscriptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+          }
+          update: {
+            args: Prisma.SubscriptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubscriptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubscriptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubscriptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubscriptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+          }
+          aggregate: {
+            args: Prisma.SubscriptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubscription>
+          }
+          groupBy: {
+            args: Prisma.SubscriptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubscriptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubscriptionCountArgs<ExtArgs>
+            result: $Utils.Optional<SubscriptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      UsageEvent: {
+        payload: Prisma.$UsageEventPayload<ExtArgs>
+        fields: Prisma.UsageEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UsageEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UsageEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>
+          }
+          findFirst: {
+            args: Prisma.UsageEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UsageEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>
+          }
+          findMany: {
+            args: Prisma.UsageEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>[]
+          }
+          create: {
+            args: Prisma.UsageEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>
+          }
+          createMany: {
+            args: Prisma.UsageEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UsageEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>[]
+          }
+          delete: {
+            args: Prisma.UsageEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>
+          }
+          update: {
+            args: Prisma.UsageEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.UsageEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UsageEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UsageEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.UsageEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsageEventPayload>
+          }
+          aggregate: {
+            args: Prisma.UsageEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUsageEvent>
+          }
+          groupBy: {
+            args: Prisma.UsageEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UsageEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UsageEventCountArgs<ExtArgs>
+            result: $Utils.Optional<UsageEventCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApiMetric: {
+        payload: Prisma.$ApiMetricPayload<ExtArgs>
+        fields: Prisma.ApiMetricFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApiMetricFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApiMetricFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>
+          }
+          findFirst: {
+            args: Prisma.ApiMetricFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApiMetricFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>
+          }
+          findMany: {
+            args: Prisma.ApiMetricFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>[]
+          }
+          create: {
+            args: Prisma.ApiMetricCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>
+          }
+          createMany: {
+            args: Prisma.ApiMetricCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApiMetricCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>[]
+          }
+          delete: {
+            args: Prisma.ApiMetricDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>
+          }
+          update: {
+            args: Prisma.ApiMetricUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApiMetricDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApiMetricUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApiMetricUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>[]
+          }
+          upsert: {
+            args: Prisma.ApiMetricUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiMetricPayload>
+          }
+          aggregate: {
+            args: Prisma.ApiMetricAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApiMetric>
+          }
+          groupBy: {
+            args: Prisma.ApiMetricGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApiMetricGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApiMetricCountArgs<ExtArgs>
+            result: $Utils.Optional<ApiMetricCountAggregateOutputType> | number
+          }
+        }
+      }
+      DynamicPage: {
+        payload: Prisma.$DynamicPagePayload<ExtArgs>
+        fields: Prisma.DynamicPageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DynamicPageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DynamicPageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>
+          }
+          findFirst: {
+            args: Prisma.DynamicPageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DynamicPageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>
+          }
+          findMany: {
+            args: Prisma.DynamicPageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>[]
+          }
+          create: {
+            args: Prisma.DynamicPageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>
+          }
+          createMany: {
+            args: Prisma.DynamicPageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DynamicPageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>[]
+          }
+          delete: {
+            args: Prisma.DynamicPageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>
+          }
+          update: {
+            args: Prisma.DynamicPageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>
+          }
+          deleteMany: {
+            args: Prisma.DynamicPageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DynamicPageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DynamicPageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>[]
+          }
+          upsert: {
+            args: Prisma.DynamicPageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPagePayload>
+          }
+          aggregate: {
+            args: Prisma.DynamicPageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDynamicPage>
+          }
+          groupBy: {
+            args: Prisma.DynamicPageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DynamicPageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DynamicPageCountArgs<ExtArgs>
+            result: $Utils.Optional<DynamicPageCountAggregateOutputType> | number
+          }
+        }
+      }
+      DynamicPageVersion: {
+        payload: Prisma.$DynamicPageVersionPayload<ExtArgs>
+        fields: Prisma.DynamicPageVersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DynamicPageVersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DynamicPageVersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>
+          }
+          findFirst: {
+            args: Prisma.DynamicPageVersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DynamicPageVersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>
+          }
+          findMany: {
+            args: Prisma.DynamicPageVersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>[]
+          }
+          create: {
+            args: Prisma.DynamicPageVersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>
+          }
+          createMany: {
+            args: Prisma.DynamicPageVersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DynamicPageVersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>[]
+          }
+          delete: {
+            args: Prisma.DynamicPageVersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>
+          }
+          update: {
+            args: Prisma.DynamicPageVersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.DynamicPageVersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DynamicPageVersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DynamicPageVersionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>[]
+          }
+          upsert: {
+            args: Prisma.DynamicPageVersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DynamicPageVersionPayload>
+          }
+          aggregate: {
+            args: Prisma.DynamicPageVersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDynamicPageVersion>
+          }
+          groupBy: {
+            args: Prisma.DynamicPageVersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DynamicPageVersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DynamicPageVersionCountArgs<ExtArgs>
+            result: $Utils.Optional<DynamicPageVersionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3393,6 +3946,7 @@ export namespace Prisma {
     auditLog?: AuditLogOmit
     memberDepartment?: MemberDepartmentOmit
     setting?: SettingOmit
+    systemSetting?: SystemSettingOmit
     familyRelation?: FamilyRelationOmit
     boardMinute?: BoardMinuteOmit
     boardMinuteVersion?: BoardMinuteVersionOmit
@@ -3405,6 +3959,11 @@ export namespace Prisma {
     suggestion?: SuggestionOmit
     qRCodeLink?: QRCodeLinkOmit
     tenant?: TenantOmit
+    subscription?: SubscriptionOmit
+    usageEvent?: UsageEventOmit
+    apiMetric?: ApiMetricOmit
+    dynamicPage?: DynamicPageOmit
+    dynamicPageVersion?: DynamicPageVersionOmit
   }
 
   /* Types for Logging */
@@ -3502,6 +4061,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated: number
     businessMinuteVersionsCreated: number
     suggestionsCreated: number
+    pagesCreated: number
+    pagesUpdated: number
+    pageVersionsCreated: number
+    usageEvents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3522,6 +4085,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: boolean | UserCountOutputTypeCountBoardMinuteVersionsCreatedArgs
     businessMinuteVersionsCreated?: boolean | UserCountOutputTypeCountBusinessMinuteVersionsCreatedArgs
     suggestionsCreated?: boolean | UserCountOutputTypeCountSuggestionsCreatedArgs
+    pagesCreated?: boolean | UserCountOutputTypeCountPagesCreatedArgs
+    pagesUpdated?: boolean | UserCountOutputTypeCountPagesUpdatedArgs
+    pageVersionsCreated?: boolean | UserCountOutputTypeCountPageVersionsCreatedArgs
+    usageEvents?: boolean | UserCountOutputTypeCountUsageEventsArgs
   }
 
   // Custom InputTypes
@@ -3652,6 +4219,34 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSuggestionsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SuggestionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPagesCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPagesUpdatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPageVersionsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageVersionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUsageEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsageEventWhereInput
   }
 
 
@@ -4114,6 +4709,10 @@ export namespace Prisma {
     businessMinutes: number
     boardMinuteVersions: number
     businessMinuteVersions: number
+    usageEvents: number
+    apiMetrics: number
+    pages: number
+    pageVersions: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4144,6 +4743,10 @@ export namespace Prisma {
     businessMinutes?: boolean | TenantCountOutputTypeCountBusinessMinutesArgs
     boardMinuteVersions?: boolean | TenantCountOutputTypeCountBoardMinuteVersionsArgs
     businessMinuteVersions?: boolean | TenantCountOutputTypeCountBusinessMinuteVersionsArgs
+    usageEvents?: boolean | TenantCountOutputTypeCountUsageEventsArgs
+    apiMetrics?: boolean | TenantCountOutputTypeCountApiMetricsArgs
+    pages?: boolean | TenantCountOutputTypeCountPagesArgs
+    pageVersions?: boolean | TenantCountOutputTypeCountPageVersionsArgs
   }
 
   // Custom InputTypes
@@ -4346,6 +4949,65 @@ export namespace Prisma {
     where?: BusinessMinuteVersionWhereInput
   }
 
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountUsageEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsageEventWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountApiMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApiMetricWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountPagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageWhereInput
+  }
+
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountPageVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageVersionWhereInput
+  }
+
+
+  /**
+   * Count Type DynamicPageCountOutputType
+   */
+
+  export type DynamicPageCountOutputType = {
+    versions: number
+  }
+
+  export type DynamicPageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versions?: boolean | DynamicPageCountOutputTypeCountVersionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DynamicPageCountOutputType without action
+   */
+  export type DynamicPageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageCountOutputType
+     */
+    select?: DynamicPageCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DynamicPageCountOutputType without action
+   */
+  export type DynamicPageCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageVersionWhereInput
+  }
+
 
   /**
    * Models
@@ -4381,6 +5043,8 @@ export namespace Prisma {
     role: $Enums.Role | null
     twoFactorEnabled: boolean | null
     twoFactorSecret: string | null
+    resetTokenHash: string | null
+    resetTokenExpiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
     tenantId: number | null
@@ -4394,6 +5058,8 @@ export namespace Prisma {
     role: $Enums.Role | null
     twoFactorEnabled: boolean | null
     twoFactorSecret: string | null
+    resetTokenHash: string | null
+    resetTokenExpiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
     tenantId: number | null
@@ -4407,6 +5073,8 @@ export namespace Prisma {
     role: number
     twoFactorEnabled: number
     twoFactorSecret: number
+    resetTokenHash: number
+    resetTokenExpiresAt: number
     createdAt: number
     updatedAt: number
     tenantId: number
@@ -4432,6 +5100,8 @@ export namespace Prisma {
     role?: true
     twoFactorEnabled?: true
     twoFactorSecret?: true
+    resetTokenHash?: true
+    resetTokenExpiresAt?: true
     createdAt?: true
     updatedAt?: true
     tenantId?: true
@@ -4445,6 +5115,8 @@ export namespace Prisma {
     role?: true
     twoFactorEnabled?: true
     twoFactorSecret?: true
+    resetTokenHash?: true
+    resetTokenExpiresAt?: true
     createdAt?: true
     updatedAt?: true
     tenantId?: true
@@ -4458,6 +5130,8 @@ export namespace Prisma {
     role?: true
     twoFactorEnabled?: true
     twoFactorSecret?: true
+    resetTokenHash?: true
+    resetTokenExpiresAt?: true
     createdAt?: true
     updatedAt?: true
     tenantId?: true
@@ -4558,6 +5232,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled: boolean
     twoFactorSecret: string | null
+    resetTokenHash: string | null
+    resetTokenExpiresAt: Date | null
     createdAt: Date
     updatedAt: Date
     tenantId: number | null
@@ -4590,6 +5266,8 @@ export namespace Prisma {
     role?: boolean
     twoFactorEnabled?: boolean
     twoFactorSecret?: boolean
+    resetTokenHash?: boolean
+    resetTokenExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tenantId?: boolean
@@ -4610,6 +5288,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: boolean | User$boardMinuteVersionsCreatedArgs<ExtArgs>
     businessMinuteVersionsCreated?: boolean | User$businessMinuteVersionsCreatedArgs<ExtArgs>
     suggestionsCreated?: boolean | User$suggestionsCreatedArgs<ExtArgs>
+    pagesCreated?: boolean | User$pagesCreatedArgs<ExtArgs>
+    pagesUpdated?: boolean | User$pagesUpdatedArgs<ExtArgs>
+    pageVersionsCreated?: boolean | User$pageVersionsCreatedArgs<ExtArgs>
+    usageEvents?: boolean | User$usageEventsArgs<ExtArgs>
     member?: boolean | User$memberArgs<ExtArgs>
     tenant?: boolean | User$tenantArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -4623,6 +5305,8 @@ export namespace Prisma {
     role?: boolean
     twoFactorEnabled?: boolean
     twoFactorSecret?: boolean
+    resetTokenHash?: boolean
+    resetTokenExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tenantId?: boolean
@@ -4637,6 +5321,8 @@ export namespace Prisma {
     role?: boolean
     twoFactorEnabled?: boolean
     twoFactorSecret?: boolean
+    resetTokenHash?: boolean
+    resetTokenExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tenantId?: boolean
@@ -4651,12 +5337,14 @@ export namespace Prisma {
     role?: boolean
     twoFactorEnabled?: boolean
     twoFactorSecret?: boolean
+    resetTokenHash?: boolean
+    resetTokenExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tenantId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "role" | "twoFactorEnabled" | "twoFactorSecret" | "createdAt" | "updatedAt" | "tenantId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "role" | "twoFactorEnabled" | "twoFactorSecret" | "resetTokenHash" | "resetTokenExpiresAt" | "createdAt" | "updatedAt" | "tenantId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
     announcementsCreated?: boolean | User$announcementsCreatedArgs<ExtArgs>
@@ -4675,6 +5363,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: boolean | User$boardMinuteVersionsCreatedArgs<ExtArgs>
     businessMinuteVersionsCreated?: boolean | User$businessMinuteVersionsCreatedArgs<ExtArgs>
     suggestionsCreated?: boolean | User$suggestionsCreatedArgs<ExtArgs>
+    pagesCreated?: boolean | User$pagesCreatedArgs<ExtArgs>
+    pagesUpdated?: boolean | User$pagesUpdatedArgs<ExtArgs>
+    pageVersionsCreated?: boolean | User$pageVersionsCreatedArgs<ExtArgs>
+    usageEvents?: boolean | User$usageEventsArgs<ExtArgs>
     member?: boolean | User$memberArgs<ExtArgs>
     tenant?: boolean | User$tenantArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -4706,6 +5398,10 @@ export namespace Prisma {
       boardMinuteVersionsCreated: Prisma.$BoardMinuteVersionPayload<ExtArgs>[]
       businessMinuteVersionsCreated: Prisma.$BusinessMinuteVersionPayload<ExtArgs>[]
       suggestionsCreated: Prisma.$SuggestionPayload<ExtArgs>[]
+      pagesCreated: Prisma.$DynamicPagePayload<ExtArgs>[]
+      pagesUpdated: Prisma.$DynamicPagePayload<ExtArgs>[]
+      pageVersionsCreated: Prisma.$DynamicPageVersionPayload<ExtArgs>[]
+      usageEvents: Prisma.$UsageEventPayload<ExtArgs>[]
       member: Prisma.$MemberPayload<ExtArgs> | null
       tenant: Prisma.$TenantPayload<ExtArgs> | null
     }
@@ -4717,6 +5413,8 @@ export namespace Prisma {
       role: $Enums.Role
       twoFactorEnabled: boolean
       twoFactorSecret: string | null
+      resetTokenHash: string | null
+      resetTokenExpiresAt: Date | null
       createdAt: Date
       updatedAt: Date
       tenantId: number | null
@@ -5131,6 +5829,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated<T extends User$boardMinuteVersionsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$boardMinuteVersionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BoardMinuteVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     businessMinuteVersionsCreated<T extends User$businessMinuteVersionsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$businessMinuteVersionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessMinuteVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     suggestionsCreated<T extends User$suggestionsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$suggestionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SuggestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pagesCreated<T extends User$pagesCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$pagesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pagesUpdated<T extends User$pagesUpdatedArgs<ExtArgs> = {}>(args?: Subset<T, User$pagesUpdatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pageVersionsCreated<T extends User$pageVersionsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$pageVersionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usageEvents<T extends User$usageEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$usageEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     member<T extends User$memberArgs<ExtArgs> = {}>(args?: Subset<T, User$memberArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     tenant<T extends User$tenantArgs<ExtArgs> = {}>(args?: Subset<T, User$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -5169,6 +5871,8 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'Role'>
     readonly twoFactorEnabled: FieldRef<"User", 'Boolean'>
     readonly twoFactorSecret: FieldRef<"User", 'String'>
+    readonly resetTokenHash: FieldRef<"User", 'String'>
+    readonly resetTokenExpiresAt: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly tenantId: FieldRef<"User", 'Int'>
@@ -5971,6 +6675,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SuggestionScalarFieldEnum | SuggestionScalarFieldEnum[]
+  }
+
+  /**
+   * User.pagesCreated
+   */
+  export type User$pagesCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    where?: DynamicPageWhereInput
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    cursor?: DynamicPageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DynamicPageScalarFieldEnum | DynamicPageScalarFieldEnum[]
+  }
+
+  /**
+   * User.pagesUpdated
+   */
+  export type User$pagesUpdatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    where?: DynamicPageWhereInput
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    cursor?: DynamicPageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DynamicPageScalarFieldEnum | DynamicPageScalarFieldEnum[]
+  }
+
+  /**
+   * User.pageVersionsCreated
+   */
+  export type User$pageVersionsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    where?: DynamicPageVersionWhereInput
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    cursor?: DynamicPageVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DynamicPageVersionScalarFieldEnum | DynamicPageVersionScalarFieldEnum[]
+  }
+
+  /**
+   * User.usageEvents
+   */
+  export type User$usageEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    where?: UsageEventWhereInput
+    orderBy?: UsageEventOrderByWithRelationInput | UsageEventOrderByWithRelationInput[]
+    cursor?: UsageEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UsageEventScalarFieldEnum | UsageEventScalarFieldEnum[]
   }
 
   /**
@@ -25375,6 +26175,1020 @@ export namespace Prisma {
 
 
   /**
+   * Model SystemSetting
+   */
+
+  export type AggregateSystemSetting = {
+    _count: SystemSettingCountAggregateOutputType | null
+    _avg: SystemSettingAvgAggregateOutputType | null
+    _sum: SystemSettingSumAggregateOutputType | null
+    _min: SystemSettingMinAggregateOutputType | null
+    _max: SystemSettingMaxAggregateOutputType | null
+  }
+
+  export type SystemSettingAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SystemSettingSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SystemSettingMinAggregateOutputType = {
+    id: number | null
+    key: string | null
+    value: string | null
+    updatedAt: Date | null
+  }
+
+  export type SystemSettingMaxAggregateOutputType = {
+    id: number | null
+    key: string | null
+    value: string | null
+    updatedAt: Date | null
+  }
+
+  export type SystemSettingCountAggregateOutputType = {
+    id: number
+    key: number
+    value: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SystemSettingAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SystemSettingSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SystemSettingMinAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    updatedAt?: true
+  }
+
+  export type SystemSettingMaxAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    updatedAt?: true
+  }
+
+  export type SystemSettingCountAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SystemSettingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemSetting to aggregate.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SystemSettings
+    **/
+    _count?: true | SystemSettingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SystemSettingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SystemSettingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SystemSettingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SystemSettingMaxAggregateInputType
+  }
+
+  export type GetSystemSettingAggregateType<T extends SystemSettingAggregateArgs> = {
+        [P in keyof T & keyof AggregateSystemSetting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSystemSetting[P]>
+      : GetScalarType<T[P], AggregateSystemSetting[P]>
+  }
+
+
+
+
+  export type SystemSettingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemSettingWhereInput
+    orderBy?: SystemSettingOrderByWithAggregationInput | SystemSettingOrderByWithAggregationInput[]
+    by: SystemSettingScalarFieldEnum[] | SystemSettingScalarFieldEnum
+    having?: SystemSettingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SystemSettingCountAggregateInputType | true
+    _avg?: SystemSettingAvgAggregateInputType
+    _sum?: SystemSettingSumAggregateInputType
+    _min?: SystemSettingMinAggregateInputType
+    _max?: SystemSettingMaxAggregateInputType
+  }
+
+  export type SystemSettingGroupByOutputType = {
+    id: number
+    key: string
+    value: string
+    updatedAt: Date
+    _count: SystemSettingCountAggregateOutputType | null
+    _avg: SystemSettingAvgAggregateOutputType | null
+    _sum: SystemSettingSumAggregateOutputType | null
+    _min: SystemSettingMinAggregateOutputType | null
+    _max: SystemSettingMaxAggregateOutputType | null
+  }
+
+  type GetSystemSettingGroupByPayload<T extends SystemSettingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SystemSettingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SystemSettingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SystemSettingGroupByOutputType[P]>
+            : GetScalarType<T[P], SystemSettingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SystemSettingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemSetting"]>
+
+  export type SystemSettingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemSetting"]>
+
+  export type SystemSettingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemSetting"]>
+
+  export type SystemSettingSelectScalar = {
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SystemSettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "value" | "updatedAt", ExtArgs["result"]["systemSetting"]>
+
+  export type $SystemSettingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SystemSetting"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      key: string
+      value: string
+      updatedAt: Date
+    }, ExtArgs["result"]["systemSetting"]>
+    composites: {}
+  }
+
+  type SystemSettingGetPayload<S extends boolean | null | undefined | SystemSettingDefaultArgs> = $Result.GetResult<Prisma.$SystemSettingPayload, S>
+
+  type SystemSettingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SystemSettingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SystemSettingCountAggregateInputType | true
+    }
+
+  export interface SystemSettingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemSetting'], meta: { name: 'SystemSetting' } }
+    /**
+     * Find zero or one SystemSetting that matches the filter.
+     * @param {SystemSettingFindUniqueArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SystemSettingFindUniqueArgs>(args: SelectSubset<T, SystemSettingFindUniqueArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SystemSetting that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SystemSettingFindUniqueOrThrowArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SystemSettingFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemSettingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemSetting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingFindFirstArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SystemSettingFindFirstArgs>(args?: SelectSubset<T, SystemSettingFindFirstArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemSetting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingFindFirstOrThrowArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SystemSettingFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemSettingFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SystemSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SystemSettings
+     * const systemSettings = await prisma.systemSetting.findMany()
+     * 
+     * // Get first 10 SystemSettings
+     * const systemSettings = await prisma.systemSetting.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const systemSettingWithIdOnly = await prisma.systemSetting.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SystemSettingFindManyArgs>(args?: SelectSubset<T, SystemSettingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SystemSetting.
+     * @param {SystemSettingCreateArgs} args - Arguments to create a SystemSetting.
+     * @example
+     * // Create one SystemSetting
+     * const SystemSetting = await prisma.systemSetting.create({
+     *   data: {
+     *     // ... data to create a SystemSetting
+     *   }
+     * })
+     * 
+     */
+    create<T extends SystemSettingCreateArgs>(args: SelectSubset<T, SystemSettingCreateArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SystemSettings.
+     * @param {SystemSettingCreateManyArgs} args - Arguments to create many SystemSettings.
+     * @example
+     * // Create many SystemSettings
+     * const systemSetting = await prisma.systemSetting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SystemSettingCreateManyArgs>(args?: SelectSubset<T, SystemSettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SystemSettings and returns the data saved in the database.
+     * @param {SystemSettingCreateManyAndReturnArgs} args - Arguments to create many SystemSettings.
+     * @example
+     * // Create many SystemSettings
+     * const systemSetting = await prisma.systemSetting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SystemSettings and only return the `id`
+     * const systemSettingWithIdOnly = await prisma.systemSetting.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SystemSettingCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemSettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SystemSetting.
+     * @param {SystemSettingDeleteArgs} args - Arguments to delete one SystemSetting.
+     * @example
+     * // Delete one SystemSetting
+     * const SystemSetting = await prisma.systemSetting.delete({
+     *   where: {
+     *     // ... filter to delete one SystemSetting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SystemSettingDeleteArgs>(args: SelectSubset<T, SystemSettingDeleteArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SystemSetting.
+     * @param {SystemSettingUpdateArgs} args - Arguments to update one SystemSetting.
+     * @example
+     * // Update one SystemSetting
+     * const systemSetting = await prisma.systemSetting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SystemSettingUpdateArgs>(args: SelectSubset<T, SystemSettingUpdateArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SystemSettings.
+     * @param {SystemSettingDeleteManyArgs} args - Arguments to filter SystemSettings to delete.
+     * @example
+     * // Delete a few SystemSettings
+     * const { count } = await prisma.systemSetting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SystemSettingDeleteManyArgs>(args?: SelectSubset<T, SystemSettingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SystemSettings
+     * const systemSetting = await prisma.systemSetting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SystemSettingUpdateManyArgs>(args: SelectSubset<T, SystemSettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemSettings and returns the data updated in the database.
+     * @param {SystemSettingUpdateManyAndReturnArgs} args - Arguments to update many SystemSettings.
+     * @example
+     * // Update many SystemSettings
+     * const systemSetting = await prisma.systemSetting.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SystemSettings and only return the `id`
+     * const systemSettingWithIdOnly = await prisma.systemSetting.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SystemSettingUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemSettingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SystemSetting.
+     * @param {SystemSettingUpsertArgs} args - Arguments to update or create a SystemSetting.
+     * @example
+     * // Update or create a SystemSetting
+     * const systemSetting = await prisma.systemSetting.upsert({
+     *   create: {
+     *     // ... data to create a SystemSetting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SystemSetting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SystemSettingUpsertArgs>(args: SelectSubset<T, SystemSettingUpsertArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingCountArgs} args - Arguments to filter SystemSettings to count.
+     * @example
+     * // Count the number of SystemSettings
+     * const count = await prisma.systemSetting.count({
+     *   where: {
+     *     // ... the filter for the SystemSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends SystemSettingCountArgs>(
+      args?: Subset<T, SystemSettingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SystemSettingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SystemSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SystemSettingAggregateArgs>(args: Subset<T, SystemSettingAggregateArgs>): Prisma.PrismaPromise<GetSystemSettingAggregateType<T>>
+
+    /**
+     * Group by SystemSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SystemSettingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SystemSettingGroupByArgs['orderBy'] }
+        : { orderBy?: SystemSettingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SystemSettingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemSettingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SystemSetting model
+   */
+  readonly fields: SystemSettingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SystemSetting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SystemSettingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SystemSetting model
+   */
+  interface SystemSettingFieldRefs {
+    readonly id: FieldRef<"SystemSetting", 'Int'>
+    readonly key: FieldRef<"SystemSetting", 'String'>
+    readonly value: FieldRef<"SystemSetting", 'String'>
+    readonly updatedAt: FieldRef<"SystemSetting", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SystemSetting findUnique
+   */
+  export type SystemSettingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting findUniqueOrThrow
+   */
+  export type SystemSettingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting findFirst
+   */
+  export type SystemSettingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemSettings.
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingScalarFieldEnum | SystemSettingScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSetting findFirstOrThrow
+   */
+  export type SystemSettingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemSettings.
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingScalarFieldEnum | SystemSettingScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSetting findMany
+   */
+  export type SystemSettingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SystemSettings.
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    distinct?: SystemSettingScalarFieldEnum | SystemSettingScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSetting create
+   */
+  export type SystemSettingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SystemSetting.
+     */
+    data: XOR<SystemSettingCreateInput, SystemSettingUncheckedCreateInput>
+  }
+
+  /**
+   * SystemSetting createMany
+   */
+  export type SystemSettingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SystemSettings.
+     */
+    data: SystemSettingCreateManyInput | SystemSettingCreateManyInput[]
+  }
+
+  /**
+   * SystemSetting createManyAndReturn
+   */
+  export type SystemSettingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data used to create many SystemSettings.
+     */
+    data: SystemSettingCreateManyInput | SystemSettingCreateManyInput[]
+  }
+
+  /**
+   * SystemSetting update
+   */
+  export type SystemSettingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SystemSetting.
+     */
+    data: XOR<SystemSettingUpdateInput, SystemSettingUncheckedUpdateInput>
+    /**
+     * Choose, which SystemSetting to update.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting updateMany
+   */
+  export type SystemSettingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SystemSettings.
+     */
+    data: XOR<SystemSettingUpdateManyMutationInput, SystemSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemSettings to update
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * Limit how many SystemSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSetting updateManyAndReturn
+   */
+  export type SystemSettingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data used to update SystemSettings.
+     */
+    data: XOR<SystemSettingUpdateManyMutationInput, SystemSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemSettings to update
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * Limit how many SystemSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSetting upsert
+   */
+  export type SystemSettingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SystemSetting to update in case it exists.
+     */
+    where: SystemSettingWhereUniqueInput
+    /**
+     * In case the SystemSetting found by the `where` argument doesn't exist, create a new SystemSetting with this data.
+     */
+    create: XOR<SystemSettingCreateInput, SystemSettingUncheckedCreateInput>
+    /**
+     * In case the SystemSetting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SystemSettingUpdateInput, SystemSettingUncheckedUpdateInput>
+  }
+
+  /**
+   * SystemSetting delete
+   */
+  export type SystemSettingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter which SystemSetting to delete.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting deleteMany
+   */
+  export type SystemSettingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemSettings to delete
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * Limit how many SystemSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSetting without action
+   */
+  export type SystemSettingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model FamilyRelation
    */
 
@@ -38858,6 +40672,11 @@ export namespace Prisma {
     businessMinutes?: boolean | Tenant$businessMinutesArgs<ExtArgs>
     boardMinuteVersions?: boolean | Tenant$boardMinuteVersionsArgs<ExtArgs>
     businessMinuteVersions?: boolean | Tenant$businessMinuteVersionsArgs<ExtArgs>
+    subscription?: boolean | Tenant$subscriptionArgs<ExtArgs>
+    usageEvents?: boolean | Tenant$usageEventsArgs<ExtArgs>
+    apiMetrics?: boolean | Tenant$apiMetricsArgs<ExtArgs>
+    pages?: boolean | Tenant$pagesArgs<ExtArgs>
+    pageVersions?: boolean | Tenant$pageVersionsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -38923,6 +40742,11 @@ export namespace Prisma {
     businessMinutes?: boolean | Tenant$businessMinutesArgs<ExtArgs>
     boardMinuteVersions?: boolean | Tenant$boardMinuteVersionsArgs<ExtArgs>
     businessMinuteVersions?: boolean | Tenant$businessMinuteVersionsArgs<ExtArgs>
+    subscription?: boolean | Tenant$subscriptionArgs<ExtArgs>
+    usageEvents?: boolean | Tenant$usageEventsArgs<ExtArgs>
+    apiMetrics?: boolean | Tenant$apiMetricsArgs<ExtArgs>
+    pages?: boolean | Tenant$pagesArgs<ExtArgs>
+    pageVersions?: boolean | Tenant$pageVersionsArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -38958,6 +40782,11 @@ export namespace Prisma {
       businessMinutes: Prisma.$BusinessMinutePayload<ExtArgs>[]
       boardMinuteVersions: Prisma.$BoardMinuteVersionPayload<ExtArgs>[]
       businessMinuteVersions: Prisma.$BusinessMinuteVersionPayload<ExtArgs>[]
+      subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+      usageEvents: Prisma.$UsageEventPayload<ExtArgs>[]
+      apiMetrics: Prisma.$ApiMetricPayload<ExtArgs>[]
+      pages: Prisma.$DynamicPagePayload<ExtArgs>[]
+      pageVersions: Prisma.$DynamicPageVersionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -39389,6 +41218,11 @@ export namespace Prisma {
     businessMinutes<T extends Tenant$businessMinutesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$businessMinutesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessMinutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     boardMinuteVersions<T extends Tenant$boardMinuteVersionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$boardMinuteVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BoardMinuteVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     businessMinuteVersions<T extends Tenant$businessMinuteVersionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$businessMinuteVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessMinuteVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    subscription<T extends Tenant$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$subscriptionArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    usageEvents<T extends Tenant$usageEventsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$usageEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    apiMetrics<T extends Tenant$apiMetricsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$apiMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pages<T extends Tenant$pagesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pageVersions<T extends Tenant$pageVersionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$pageVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -40460,6 +42294,121 @@ export namespace Prisma {
   }
 
   /**
+   * Tenant.subscription
+   */
+  export type Tenant$subscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    where?: SubscriptionWhereInput
+  }
+
+  /**
+   * Tenant.usageEvents
+   */
+  export type Tenant$usageEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    where?: UsageEventWhereInput
+    orderBy?: UsageEventOrderByWithRelationInput | UsageEventOrderByWithRelationInput[]
+    cursor?: UsageEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UsageEventScalarFieldEnum | UsageEventScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.apiMetrics
+   */
+  export type Tenant$apiMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    where?: ApiMetricWhereInput
+    orderBy?: ApiMetricOrderByWithRelationInput | ApiMetricOrderByWithRelationInput[]
+    cursor?: ApiMetricWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApiMetricScalarFieldEnum | ApiMetricScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.pages
+   */
+  export type Tenant$pagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    where?: DynamicPageWhereInput
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    cursor?: DynamicPageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DynamicPageScalarFieldEnum | DynamicPageScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.pageVersions
+   */
+  export type Tenant$pageVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    where?: DynamicPageVersionWhereInput
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    cursor?: DynamicPageVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DynamicPageVersionScalarFieldEnum | DynamicPageVersionScalarFieldEnum[]
+  }
+
+  /**
    * Tenant without action
    */
   export type TenantDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -40475,6 +42424,5959 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TenantInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Subscription
+   */
+
+  export type AggregateSubscription = {
+    _count: SubscriptionCountAggregateOutputType | null
+    _avg: SubscriptionAvgAggregateOutputType | null
+    _sum: SubscriptionSumAggregateOutputType | null
+    _min: SubscriptionMinAggregateOutputType | null
+    _max: SubscriptionMaxAggregateOutputType | null
+  }
+
+  export type SubscriptionAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    seats: number | null
+    price: number | null
+  }
+
+  export type SubscriptionSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    seats: number | null
+    price: number | null
+  }
+
+  export type SubscriptionMinAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    plan: $Enums.SubscriptionPlan | null
+    status: string | null
+    seats: number | null
+    period: string | null
+    price: number | null
+    provider: string | null
+    providerCustomerId: string | null
+    providerSubscriptionId: string | null
+    currentPeriodStart: Date | null
+    currentPeriodEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubscriptionMaxAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    plan: $Enums.SubscriptionPlan | null
+    status: string | null
+    seats: number | null
+    period: string | null
+    price: number | null
+    provider: string | null
+    providerCustomerId: string | null
+    providerSubscriptionId: string | null
+    currentPeriodStart: Date | null
+    currentPeriodEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubscriptionCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    plan: number
+    status: number
+    seats: number
+    period: number
+    price: number
+    provider: number
+    providerCustomerId: number
+    providerSubscriptionId: number
+    currentPeriodStart: number
+    currentPeriodEnd: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SubscriptionAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    seats?: true
+    price?: true
+  }
+
+  export type SubscriptionSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    seats?: true
+    price?: true
+  }
+
+  export type SubscriptionMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    plan?: true
+    status?: true
+    seats?: true
+    period?: true
+    price?: true
+    provider?: true
+    providerCustomerId?: true
+    providerSubscriptionId?: true
+    currentPeriodStart?: true
+    currentPeriodEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubscriptionMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    plan?: true
+    status?: true
+    seats?: true
+    period?: true
+    price?: true
+    provider?: true
+    providerCustomerId?: true
+    providerSubscriptionId?: true
+    currentPeriodStart?: true
+    currentPeriodEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubscriptionCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    plan?: true
+    status?: true
+    seats?: true
+    period?: true
+    price?: true
+    provider?: true
+    providerCustomerId?: true
+    providerSubscriptionId?: true
+    currentPeriodStart?: true
+    currentPeriodEnd?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SubscriptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Subscription to aggregate.
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subscriptions to fetch.
+     */
+    orderBy?: SubscriptionOrderByWithRelationInput | SubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Subscriptions
+    **/
+    _count?: true | SubscriptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubscriptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubscriptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubscriptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubscriptionMaxAggregateInputType
+  }
+
+  export type GetSubscriptionAggregateType<T extends SubscriptionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubscription]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubscription[P]>
+      : GetScalarType<T[P], AggregateSubscription[P]>
+  }
+
+
+
+
+  export type SubscriptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubscriptionWhereInput
+    orderBy?: SubscriptionOrderByWithAggregationInput | SubscriptionOrderByWithAggregationInput[]
+    by: SubscriptionScalarFieldEnum[] | SubscriptionScalarFieldEnum
+    having?: SubscriptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubscriptionCountAggregateInputType | true
+    _avg?: SubscriptionAvgAggregateInputType
+    _sum?: SubscriptionSumAggregateInputType
+    _min?: SubscriptionMinAggregateInputType
+    _max?: SubscriptionMaxAggregateInputType
+  }
+
+  export type SubscriptionGroupByOutputType = {
+    id: number
+    tenantId: number
+    plan: $Enums.SubscriptionPlan
+    status: string
+    seats: number
+    period: string
+    price: number
+    provider: string | null
+    providerCustomerId: string | null
+    providerSubscriptionId: string | null
+    currentPeriodStart: Date | null
+    currentPeriodEnd: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SubscriptionCountAggregateOutputType | null
+    _avg: SubscriptionAvgAggregateOutputType | null
+    _sum: SubscriptionSumAggregateOutputType | null
+    _min: SubscriptionMinAggregateOutputType | null
+    _max: SubscriptionMaxAggregateOutputType | null
+  }
+
+  type GetSubscriptionGroupByPayload<T extends SubscriptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubscriptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubscriptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubscriptionGroupByOutputType[P]>
+            : GetScalarType<T[P], SubscriptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubscriptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    plan?: boolean
+    status?: boolean
+    seats?: boolean
+    period?: boolean
+    price?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
+    providerSubscriptionId?: boolean
+    currentPeriodStart?: boolean
+    currentPeriodEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subscription"]>
+
+  export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    plan?: boolean
+    status?: boolean
+    seats?: boolean
+    period?: boolean
+    price?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
+    providerSubscriptionId?: boolean
+    currentPeriodStart?: boolean
+    currentPeriodEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subscription"]>
+
+  export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    plan?: boolean
+    status?: boolean
+    seats?: boolean
+    period?: boolean
+    price?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
+    providerSubscriptionId?: boolean
+    currentPeriodStart?: boolean
+    currentPeriodEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subscription"]>
+
+  export type SubscriptionSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    plan?: boolean
+    status?: boolean
+    seats?: boolean
+    period?: boolean
+    price?: boolean
+    provider?: boolean
+    providerCustomerId?: boolean
+    providerSubscriptionId?: boolean
+    currentPeriodStart?: boolean
+    currentPeriodEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "plan" | "status" | "seats" | "period" | "price" | "provider" | "providerCustomerId" | "providerSubscriptionId" | "currentPeriodStart" | "currentPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
+  export type SubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type SubscriptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type SubscriptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $SubscriptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Subscription"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantId: number
+      plan: $Enums.SubscriptionPlan
+      status: string
+      seats: number
+      period: string
+      price: number
+      provider: string | null
+      providerCustomerId: string | null
+      providerSubscriptionId: string | null
+      currentPeriodStart: Date | null
+      currentPeriodEnd: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["subscription"]>
+    composites: {}
+  }
+
+  type SubscriptionGetPayload<S extends boolean | null | undefined | SubscriptionDefaultArgs> = $Result.GetResult<Prisma.$SubscriptionPayload, S>
+
+  type SubscriptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubscriptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubscriptionCountAggregateInputType | true
+    }
+
+  export interface SubscriptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Subscription'], meta: { name: 'Subscription' } }
+    /**
+     * Find zero or one Subscription that matches the filter.
+     * @param {SubscriptionFindUniqueArgs} args - Arguments to find a Subscription
+     * @example
+     * // Get one Subscription
+     * const subscription = await prisma.subscription.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubscriptionFindUniqueArgs>(args: SelectSubset<T, SubscriptionFindUniqueArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Subscription that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubscriptionFindUniqueOrThrowArgs} args - Arguments to find a Subscription
+     * @example
+     * // Get one Subscription
+     * const subscription = await prisma.subscription.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubscriptionFindUniqueOrThrowArgs>(args: SelectSubset<T, SubscriptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Subscription that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionFindFirstArgs} args - Arguments to find a Subscription
+     * @example
+     * // Get one Subscription
+     * const subscription = await prisma.subscription.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubscriptionFindFirstArgs>(args?: SelectSubset<T, SubscriptionFindFirstArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Subscription that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionFindFirstOrThrowArgs} args - Arguments to find a Subscription
+     * @example
+     * // Get one Subscription
+     * const subscription = await prisma.subscription.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubscriptionFindFirstOrThrowArgs>(args?: SelectSubset<T, SubscriptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Subscriptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Subscriptions
+     * const subscriptions = await prisma.subscription.findMany()
+     * 
+     * // Get first 10 Subscriptions
+     * const subscriptions = await prisma.subscription.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const subscriptionWithIdOnly = await prisma.subscription.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubscriptionFindManyArgs>(args?: SelectSubset<T, SubscriptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Subscription.
+     * @param {SubscriptionCreateArgs} args - Arguments to create a Subscription.
+     * @example
+     * // Create one Subscription
+     * const Subscription = await prisma.subscription.create({
+     *   data: {
+     *     // ... data to create a Subscription
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubscriptionCreateArgs>(args: SelectSubset<T, SubscriptionCreateArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Subscriptions.
+     * @param {SubscriptionCreateManyArgs} args - Arguments to create many Subscriptions.
+     * @example
+     * // Create many Subscriptions
+     * const subscription = await prisma.subscription.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubscriptionCreateManyArgs>(args?: SelectSubset<T, SubscriptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Subscriptions and returns the data saved in the database.
+     * @param {SubscriptionCreateManyAndReturnArgs} args - Arguments to create many Subscriptions.
+     * @example
+     * // Create many Subscriptions
+     * const subscription = await prisma.subscription.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Subscriptions and only return the `id`
+     * const subscriptionWithIdOnly = await prisma.subscription.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubscriptionCreateManyAndReturnArgs>(args?: SelectSubset<T, SubscriptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Subscription.
+     * @param {SubscriptionDeleteArgs} args - Arguments to delete one Subscription.
+     * @example
+     * // Delete one Subscription
+     * const Subscription = await prisma.subscription.delete({
+     *   where: {
+     *     // ... filter to delete one Subscription
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubscriptionDeleteArgs>(args: SelectSubset<T, SubscriptionDeleteArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Subscription.
+     * @param {SubscriptionUpdateArgs} args - Arguments to update one Subscription.
+     * @example
+     * // Update one Subscription
+     * const subscription = await prisma.subscription.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubscriptionUpdateArgs>(args: SelectSubset<T, SubscriptionUpdateArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Subscriptions.
+     * @param {SubscriptionDeleteManyArgs} args - Arguments to filter Subscriptions to delete.
+     * @example
+     * // Delete a few Subscriptions
+     * const { count } = await prisma.subscription.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubscriptionDeleteManyArgs>(args?: SelectSubset<T, SubscriptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Subscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Subscriptions
+     * const subscription = await prisma.subscription.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubscriptionUpdateManyArgs>(args: SelectSubset<T, SubscriptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Subscriptions and returns the data updated in the database.
+     * @param {SubscriptionUpdateManyAndReturnArgs} args - Arguments to update many Subscriptions.
+     * @example
+     * // Update many Subscriptions
+     * const subscription = await prisma.subscription.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Subscriptions and only return the `id`
+     * const subscriptionWithIdOnly = await prisma.subscription.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubscriptionUpdateManyAndReturnArgs>(args: SelectSubset<T, SubscriptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Subscription.
+     * @param {SubscriptionUpsertArgs} args - Arguments to update or create a Subscription.
+     * @example
+     * // Update or create a Subscription
+     * const subscription = await prisma.subscription.upsert({
+     *   create: {
+     *     // ... data to create a Subscription
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Subscription we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubscriptionUpsertArgs>(args: SelectSubset<T, SubscriptionUpsertArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Subscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionCountArgs} args - Arguments to filter Subscriptions to count.
+     * @example
+     * // Count the number of Subscriptions
+     * const count = await prisma.subscription.count({
+     *   where: {
+     *     // ... the filter for the Subscriptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubscriptionCountArgs>(
+      args?: Subset<T, SubscriptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubscriptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Subscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubscriptionAggregateArgs>(args: Subset<T, SubscriptionAggregateArgs>): Prisma.PrismaPromise<GetSubscriptionAggregateType<T>>
+
+    /**
+     * Group by Subscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubscriptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubscriptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubscriptionGroupByArgs['orderBy'] }
+        : { orderBy?: SubscriptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubscriptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubscriptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Subscription model
+   */
+  readonly fields: SubscriptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Subscription.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Subscription model
+   */
+  interface SubscriptionFieldRefs {
+    readonly id: FieldRef<"Subscription", 'Int'>
+    readonly tenantId: FieldRef<"Subscription", 'Int'>
+    readonly plan: FieldRef<"Subscription", 'SubscriptionPlan'>
+    readonly status: FieldRef<"Subscription", 'String'>
+    readonly seats: FieldRef<"Subscription", 'Int'>
+    readonly period: FieldRef<"Subscription", 'String'>
+    readonly price: FieldRef<"Subscription", 'Float'>
+    readonly provider: FieldRef<"Subscription", 'String'>
+    readonly providerCustomerId: FieldRef<"Subscription", 'String'>
+    readonly providerSubscriptionId: FieldRef<"Subscription", 'String'>
+    readonly currentPeriodStart: FieldRef<"Subscription", 'DateTime'>
+    readonly currentPeriodEnd: FieldRef<"Subscription", 'DateTime'>
+    readonly createdAt: FieldRef<"Subscription", 'DateTime'>
+    readonly updatedAt: FieldRef<"Subscription", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Subscription findUnique
+   */
+  export type SubscriptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subscription to fetch.
+     */
+    where: SubscriptionWhereUniqueInput
+  }
+
+  /**
+   * Subscription findUniqueOrThrow
+   */
+  export type SubscriptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subscription to fetch.
+     */
+    where: SubscriptionWhereUniqueInput
+  }
+
+  /**
+   * Subscription findFirst
+   */
+  export type SubscriptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subscription to fetch.
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subscriptions to fetch.
+     */
+    orderBy?: SubscriptionOrderByWithRelationInput | SubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Subscriptions.
+     */
+    cursor?: SubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Subscriptions.
+     */
+    distinct?: SubscriptionScalarFieldEnum | SubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * Subscription findFirstOrThrow
+   */
+  export type SubscriptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subscription to fetch.
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subscriptions to fetch.
+     */
+    orderBy?: SubscriptionOrderByWithRelationInput | SubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Subscriptions.
+     */
+    cursor?: SubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Subscriptions.
+     */
+    distinct?: SubscriptionScalarFieldEnum | SubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * Subscription findMany
+   */
+  export type SubscriptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subscriptions to fetch.
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subscriptions to fetch.
+     */
+    orderBy?: SubscriptionOrderByWithRelationInput | SubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Subscriptions.
+     */
+    cursor?: SubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subscriptions.
+     */
+    skip?: number
+    distinct?: SubscriptionScalarFieldEnum | SubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * Subscription create
+   */
+  export type SubscriptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Subscription.
+     */
+    data: XOR<SubscriptionCreateInput, SubscriptionUncheckedCreateInput>
+  }
+
+  /**
+   * Subscription createMany
+   */
+  export type SubscriptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Subscriptions.
+     */
+    data: SubscriptionCreateManyInput | SubscriptionCreateManyInput[]
+  }
+
+  /**
+   * Subscription createManyAndReturn
+   */
+  export type SubscriptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Subscriptions.
+     */
+    data: SubscriptionCreateManyInput | SubscriptionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Subscription update
+   */
+  export type SubscriptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Subscription.
+     */
+    data: XOR<SubscriptionUpdateInput, SubscriptionUncheckedUpdateInput>
+    /**
+     * Choose, which Subscription to update.
+     */
+    where: SubscriptionWhereUniqueInput
+  }
+
+  /**
+   * Subscription updateMany
+   */
+  export type SubscriptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Subscriptions.
+     */
+    data: XOR<SubscriptionUpdateManyMutationInput, SubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which Subscriptions to update
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * Limit how many Subscriptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subscription updateManyAndReturn
+   */
+  export type SubscriptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to update Subscriptions.
+     */
+    data: XOR<SubscriptionUpdateManyMutationInput, SubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which Subscriptions to update
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * Limit how many Subscriptions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Subscription upsert
+   */
+  export type SubscriptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Subscription to update in case it exists.
+     */
+    where: SubscriptionWhereUniqueInput
+    /**
+     * In case the Subscription found by the `where` argument doesn't exist, create a new Subscription with this data.
+     */
+    create: XOR<SubscriptionCreateInput, SubscriptionUncheckedCreateInput>
+    /**
+     * In case the Subscription was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubscriptionUpdateInput, SubscriptionUncheckedUpdateInput>
+  }
+
+  /**
+   * Subscription delete
+   */
+  export type SubscriptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter which Subscription to delete.
+     */
+    where: SubscriptionWhereUniqueInput
+  }
+
+  /**
+   * Subscription deleteMany
+   */
+  export type SubscriptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Subscriptions to delete
+     */
+    where?: SubscriptionWhereInput
+    /**
+     * Limit how many Subscriptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subscription without action
+   */
+  export type SubscriptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subscription
+     */
+    select?: SubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subscription
+     */
+    omit?: SubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubscriptionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UsageEvent
+   */
+
+  export type AggregateUsageEvent = {
+    _count: UsageEventCountAggregateOutputType | null
+    _avg: UsageEventAvgAggregateOutputType | null
+    _sum: UsageEventSumAggregateOutputType | null
+    _min: UsageEventMinAggregateOutputType | null
+    _max: UsageEventMaxAggregateOutputType | null
+  }
+
+  export type UsageEventAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+  }
+
+  export type UsageEventSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+  }
+
+  export type UsageEventMinAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+    featureKey: string | null
+    event: string | null
+    createdAt: Date | null
+  }
+
+  export type UsageEventMaxAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    userId: number | null
+    featureKey: string | null
+    event: string | null
+    createdAt: Date | null
+  }
+
+  export type UsageEventCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    userId: number
+    featureKey: number
+    event: number
+    meta: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UsageEventAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+  }
+
+  export type UsageEventSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+  }
+
+  export type UsageEventMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    featureKey?: true
+    event?: true
+    createdAt?: true
+  }
+
+  export type UsageEventMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    featureKey?: true
+    event?: true
+    createdAt?: true
+  }
+
+  export type UsageEventCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    userId?: true
+    featureKey?: true
+    event?: true
+    meta?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UsageEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UsageEvent to aggregate.
+     */
+    where?: UsageEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageEvents to fetch.
+     */
+    orderBy?: UsageEventOrderByWithRelationInput | UsageEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UsageEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UsageEvents
+    **/
+    _count?: true | UsageEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UsageEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UsageEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UsageEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UsageEventMaxAggregateInputType
+  }
+
+  export type GetUsageEventAggregateType<T extends UsageEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsageEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUsageEvent[P]>
+      : GetScalarType<T[P], AggregateUsageEvent[P]>
+  }
+
+
+
+
+  export type UsageEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsageEventWhereInput
+    orderBy?: UsageEventOrderByWithAggregationInput | UsageEventOrderByWithAggregationInput[]
+    by: UsageEventScalarFieldEnum[] | UsageEventScalarFieldEnum
+    having?: UsageEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UsageEventCountAggregateInputType | true
+    _avg?: UsageEventAvgAggregateInputType
+    _sum?: UsageEventSumAggregateInputType
+    _min?: UsageEventMinAggregateInputType
+    _max?: UsageEventMaxAggregateInputType
+  }
+
+  export type UsageEventGroupByOutputType = {
+    id: number
+    tenantId: number
+    userId: number | null
+    featureKey: string
+    event: string
+    meta: JsonValue | null
+    createdAt: Date
+    _count: UsageEventCountAggregateOutputType | null
+    _avg: UsageEventAvgAggregateOutputType | null
+    _sum: UsageEventSumAggregateOutputType | null
+    _min: UsageEventMinAggregateOutputType | null
+    _max: UsageEventMaxAggregateOutputType | null
+  }
+
+  type GetUsageEventGroupByPayload<T extends UsageEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UsageEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UsageEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UsageEventGroupByOutputType[P]>
+            : GetScalarType<T[P], UsageEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UsageEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    featureKey?: boolean
+    event?: boolean
+    meta?: boolean
+    createdAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | UsageEvent$userArgs<ExtArgs>
+  }, ExtArgs["result"]["usageEvent"]>
+
+  export type UsageEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    featureKey?: boolean
+    event?: boolean
+    meta?: boolean
+    createdAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | UsageEvent$userArgs<ExtArgs>
+  }, ExtArgs["result"]["usageEvent"]>
+
+  export type UsageEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    featureKey?: boolean
+    event?: boolean
+    meta?: boolean
+    createdAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | UsageEvent$userArgs<ExtArgs>
+  }, ExtArgs["result"]["usageEvent"]>
+
+  export type UsageEventSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    userId?: boolean
+    featureKey?: boolean
+    event?: boolean
+    meta?: boolean
+    createdAt?: boolean
+  }
+
+  export type UsageEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "userId" | "featureKey" | "event" | "meta" | "createdAt", ExtArgs["result"]["usageEvent"]>
+  export type UsageEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | UsageEvent$userArgs<ExtArgs>
+  }
+  export type UsageEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | UsageEvent$userArgs<ExtArgs>
+  }
+  export type UsageEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    user?: boolean | UsageEvent$userArgs<ExtArgs>
+  }
+
+  export type $UsageEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UsageEvent"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantId: number
+      userId: number | null
+      featureKey: string
+      event: string
+      meta: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["usageEvent"]>
+    composites: {}
+  }
+
+  type UsageEventGetPayload<S extends boolean | null | undefined | UsageEventDefaultArgs> = $Result.GetResult<Prisma.$UsageEventPayload, S>
+
+  type UsageEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UsageEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UsageEventCountAggregateInputType | true
+    }
+
+  export interface UsageEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UsageEvent'], meta: { name: 'UsageEvent' } }
+    /**
+     * Find zero or one UsageEvent that matches the filter.
+     * @param {UsageEventFindUniqueArgs} args - Arguments to find a UsageEvent
+     * @example
+     * // Get one UsageEvent
+     * const usageEvent = await prisma.usageEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UsageEventFindUniqueArgs>(args: SelectSubset<T, UsageEventFindUniqueArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UsageEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UsageEventFindUniqueOrThrowArgs} args - Arguments to find a UsageEvent
+     * @example
+     * // Get one UsageEvent
+     * const usageEvent = await prisma.usageEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UsageEventFindUniqueOrThrowArgs>(args: SelectSubset<T, UsageEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UsageEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventFindFirstArgs} args - Arguments to find a UsageEvent
+     * @example
+     * // Get one UsageEvent
+     * const usageEvent = await prisma.usageEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UsageEventFindFirstArgs>(args?: SelectSubset<T, UsageEventFindFirstArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UsageEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventFindFirstOrThrowArgs} args - Arguments to find a UsageEvent
+     * @example
+     * // Get one UsageEvent
+     * const usageEvent = await prisma.usageEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UsageEventFindFirstOrThrowArgs>(args?: SelectSubset<T, UsageEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UsageEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UsageEvents
+     * const usageEvents = await prisma.usageEvent.findMany()
+     * 
+     * // Get first 10 UsageEvents
+     * const usageEvents = await prisma.usageEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const usageEventWithIdOnly = await prisma.usageEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UsageEventFindManyArgs>(args?: SelectSubset<T, UsageEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UsageEvent.
+     * @param {UsageEventCreateArgs} args - Arguments to create a UsageEvent.
+     * @example
+     * // Create one UsageEvent
+     * const UsageEvent = await prisma.usageEvent.create({
+     *   data: {
+     *     // ... data to create a UsageEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends UsageEventCreateArgs>(args: SelectSubset<T, UsageEventCreateArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UsageEvents.
+     * @param {UsageEventCreateManyArgs} args - Arguments to create many UsageEvents.
+     * @example
+     * // Create many UsageEvents
+     * const usageEvent = await prisma.usageEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UsageEventCreateManyArgs>(args?: SelectSubset<T, UsageEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UsageEvents and returns the data saved in the database.
+     * @param {UsageEventCreateManyAndReturnArgs} args - Arguments to create many UsageEvents.
+     * @example
+     * // Create many UsageEvents
+     * const usageEvent = await prisma.usageEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UsageEvents and only return the `id`
+     * const usageEventWithIdOnly = await prisma.usageEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UsageEventCreateManyAndReturnArgs>(args?: SelectSubset<T, UsageEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UsageEvent.
+     * @param {UsageEventDeleteArgs} args - Arguments to delete one UsageEvent.
+     * @example
+     * // Delete one UsageEvent
+     * const UsageEvent = await prisma.usageEvent.delete({
+     *   where: {
+     *     // ... filter to delete one UsageEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UsageEventDeleteArgs>(args: SelectSubset<T, UsageEventDeleteArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UsageEvent.
+     * @param {UsageEventUpdateArgs} args - Arguments to update one UsageEvent.
+     * @example
+     * // Update one UsageEvent
+     * const usageEvent = await prisma.usageEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UsageEventUpdateArgs>(args: SelectSubset<T, UsageEventUpdateArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UsageEvents.
+     * @param {UsageEventDeleteManyArgs} args - Arguments to filter UsageEvents to delete.
+     * @example
+     * // Delete a few UsageEvents
+     * const { count } = await prisma.usageEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UsageEventDeleteManyArgs>(args?: SelectSubset<T, UsageEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UsageEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UsageEvents
+     * const usageEvent = await prisma.usageEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UsageEventUpdateManyArgs>(args: SelectSubset<T, UsageEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UsageEvents and returns the data updated in the database.
+     * @param {UsageEventUpdateManyAndReturnArgs} args - Arguments to update many UsageEvents.
+     * @example
+     * // Update many UsageEvents
+     * const usageEvent = await prisma.usageEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UsageEvents and only return the `id`
+     * const usageEventWithIdOnly = await prisma.usageEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UsageEventUpdateManyAndReturnArgs>(args: SelectSubset<T, UsageEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UsageEvent.
+     * @param {UsageEventUpsertArgs} args - Arguments to update or create a UsageEvent.
+     * @example
+     * // Update or create a UsageEvent
+     * const usageEvent = await prisma.usageEvent.upsert({
+     *   create: {
+     *     // ... data to create a UsageEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UsageEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UsageEventUpsertArgs>(args: SelectSubset<T, UsageEventUpsertArgs<ExtArgs>>): Prisma__UsageEventClient<$Result.GetResult<Prisma.$UsageEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UsageEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventCountArgs} args - Arguments to filter UsageEvents to count.
+     * @example
+     * // Count the number of UsageEvents
+     * const count = await prisma.usageEvent.count({
+     *   where: {
+     *     // ... the filter for the UsageEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends UsageEventCountArgs>(
+      args?: Subset<T, UsageEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UsageEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UsageEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UsageEventAggregateArgs>(args: Subset<T, UsageEventAggregateArgs>): Prisma.PrismaPromise<GetUsageEventAggregateType<T>>
+
+    /**
+     * Group by UsageEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UsageEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UsageEventGroupByArgs['orderBy'] }
+        : { orderBy?: UsageEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UsageEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsageEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UsageEvent model
+   */
+  readonly fields: UsageEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UsageEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UsageEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UsageEvent$userArgs<ExtArgs> = {}>(args?: Subset<T, UsageEvent$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UsageEvent model
+   */
+  interface UsageEventFieldRefs {
+    readonly id: FieldRef<"UsageEvent", 'Int'>
+    readonly tenantId: FieldRef<"UsageEvent", 'Int'>
+    readonly userId: FieldRef<"UsageEvent", 'Int'>
+    readonly featureKey: FieldRef<"UsageEvent", 'String'>
+    readonly event: FieldRef<"UsageEvent", 'String'>
+    readonly meta: FieldRef<"UsageEvent", 'Json'>
+    readonly createdAt: FieldRef<"UsageEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UsageEvent findUnique
+   */
+  export type UsageEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * Filter, which UsageEvent to fetch.
+     */
+    where: UsageEventWhereUniqueInput
+  }
+
+  /**
+   * UsageEvent findUniqueOrThrow
+   */
+  export type UsageEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * Filter, which UsageEvent to fetch.
+     */
+    where: UsageEventWhereUniqueInput
+  }
+
+  /**
+   * UsageEvent findFirst
+   */
+  export type UsageEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * Filter, which UsageEvent to fetch.
+     */
+    where?: UsageEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageEvents to fetch.
+     */
+    orderBy?: UsageEventOrderByWithRelationInput | UsageEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsageEvents.
+     */
+    cursor?: UsageEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsageEvents.
+     */
+    distinct?: UsageEventScalarFieldEnum | UsageEventScalarFieldEnum[]
+  }
+
+  /**
+   * UsageEvent findFirstOrThrow
+   */
+  export type UsageEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * Filter, which UsageEvent to fetch.
+     */
+    where?: UsageEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageEvents to fetch.
+     */
+    orderBy?: UsageEventOrderByWithRelationInput | UsageEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsageEvents.
+     */
+    cursor?: UsageEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsageEvents.
+     */
+    distinct?: UsageEventScalarFieldEnum | UsageEventScalarFieldEnum[]
+  }
+
+  /**
+   * UsageEvent findMany
+   */
+  export type UsageEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * Filter, which UsageEvents to fetch.
+     */
+    where?: UsageEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageEvents to fetch.
+     */
+    orderBy?: UsageEventOrderByWithRelationInput | UsageEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UsageEvents.
+     */
+    cursor?: UsageEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageEvents.
+     */
+    skip?: number
+    distinct?: UsageEventScalarFieldEnum | UsageEventScalarFieldEnum[]
+  }
+
+  /**
+   * UsageEvent create
+   */
+  export type UsageEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UsageEvent.
+     */
+    data: XOR<UsageEventCreateInput, UsageEventUncheckedCreateInput>
+  }
+
+  /**
+   * UsageEvent createMany
+   */
+  export type UsageEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UsageEvents.
+     */
+    data: UsageEventCreateManyInput | UsageEventCreateManyInput[]
+  }
+
+  /**
+   * UsageEvent createManyAndReturn
+   */
+  export type UsageEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many UsageEvents.
+     */
+    data: UsageEventCreateManyInput | UsageEventCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UsageEvent update
+   */
+  export type UsageEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UsageEvent.
+     */
+    data: XOR<UsageEventUpdateInput, UsageEventUncheckedUpdateInput>
+    /**
+     * Choose, which UsageEvent to update.
+     */
+    where: UsageEventWhereUniqueInput
+  }
+
+  /**
+   * UsageEvent updateMany
+   */
+  export type UsageEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UsageEvents.
+     */
+    data: XOR<UsageEventUpdateManyMutationInput, UsageEventUncheckedUpdateManyInput>
+    /**
+     * Filter which UsageEvents to update
+     */
+    where?: UsageEventWhereInput
+    /**
+     * Limit how many UsageEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UsageEvent updateManyAndReturn
+   */
+  export type UsageEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * The data used to update UsageEvents.
+     */
+    data: XOR<UsageEventUpdateManyMutationInput, UsageEventUncheckedUpdateManyInput>
+    /**
+     * Filter which UsageEvents to update
+     */
+    where?: UsageEventWhereInput
+    /**
+     * Limit how many UsageEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UsageEvent upsert
+   */
+  export type UsageEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UsageEvent to update in case it exists.
+     */
+    where: UsageEventWhereUniqueInput
+    /**
+     * In case the UsageEvent found by the `where` argument doesn't exist, create a new UsageEvent with this data.
+     */
+    create: XOR<UsageEventCreateInput, UsageEventUncheckedCreateInput>
+    /**
+     * In case the UsageEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UsageEventUpdateInput, UsageEventUncheckedUpdateInput>
+  }
+
+  /**
+   * UsageEvent delete
+   */
+  export type UsageEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+    /**
+     * Filter which UsageEvent to delete.
+     */
+    where: UsageEventWhereUniqueInput
+  }
+
+  /**
+   * UsageEvent deleteMany
+   */
+  export type UsageEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UsageEvents to delete
+     */
+    where?: UsageEventWhereInput
+    /**
+     * Limit how many UsageEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UsageEvent.user
+   */
+  export type UsageEvent$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * UsageEvent without action
+   */
+  export type UsageEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsageEvent
+     */
+    select?: UsageEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UsageEvent
+     */
+    omit?: UsageEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsageEventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApiMetric
+   */
+
+  export type AggregateApiMetric = {
+    _count: ApiMetricCountAggregateOutputType | null
+    _avg: ApiMetricAvgAggregateOutputType | null
+    _sum: ApiMetricSumAggregateOutputType | null
+    _min: ApiMetricMinAggregateOutputType | null
+    _max: ApiMetricMaxAggregateOutputType | null
+  }
+
+  export type ApiMetricAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    status: number | null
+    durationMs: number | null
+  }
+
+  export type ApiMetricSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    status: number | null
+    durationMs: number | null
+  }
+
+  export type ApiMetricMinAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    method: string | null
+    path: string | null
+    status: number | null
+    durationMs: number | null
+    createdAt: Date | null
+  }
+
+  export type ApiMetricMaxAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    method: string | null
+    path: string | null
+    status: number | null
+    durationMs: number | null
+    createdAt: Date | null
+  }
+
+  export type ApiMetricCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    method: number
+    path: number
+    status: number
+    durationMs: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ApiMetricAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    status?: true
+    durationMs?: true
+  }
+
+  export type ApiMetricSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    status?: true
+    durationMs?: true
+  }
+
+  export type ApiMetricMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    method?: true
+    path?: true
+    status?: true
+    durationMs?: true
+    createdAt?: true
+  }
+
+  export type ApiMetricMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    method?: true
+    path?: true
+    status?: true
+    durationMs?: true
+    createdAt?: true
+  }
+
+  export type ApiMetricCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    method?: true
+    path?: true
+    status?: true
+    durationMs?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ApiMetricAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApiMetric to aggregate.
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiMetrics to fetch.
+     */
+    orderBy?: ApiMetricOrderByWithRelationInput | ApiMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApiMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApiMetrics
+    **/
+    _count?: true | ApiMetricCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ApiMetricAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApiMetricSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApiMetricMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApiMetricMaxAggregateInputType
+  }
+
+  export type GetApiMetricAggregateType<T extends ApiMetricAggregateArgs> = {
+        [P in keyof T & keyof AggregateApiMetric]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApiMetric[P]>
+      : GetScalarType<T[P], AggregateApiMetric[P]>
+  }
+
+
+
+
+  export type ApiMetricGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApiMetricWhereInput
+    orderBy?: ApiMetricOrderByWithAggregationInput | ApiMetricOrderByWithAggregationInput[]
+    by: ApiMetricScalarFieldEnum[] | ApiMetricScalarFieldEnum
+    having?: ApiMetricScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApiMetricCountAggregateInputType | true
+    _avg?: ApiMetricAvgAggregateInputType
+    _sum?: ApiMetricSumAggregateInputType
+    _min?: ApiMetricMinAggregateInputType
+    _max?: ApiMetricMaxAggregateInputType
+  }
+
+  export type ApiMetricGroupByOutputType = {
+    id: number
+    tenantId: number | null
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt: Date
+    _count: ApiMetricCountAggregateOutputType | null
+    _avg: ApiMetricAvgAggregateOutputType | null
+    _sum: ApiMetricSumAggregateOutputType | null
+    _min: ApiMetricMinAggregateOutputType | null
+    _max: ApiMetricMaxAggregateOutputType | null
+  }
+
+  type GetApiMetricGroupByPayload<T extends ApiMetricGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApiMetricGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApiMetricGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApiMetricGroupByOutputType[P]>
+            : GetScalarType<T[P], ApiMetricGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApiMetricSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    method?: boolean
+    path?: boolean
+    status?: boolean
+    durationMs?: boolean
+    createdAt?: boolean
+    tenant?: boolean | ApiMetric$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["apiMetric"]>
+
+  export type ApiMetricSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    method?: boolean
+    path?: boolean
+    status?: boolean
+    durationMs?: boolean
+    createdAt?: boolean
+    tenant?: boolean | ApiMetric$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["apiMetric"]>
+
+  export type ApiMetricSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    method?: boolean
+    path?: boolean
+    status?: boolean
+    durationMs?: boolean
+    createdAt?: boolean
+    tenant?: boolean | ApiMetric$tenantArgs<ExtArgs>
+  }, ExtArgs["result"]["apiMetric"]>
+
+  export type ApiMetricSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    method?: boolean
+    path?: boolean
+    status?: boolean
+    durationMs?: boolean
+    createdAt?: boolean
+  }
+
+  export type ApiMetricOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "method" | "path" | "status" | "durationMs" | "createdAt", ExtArgs["result"]["apiMetric"]>
+  export type ApiMetricInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | ApiMetric$tenantArgs<ExtArgs>
+  }
+  export type ApiMetricIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | ApiMetric$tenantArgs<ExtArgs>
+  }
+  export type ApiMetricIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | ApiMetric$tenantArgs<ExtArgs>
+  }
+
+  export type $ApiMetricPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApiMetric"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantId: number | null
+      method: string
+      path: string
+      status: number
+      durationMs: number
+      createdAt: Date
+    }, ExtArgs["result"]["apiMetric"]>
+    composites: {}
+  }
+
+  type ApiMetricGetPayload<S extends boolean | null | undefined | ApiMetricDefaultArgs> = $Result.GetResult<Prisma.$ApiMetricPayload, S>
+
+  type ApiMetricCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApiMetricFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApiMetricCountAggregateInputType | true
+    }
+
+  export interface ApiMetricDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApiMetric'], meta: { name: 'ApiMetric' } }
+    /**
+     * Find zero or one ApiMetric that matches the filter.
+     * @param {ApiMetricFindUniqueArgs} args - Arguments to find a ApiMetric
+     * @example
+     * // Get one ApiMetric
+     * const apiMetric = await prisma.apiMetric.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApiMetricFindUniqueArgs>(args: SelectSubset<T, ApiMetricFindUniqueArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApiMetric that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApiMetricFindUniqueOrThrowArgs} args - Arguments to find a ApiMetric
+     * @example
+     * // Get one ApiMetric
+     * const apiMetric = await prisma.apiMetric.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApiMetricFindUniqueOrThrowArgs>(args: SelectSubset<T, ApiMetricFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApiMetric that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricFindFirstArgs} args - Arguments to find a ApiMetric
+     * @example
+     * // Get one ApiMetric
+     * const apiMetric = await prisma.apiMetric.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApiMetricFindFirstArgs>(args?: SelectSubset<T, ApiMetricFindFirstArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApiMetric that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricFindFirstOrThrowArgs} args - Arguments to find a ApiMetric
+     * @example
+     * // Get one ApiMetric
+     * const apiMetric = await prisma.apiMetric.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApiMetricFindFirstOrThrowArgs>(args?: SelectSubset<T, ApiMetricFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApiMetrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApiMetrics
+     * const apiMetrics = await prisma.apiMetric.findMany()
+     * 
+     * // Get first 10 ApiMetrics
+     * const apiMetrics = await prisma.apiMetric.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const apiMetricWithIdOnly = await prisma.apiMetric.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApiMetricFindManyArgs>(args?: SelectSubset<T, ApiMetricFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApiMetric.
+     * @param {ApiMetricCreateArgs} args - Arguments to create a ApiMetric.
+     * @example
+     * // Create one ApiMetric
+     * const ApiMetric = await prisma.apiMetric.create({
+     *   data: {
+     *     // ... data to create a ApiMetric
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApiMetricCreateArgs>(args: SelectSubset<T, ApiMetricCreateArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApiMetrics.
+     * @param {ApiMetricCreateManyArgs} args - Arguments to create many ApiMetrics.
+     * @example
+     * // Create many ApiMetrics
+     * const apiMetric = await prisma.apiMetric.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApiMetricCreateManyArgs>(args?: SelectSubset<T, ApiMetricCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApiMetrics and returns the data saved in the database.
+     * @param {ApiMetricCreateManyAndReturnArgs} args - Arguments to create many ApiMetrics.
+     * @example
+     * // Create many ApiMetrics
+     * const apiMetric = await prisma.apiMetric.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApiMetrics and only return the `id`
+     * const apiMetricWithIdOnly = await prisma.apiMetric.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApiMetricCreateManyAndReturnArgs>(args?: SelectSubset<T, ApiMetricCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApiMetric.
+     * @param {ApiMetricDeleteArgs} args - Arguments to delete one ApiMetric.
+     * @example
+     * // Delete one ApiMetric
+     * const ApiMetric = await prisma.apiMetric.delete({
+     *   where: {
+     *     // ... filter to delete one ApiMetric
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApiMetricDeleteArgs>(args: SelectSubset<T, ApiMetricDeleteArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApiMetric.
+     * @param {ApiMetricUpdateArgs} args - Arguments to update one ApiMetric.
+     * @example
+     * // Update one ApiMetric
+     * const apiMetric = await prisma.apiMetric.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApiMetricUpdateArgs>(args: SelectSubset<T, ApiMetricUpdateArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApiMetrics.
+     * @param {ApiMetricDeleteManyArgs} args - Arguments to filter ApiMetrics to delete.
+     * @example
+     * // Delete a few ApiMetrics
+     * const { count } = await prisma.apiMetric.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApiMetricDeleteManyArgs>(args?: SelectSubset<T, ApiMetricDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApiMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApiMetrics
+     * const apiMetric = await prisma.apiMetric.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApiMetricUpdateManyArgs>(args: SelectSubset<T, ApiMetricUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApiMetrics and returns the data updated in the database.
+     * @param {ApiMetricUpdateManyAndReturnArgs} args - Arguments to update many ApiMetrics.
+     * @example
+     * // Update many ApiMetrics
+     * const apiMetric = await prisma.apiMetric.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApiMetrics and only return the `id`
+     * const apiMetricWithIdOnly = await prisma.apiMetric.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApiMetricUpdateManyAndReturnArgs>(args: SelectSubset<T, ApiMetricUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApiMetric.
+     * @param {ApiMetricUpsertArgs} args - Arguments to update or create a ApiMetric.
+     * @example
+     * // Update or create a ApiMetric
+     * const apiMetric = await prisma.apiMetric.upsert({
+     *   create: {
+     *     // ... data to create a ApiMetric
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApiMetric we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApiMetricUpsertArgs>(args: SelectSubset<T, ApiMetricUpsertArgs<ExtArgs>>): Prisma__ApiMetricClient<$Result.GetResult<Prisma.$ApiMetricPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApiMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricCountArgs} args - Arguments to filter ApiMetrics to count.
+     * @example
+     * // Count the number of ApiMetrics
+     * const count = await prisma.apiMetric.count({
+     *   where: {
+     *     // ... the filter for the ApiMetrics we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApiMetricCountArgs>(
+      args?: Subset<T, ApiMetricCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApiMetricCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApiMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApiMetricAggregateArgs>(args: Subset<T, ApiMetricAggregateArgs>): Prisma.PrismaPromise<GetApiMetricAggregateType<T>>
+
+    /**
+     * Group by ApiMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiMetricGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApiMetricGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApiMetricGroupByArgs['orderBy'] }
+        : { orderBy?: ApiMetricGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApiMetricGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApiMetricGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApiMetric model
+   */
+  readonly fields: ApiMetricFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApiMetric.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApiMetricClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends ApiMetric$tenantArgs<ExtArgs> = {}>(args?: Subset<T, ApiMetric$tenantArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApiMetric model
+   */
+  interface ApiMetricFieldRefs {
+    readonly id: FieldRef<"ApiMetric", 'Int'>
+    readonly tenantId: FieldRef<"ApiMetric", 'Int'>
+    readonly method: FieldRef<"ApiMetric", 'String'>
+    readonly path: FieldRef<"ApiMetric", 'String'>
+    readonly status: FieldRef<"ApiMetric", 'Int'>
+    readonly durationMs: FieldRef<"ApiMetric", 'Int'>
+    readonly createdAt: FieldRef<"ApiMetric", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApiMetric findUnique
+   */
+  export type ApiMetricFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiMetric to fetch.
+     */
+    where: ApiMetricWhereUniqueInput
+  }
+
+  /**
+   * ApiMetric findUniqueOrThrow
+   */
+  export type ApiMetricFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiMetric to fetch.
+     */
+    where: ApiMetricWhereUniqueInput
+  }
+
+  /**
+   * ApiMetric findFirst
+   */
+  export type ApiMetricFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiMetric to fetch.
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiMetrics to fetch.
+     */
+    orderBy?: ApiMetricOrderByWithRelationInput | ApiMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApiMetrics.
+     */
+    cursor?: ApiMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApiMetrics.
+     */
+    distinct?: ApiMetricScalarFieldEnum | ApiMetricScalarFieldEnum[]
+  }
+
+  /**
+   * ApiMetric findFirstOrThrow
+   */
+  export type ApiMetricFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiMetric to fetch.
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiMetrics to fetch.
+     */
+    orderBy?: ApiMetricOrderByWithRelationInput | ApiMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApiMetrics.
+     */
+    cursor?: ApiMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApiMetrics.
+     */
+    distinct?: ApiMetricScalarFieldEnum | ApiMetricScalarFieldEnum[]
+  }
+
+  /**
+   * ApiMetric findMany
+   */
+  export type ApiMetricFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiMetrics to fetch.
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiMetrics to fetch.
+     */
+    orderBy?: ApiMetricOrderByWithRelationInput | ApiMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApiMetrics.
+     */
+    cursor?: ApiMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiMetrics.
+     */
+    skip?: number
+    distinct?: ApiMetricScalarFieldEnum | ApiMetricScalarFieldEnum[]
+  }
+
+  /**
+   * ApiMetric create
+   */
+  export type ApiMetricCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApiMetric.
+     */
+    data: XOR<ApiMetricCreateInput, ApiMetricUncheckedCreateInput>
+  }
+
+  /**
+   * ApiMetric createMany
+   */
+  export type ApiMetricCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApiMetrics.
+     */
+    data: ApiMetricCreateManyInput | ApiMetricCreateManyInput[]
+  }
+
+  /**
+   * ApiMetric createManyAndReturn
+   */
+  export type ApiMetricCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApiMetrics.
+     */
+    data: ApiMetricCreateManyInput | ApiMetricCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApiMetric update
+   */
+  export type ApiMetricUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApiMetric.
+     */
+    data: XOR<ApiMetricUpdateInput, ApiMetricUncheckedUpdateInput>
+    /**
+     * Choose, which ApiMetric to update.
+     */
+    where: ApiMetricWhereUniqueInput
+  }
+
+  /**
+   * ApiMetric updateMany
+   */
+  export type ApiMetricUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApiMetrics.
+     */
+    data: XOR<ApiMetricUpdateManyMutationInput, ApiMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which ApiMetrics to update
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * Limit how many ApiMetrics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApiMetric updateManyAndReturn
+   */
+  export type ApiMetricUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * The data used to update ApiMetrics.
+     */
+    data: XOR<ApiMetricUpdateManyMutationInput, ApiMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which ApiMetrics to update
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * Limit how many ApiMetrics to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApiMetric upsert
+   */
+  export type ApiMetricUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApiMetric to update in case it exists.
+     */
+    where: ApiMetricWhereUniqueInput
+    /**
+     * In case the ApiMetric found by the `where` argument doesn't exist, create a new ApiMetric with this data.
+     */
+    create: XOR<ApiMetricCreateInput, ApiMetricUncheckedCreateInput>
+    /**
+     * In case the ApiMetric was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApiMetricUpdateInput, ApiMetricUncheckedUpdateInput>
+  }
+
+  /**
+   * ApiMetric delete
+   */
+  export type ApiMetricDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+    /**
+     * Filter which ApiMetric to delete.
+     */
+    where: ApiMetricWhereUniqueInput
+  }
+
+  /**
+   * ApiMetric deleteMany
+   */
+  export type ApiMetricDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApiMetrics to delete
+     */
+    where?: ApiMetricWhereInput
+    /**
+     * Limit how many ApiMetrics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApiMetric.tenant
+   */
+  export type ApiMetric$tenantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tenant
+     */
+    select?: TenantSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tenant
+     */
+    omit?: TenantOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TenantInclude<ExtArgs> | null
+    where?: TenantWhereInput
+  }
+
+  /**
+   * ApiMetric without action
+   */
+  export type ApiMetricDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiMetric
+     */
+    select?: ApiMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApiMetric
+     */
+    omit?: ApiMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiMetricInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DynamicPage
+   */
+
+  export type AggregateDynamicPage = {
+    _count: DynamicPageCountAggregateOutputType | null
+    _avg: DynamicPageAvgAggregateOutputType | null
+    _sum: DynamicPageSumAggregateOutputType | null
+    _min: DynamicPageMinAggregateOutputType | null
+    _max: DynamicPageMaxAggregateOutputType | null
+  }
+
+  export type DynamicPageAvgAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    version: number | null
+    createdById: number | null
+    updatedById: number | null
+  }
+
+  export type DynamicPageSumAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    version: number | null
+    createdById: number | null
+    updatedById: number | null
+  }
+
+  export type DynamicPageMinAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    slug: string | null
+    title: string | null
+    status: string | null
+    version: number | null
+    createdById: number | null
+    updatedById: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DynamicPageMaxAggregateOutputType = {
+    id: number | null
+    tenantId: number | null
+    slug: string | null
+    title: string | null
+    status: string | null
+    version: number | null
+    createdById: number | null
+    updatedById: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DynamicPageCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    slug: number
+    title: number
+    status: number
+    content: number
+    version: number
+    createdById: number
+    updatedById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DynamicPageAvgAggregateInputType = {
+    id?: true
+    tenantId?: true
+    version?: true
+    createdById?: true
+    updatedById?: true
+  }
+
+  export type DynamicPageSumAggregateInputType = {
+    id?: true
+    tenantId?: true
+    version?: true
+    createdById?: true
+    updatedById?: true
+  }
+
+  export type DynamicPageMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    slug?: true
+    title?: true
+    status?: true
+    version?: true
+    createdById?: true
+    updatedById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DynamicPageMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    slug?: true
+    title?: true
+    status?: true
+    version?: true
+    createdById?: true
+    updatedById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DynamicPageCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    slug?: true
+    title?: true
+    status?: true
+    content?: true
+    version?: true
+    createdById?: true
+    updatedById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DynamicPageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DynamicPage to aggregate.
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPages to fetch.
+     */
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DynamicPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DynamicPages
+    **/
+    _count?: true | DynamicPageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DynamicPageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DynamicPageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DynamicPageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DynamicPageMaxAggregateInputType
+  }
+
+  export type GetDynamicPageAggregateType<T extends DynamicPageAggregateArgs> = {
+        [P in keyof T & keyof AggregateDynamicPage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDynamicPage[P]>
+      : GetScalarType<T[P], AggregateDynamicPage[P]>
+  }
+
+
+
+
+  export type DynamicPageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageWhereInput
+    orderBy?: DynamicPageOrderByWithAggregationInput | DynamicPageOrderByWithAggregationInput[]
+    by: DynamicPageScalarFieldEnum[] | DynamicPageScalarFieldEnum
+    having?: DynamicPageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DynamicPageCountAggregateInputType | true
+    _avg?: DynamicPageAvgAggregateInputType
+    _sum?: DynamicPageSumAggregateInputType
+    _min?: DynamicPageMinAggregateInputType
+    _max?: DynamicPageMaxAggregateInputType
+  }
+
+  export type DynamicPageGroupByOutputType = {
+    id: number
+    tenantId: number
+    slug: string
+    title: string
+    status: string
+    content: JsonValue
+    version: number
+    createdById: number | null
+    updatedById: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DynamicPageCountAggregateOutputType | null
+    _avg: DynamicPageAvgAggregateOutputType | null
+    _sum: DynamicPageSumAggregateOutputType | null
+    _min: DynamicPageMinAggregateOutputType | null
+    _max: DynamicPageMaxAggregateOutputType | null
+  }
+
+  type GetDynamicPageGroupByPayload<T extends DynamicPageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DynamicPageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DynamicPageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DynamicPageGroupByOutputType[P]>
+            : GetScalarType<T[P], DynamicPageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DynamicPageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    slug?: boolean
+    title?: boolean
+    status?: boolean
+    content?: boolean
+    version?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPage$createdByArgs<ExtArgs>
+    updatedBy?: boolean | DynamicPage$updatedByArgs<ExtArgs>
+    versions?: boolean | DynamicPage$versionsArgs<ExtArgs>
+    _count?: boolean | DynamicPageCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dynamicPage"]>
+
+  export type DynamicPageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    slug?: boolean
+    title?: boolean
+    status?: boolean
+    content?: boolean
+    version?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPage$createdByArgs<ExtArgs>
+    updatedBy?: boolean | DynamicPage$updatedByArgs<ExtArgs>
+  }, ExtArgs["result"]["dynamicPage"]>
+
+  export type DynamicPageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    slug?: boolean
+    title?: boolean
+    status?: boolean
+    content?: boolean
+    version?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPage$createdByArgs<ExtArgs>
+    updatedBy?: boolean | DynamicPage$updatedByArgs<ExtArgs>
+  }, ExtArgs["result"]["dynamicPage"]>
+
+  export type DynamicPageSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    slug?: boolean
+    title?: boolean
+    status?: boolean
+    content?: boolean
+    version?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DynamicPageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "slug" | "title" | "status" | "content" | "version" | "createdById" | "updatedById" | "createdAt" | "updatedAt", ExtArgs["result"]["dynamicPage"]>
+  export type DynamicPageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPage$createdByArgs<ExtArgs>
+    updatedBy?: boolean | DynamicPage$updatedByArgs<ExtArgs>
+    versions?: boolean | DynamicPage$versionsArgs<ExtArgs>
+    _count?: boolean | DynamicPageCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DynamicPageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPage$createdByArgs<ExtArgs>
+    updatedBy?: boolean | DynamicPage$updatedByArgs<ExtArgs>
+  }
+  export type DynamicPageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPage$createdByArgs<ExtArgs>
+    updatedBy?: boolean | DynamicPage$updatedByArgs<ExtArgs>
+  }
+
+  export type $DynamicPagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DynamicPage"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+      updatedBy: Prisma.$UserPayload<ExtArgs> | null
+      versions: Prisma.$DynamicPageVersionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantId: number
+      slug: string
+      title: string
+      status: string
+      content: Prisma.JsonValue
+      version: number
+      createdById: number | null
+      updatedById: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["dynamicPage"]>
+    composites: {}
+  }
+
+  type DynamicPageGetPayload<S extends boolean | null | undefined | DynamicPageDefaultArgs> = $Result.GetResult<Prisma.$DynamicPagePayload, S>
+
+  type DynamicPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DynamicPageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DynamicPageCountAggregateInputType | true
+    }
+
+  export interface DynamicPageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DynamicPage'], meta: { name: 'DynamicPage' } }
+    /**
+     * Find zero or one DynamicPage that matches the filter.
+     * @param {DynamicPageFindUniqueArgs} args - Arguments to find a DynamicPage
+     * @example
+     * // Get one DynamicPage
+     * const dynamicPage = await prisma.dynamicPage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DynamicPageFindUniqueArgs>(args: SelectSubset<T, DynamicPageFindUniqueArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DynamicPage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DynamicPageFindUniqueOrThrowArgs} args - Arguments to find a DynamicPage
+     * @example
+     * // Get one DynamicPage
+     * const dynamicPage = await prisma.dynamicPage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DynamicPageFindUniqueOrThrowArgs>(args: SelectSubset<T, DynamicPageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DynamicPage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageFindFirstArgs} args - Arguments to find a DynamicPage
+     * @example
+     * // Get one DynamicPage
+     * const dynamicPage = await prisma.dynamicPage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DynamicPageFindFirstArgs>(args?: SelectSubset<T, DynamicPageFindFirstArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DynamicPage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageFindFirstOrThrowArgs} args - Arguments to find a DynamicPage
+     * @example
+     * // Get one DynamicPage
+     * const dynamicPage = await prisma.dynamicPage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DynamicPageFindFirstOrThrowArgs>(args?: SelectSubset<T, DynamicPageFindFirstOrThrowArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DynamicPages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DynamicPages
+     * const dynamicPages = await prisma.dynamicPage.findMany()
+     * 
+     * // Get first 10 DynamicPages
+     * const dynamicPages = await prisma.dynamicPage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dynamicPageWithIdOnly = await prisma.dynamicPage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DynamicPageFindManyArgs>(args?: SelectSubset<T, DynamicPageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DynamicPage.
+     * @param {DynamicPageCreateArgs} args - Arguments to create a DynamicPage.
+     * @example
+     * // Create one DynamicPage
+     * const DynamicPage = await prisma.dynamicPage.create({
+     *   data: {
+     *     // ... data to create a DynamicPage
+     *   }
+     * })
+     * 
+     */
+    create<T extends DynamicPageCreateArgs>(args: SelectSubset<T, DynamicPageCreateArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DynamicPages.
+     * @param {DynamicPageCreateManyArgs} args - Arguments to create many DynamicPages.
+     * @example
+     * // Create many DynamicPages
+     * const dynamicPage = await prisma.dynamicPage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DynamicPageCreateManyArgs>(args?: SelectSubset<T, DynamicPageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DynamicPages and returns the data saved in the database.
+     * @param {DynamicPageCreateManyAndReturnArgs} args - Arguments to create many DynamicPages.
+     * @example
+     * // Create many DynamicPages
+     * const dynamicPage = await prisma.dynamicPage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DynamicPages and only return the `id`
+     * const dynamicPageWithIdOnly = await prisma.dynamicPage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DynamicPageCreateManyAndReturnArgs>(args?: SelectSubset<T, DynamicPageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DynamicPage.
+     * @param {DynamicPageDeleteArgs} args - Arguments to delete one DynamicPage.
+     * @example
+     * // Delete one DynamicPage
+     * const DynamicPage = await prisma.dynamicPage.delete({
+     *   where: {
+     *     // ... filter to delete one DynamicPage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DynamicPageDeleteArgs>(args: SelectSubset<T, DynamicPageDeleteArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DynamicPage.
+     * @param {DynamicPageUpdateArgs} args - Arguments to update one DynamicPage.
+     * @example
+     * // Update one DynamicPage
+     * const dynamicPage = await prisma.dynamicPage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DynamicPageUpdateArgs>(args: SelectSubset<T, DynamicPageUpdateArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DynamicPages.
+     * @param {DynamicPageDeleteManyArgs} args - Arguments to filter DynamicPages to delete.
+     * @example
+     * // Delete a few DynamicPages
+     * const { count } = await prisma.dynamicPage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DynamicPageDeleteManyArgs>(args?: SelectSubset<T, DynamicPageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DynamicPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DynamicPages
+     * const dynamicPage = await prisma.dynamicPage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DynamicPageUpdateManyArgs>(args: SelectSubset<T, DynamicPageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DynamicPages and returns the data updated in the database.
+     * @param {DynamicPageUpdateManyAndReturnArgs} args - Arguments to update many DynamicPages.
+     * @example
+     * // Update many DynamicPages
+     * const dynamicPage = await prisma.dynamicPage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DynamicPages and only return the `id`
+     * const dynamicPageWithIdOnly = await prisma.dynamicPage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DynamicPageUpdateManyAndReturnArgs>(args: SelectSubset<T, DynamicPageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DynamicPage.
+     * @param {DynamicPageUpsertArgs} args - Arguments to update or create a DynamicPage.
+     * @example
+     * // Update or create a DynamicPage
+     * const dynamicPage = await prisma.dynamicPage.upsert({
+     *   create: {
+     *     // ... data to create a DynamicPage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DynamicPage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DynamicPageUpsertArgs>(args: SelectSubset<T, DynamicPageUpsertArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DynamicPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageCountArgs} args - Arguments to filter DynamicPages to count.
+     * @example
+     * // Count the number of DynamicPages
+     * const count = await prisma.dynamicPage.count({
+     *   where: {
+     *     // ... the filter for the DynamicPages we want to count
+     *   }
+     * })
+    **/
+    count<T extends DynamicPageCountArgs>(
+      args?: Subset<T, DynamicPageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DynamicPageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DynamicPage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DynamicPageAggregateArgs>(args: Subset<T, DynamicPageAggregateArgs>): Prisma.PrismaPromise<GetDynamicPageAggregateType<T>>
+
+    /**
+     * Group by DynamicPage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DynamicPageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DynamicPageGroupByArgs['orderBy'] }
+        : { orderBy?: DynamicPageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DynamicPageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDynamicPageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DynamicPage model
+   */
+  readonly fields: DynamicPageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DynamicPage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DynamicPageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    createdBy<T extends DynamicPage$createdByArgs<ExtArgs> = {}>(args?: Subset<T, DynamicPage$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    updatedBy<T extends DynamicPage$updatedByArgs<ExtArgs> = {}>(args?: Subset<T, DynamicPage$updatedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    versions<T extends DynamicPage$versionsArgs<ExtArgs> = {}>(args?: Subset<T, DynamicPage$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DynamicPage model
+   */
+  interface DynamicPageFieldRefs {
+    readonly id: FieldRef<"DynamicPage", 'Int'>
+    readonly tenantId: FieldRef<"DynamicPage", 'Int'>
+    readonly slug: FieldRef<"DynamicPage", 'String'>
+    readonly title: FieldRef<"DynamicPage", 'String'>
+    readonly status: FieldRef<"DynamicPage", 'String'>
+    readonly content: FieldRef<"DynamicPage", 'Json'>
+    readonly version: FieldRef<"DynamicPage", 'Int'>
+    readonly createdById: FieldRef<"DynamicPage", 'Int'>
+    readonly updatedById: FieldRef<"DynamicPage", 'Int'>
+    readonly createdAt: FieldRef<"DynamicPage", 'DateTime'>
+    readonly updatedAt: FieldRef<"DynamicPage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DynamicPage findUnique
+   */
+  export type DynamicPageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPage to fetch.
+     */
+    where: DynamicPageWhereUniqueInput
+  }
+
+  /**
+   * DynamicPage findUniqueOrThrow
+   */
+  export type DynamicPageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPage to fetch.
+     */
+    where: DynamicPageWhereUniqueInput
+  }
+
+  /**
+   * DynamicPage findFirst
+   */
+  export type DynamicPageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPage to fetch.
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPages to fetch.
+     */
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DynamicPages.
+     */
+    cursor?: DynamicPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DynamicPages.
+     */
+    distinct?: DynamicPageScalarFieldEnum | DynamicPageScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPage findFirstOrThrow
+   */
+  export type DynamicPageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPage to fetch.
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPages to fetch.
+     */
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DynamicPages.
+     */
+    cursor?: DynamicPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DynamicPages.
+     */
+    distinct?: DynamicPageScalarFieldEnum | DynamicPageScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPage findMany
+   */
+  export type DynamicPageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPages to fetch.
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPages to fetch.
+     */
+    orderBy?: DynamicPageOrderByWithRelationInput | DynamicPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DynamicPages.
+     */
+    cursor?: DynamicPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPages.
+     */
+    skip?: number
+    distinct?: DynamicPageScalarFieldEnum | DynamicPageScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPage create
+   */
+  export type DynamicPageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DynamicPage.
+     */
+    data: XOR<DynamicPageCreateInput, DynamicPageUncheckedCreateInput>
+  }
+
+  /**
+   * DynamicPage createMany
+   */
+  export type DynamicPageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DynamicPages.
+     */
+    data: DynamicPageCreateManyInput | DynamicPageCreateManyInput[]
+  }
+
+  /**
+   * DynamicPage createManyAndReturn
+   */
+  export type DynamicPageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * The data used to create many DynamicPages.
+     */
+    data: DynamicPageCreateManyInput | DynamicPageCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DynamicPage update
+   */
+  export type DynamicPageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DynamicPage.
+     */
+    data: XOR<DynamicPageUpdateInput, DynamicPageUncheckedUpdateInput>
+    /**
+     * Choose, which DynamicPage to update.
+     */
+    where: DynamicPageWhereUniqueInput
+  }
+
+  /**
+   * DynamicPage updateMany
+   */
+  export type DynamicPageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DynamicPages.
+     */
+    data: XOR<DynamicPageUpdateManyMutationInput, DynamicPageUncheckedUpdateManyInput>
+    /**
+     * Filter which DynamicPages to update
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * Limit how many DynamicPages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DynamicPage updateManyAndReturn
+   */
+  export type DynamicPageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * The data used to update DynamicPages.
+     */
+    data: XOR<DynamicPageUpdateManyMutationInput, DynamicPageUncheckedUpdateManyInput>
+    /**
+     * Filter which DynamicPages to update
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * Limit how many DynamicPages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DynamicPage upsert
+   */
+  export type DynamicPageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DynamicPage to update in case it exists.
+     */
+    where: DynamicPageWhereUniqueInput
+    /**
+     * In case the DynamicPage found by the `where` argument doesn't exist, create a new DynamicPage with this data.
+     */
+    create: XOR<DynamicPageCreateInput, DynamicPageUncheckedCreateInput>
+    /**
+     * In case the DynamicPage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DynamicPageUpdateInput, DynamicPageUncheckedUpdateInput>
+  }
+
+  /**
+   * DynamicPage delete
+   */
+  export type DynamicPageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+    /**
+     * Filter which DynamicPage to delete.
+     */
+    where: DynamicPageWhereUniqueInput
+  }
+
+  /**
+   * DynamicPage deleteMany
+   */
+  export type DynamicPageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DynamicPages to delete
+     */
+    where?: DynamicPageWhereInput
+    /**
+     * Limit how many DynamicPages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DynamicPage.createdBy
+   */
+  export type DynamicPage$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * DynamicPage.updatedBy
+   */
+  export type DynamicPage$updatedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * DynamicPage.versions
+   */
+  export type DynamicPage$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    where?: DynamicPageVersionWhereInput
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    cursor?: DynamicPageVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DynamicPageVersionScalarFieldEnum | DynamicPageVersionScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPage without action
+   */
+  export type DynamicPageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPage
+     */
+    select?: DynamicPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPage
+     */
+    omit?: DynamicPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DynamicPageVersion
+   */
+
+  export type AggregateDynamicPageVersion = {
+    _count: DynamicPageVersionCountAggregateOutputType | null
+    _avg: DynamicPageVersionAvgAggregateOutputType | null
+    _sum: DynamicPageVersionSumAggregateOutputType | null
+    _min: DynamicPageVersionMinAggregateOutputType | null
+    _max: DynamicPageVersionMaxAggregateOutputType | null
+  }
+
+  export type DynamicPageVersionAvgAggregateOutputType = {
+    id: number | null
+    pageId: number | null
+    version: number | null
+    createdById: number | null
+    tenantId: number | null
+  }
+
+  export type DynamicPageVersionSumAggregateOutputType = {
+    id: number | null
+    pageId: number | null
+    version: number | null
+    createdById: number | null
+    tenantId: number | null
+  }
+
+  export type DynamicPageVersionMinAggregateOutputType = {
+    id: number | null
+    pageId: number | null
+    version: number | null
+    title: string | null
+    createdById: number | null
+    createdAt: Date | null
+    tenantId: number | null
+  }
+
+  export type DynamicPageVersionMaxAggregateOutputType = {
+    id: number | null
+    pageId: number | null
+    version: number | null
+    title: string | null
+    createdById: number | null
+    createdAt: Date | null
+    tenantId: number | null
+  }
+
+  export type DynamicPageVersionCountAggregateOutputType = {
+    id: number
+    pageId: number
+    version: number
+    title: number
+    content: number
+    createdById: number
+    createdAt: number
+    tenantId: number
+    _all: number
+  }
+
+
+  export type DynamicPageVersionAvgAggregateInputType = {
+    id?: true
+    pageId?: true
+    version?: true
+    createdById?: true
+    tenantId?: true
+  }
+
+  export type DynamicPageVersionSumAggregateInputType = {
+    id?: true
+    pageId?: true
+    version?: true
+    createdById?: true
+    tenantId?: true
+  }
+
+  export type DynamicPageVersionMinAggregateInputType = {
+    id?: true
+    pageId?: true
+    version?: true
+    title?: true
+    createdById?: true
+    createdAt?: true
+    tenantId?: true
+  }
+
+  export type DynamicPageVersionMaxAggregateInputType = {
+    id?: true
+    pageId?: true
+    version?: true
+    title?: true
+    createdById?: true
+    createdAt?: true
+    tenantId?: true
+  }
+
+  export type DynamicPageVersionCountAggregateInputType = {
+    id?: true
+    pageId?: true
+    version?: true
+    title?: true
+    content?: true
+    createdById?: true
+    createdAt?: true
+    tenantId?: true
+    _all?: true
+  }
+
+  export type DynamicPageVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DynamicPageVersion to aggregate.
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPageVersions to fetch.
+     */
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DynamicPageVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPageVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPageVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DynamicPageVersions
+    **/
+    _count?: true | DynamicPageVersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DynamicPageVersionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DynamicPageVersionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DynamicPageVersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DynamicPageVersionMaxAggregateInputType
+  }
+
+  export type GetDynamicPageVersionAggregateType<T extends DynamicPageVersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateDynamicPageVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDynamicPageVersion[P]>
+      : GetScalarType<T[P], AggregateDynamicPageVersion[P]>
+  }
+
+
+
+
+  export type DynamicPageVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DynamicPageVersionWhereInput
+    orderBy?: DynamicPageVersionOrderByWithAggregationInput | DynamicPageVersionOrderByWithAggregationInput[]
+    by: DynamicPageVersionScalarFieldEnum[] | DynamicPageVersionScalarFieldEnum
+    having?: DynamicPageVersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DynamicPageVersionCountAggregateInputType | true
+    _avg?: DynamicPageVersionAvgAggregateInputType
+    _sum?: DynamicPageVersionSumAggregateInputType
+    _min?: DynamicPageVersionMinAggregateInputType
+    _max?: DynamicPageVersionMaxAggregateInputType
+  }
+
+  export type DynamicPageVersionGroupByOutputType = {
+    id: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonValue
+    createdById: number | null
+    createdAt: Date
+    tenantId: number
+    _count: DynamicPageVersionCountAggregateOutputType | null
+    _avg: DynamicPageVersionAvgAggregateOutputType | null
+    _sum: DynamicPageVersionSumAggregateOutputType | null
+    _min: DynamicPageVersionMinAggregateOutputType | null
+    _max: DynamicPageVersionMaxAggregateOutputType | null
+  }
+
+  type GetDynamicPageVersionGroupByPayload<T extends DynamicPageVersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DynamicPageVersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DynamicPageVersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DynamicPageVersionGroupByOutputType[P]>
+            : GetScalarType<T[P], DynamicPageVersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DynamicPageVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pageId?: boolean
+    version?: boolean
+    title?: boolean
+    content?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    tenantId?: boolean
+    page?: boolean | DynamicPageDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPageVersion$createdByArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dynamicPageVersion"]>
+
+  export type DynamicPageVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pageId?: boolean
+    version?: boolean
+    title?: boolean
+    content?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    tenantId?: boolean
+    page?: boolean | DynamicPageDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPageVersion$createdByArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dynamicPageVersion"]>
+
+  export type DynamicPageVersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pageId?: boolean
+    version?: boolean
+    title?: boolean
+    content?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    tenantId?: boolean
+    page?: boolean | DynamicPageDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPageVersion$createdByArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dynamicPageVersion"]>
+
+  export type DynamicPageVersionSelectScalar = {
+    id?: boolean
+    pageId?: boolean
+    version?: boolean
+    title?: boolean
+    content?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    tenantId?: boolean
+  }
+
+  export type DynamicPageVersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pageId" | "version" | "title" | "content" | "createdById" | "createdAt" | "tenantId", ExtArgs["result"]["dynamicPageVersion"]>
+  export type DynamicPageVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    page?: boolean | DynamicPageDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPageVersion$createdByArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type DynamicPageVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    page?: boolean | DynamicPageDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPageVersion$createdByArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type DynamicPageVersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    page?: boolean | DynamicPageDefaultArgs<ExtArgs>
+    createdBy?: boolean | DynamicPageVersion$createdByArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $DynamicPageVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DynamicPageVersion"
+    objects: {
+      page: Prisma.$DynamicPagePayload<ExtArgs>
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+      tenant: Prisma.$TenantPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      pageId: number
+      version: number
+      title: string
+      content: Prisma.JsonValue
+      createdById: number | null
+      createdAt: Date
+      tenantId: number
+    }, ExtArgs["result"]["dynamicPageVersion"]>
+    composites: {}
+  }
+
+  type DynamicPageVersionGetPayload<S extends boolean | null | undefined | DynamicPageVersionDefaultArgs> = $Result.GetResult<Prisma.$DynamicPageVersionPayload, S>
+
+  type DynamicPageVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DynamicPageVersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DynamicPageVersionCountAggregateInputType | true
+    }
+
+  export interface DynamicPageVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DynamicPageVersion'], meta: { name: 'DynamicPageVersion' } }
+    /**
+     * Find zero or one DynamicPageVersion that matches the filter.
+     * @param {DynamicPageVersionFindUniqueArgs} args - Arguments to find a DynamicPageVersion
+     * @example
+     * // Get one DynamicPageVersion
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DynamicPageVersionFindUniqueArgs>(args: SelectSubset<T, DynamicPageVersionFindUniqueArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DynamicPageVersion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DynamicPageVersionFindUniqueOrThrowArgs} args - Arguments to find a DynamicPageVersion
+     * @example
+     * // Get one DynamicPageVersion
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DynamicPageVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, DynamicPageVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DynamicPageVersion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionFindFirstArgs} args - Arguments to find a DynamicPageVersion
+     * @example
+     * // Get one DynamicPageVersion
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DynamicPageVersionFindFirstArgs>(args?: SelectSubset<T, DynamicPageVersionFindFirstArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DynamicPageVersion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionFindFirstOrThrowArgs} args - Arguments to find a DynamicPageVersion
+     * @example
+     * // Get one DynamicPageVersion
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DynamicPageVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, DynamicPageVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DynamicPageVersions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DynamicPageVersions
+     * const dynamicPageVersions = await prisma.dynamicPageVersion.findMany()
+     * 
+     * // Get first 10 DynamicPageVersions
+     * const dynamicPageVersions = await prisma.dynamicPageVersion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dynamicPageVersionWithIdOnly = await prisma.dynamicPageVersion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DynamicPageVersionFindManyArgs>(args?: SelectSubset<T, DynamicPageVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DynamicPageVersion.
+     * @param {DynamicPageVersionCreateArgs} args - Arguments to create a DynamicPageVersion.
+     * @example
+     * // Create one DynamicPageVersion
+     * const DynamicPageVersion = await prisma.dynamicPageVersion.create({
+     *   data: {
+     *     // ... data to create a DynamicPageVersion
+     *   }
+     * })
+     * 
+     */
+    create<T extends DynamicPageVersionCreateArgs>(args: SelectSubset<T, DynamicPageVersionCreateArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DynamicPageVersions.
+     * @param {DynamicPageVersionCreateManyArgs} args - Arguments to create many DynamicPageVersions.
+     * @example
+     * // Create many DynamicPageVersions
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DynamicPageVersionCreateManyArgs>(args?: SelectSubset<T, DynamicPageVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DynamicPageVersions and returns the data saved in the database.
+     * @param {DynamicPageVersionCreateManyAndReturnArgs} args - Arguments to create many DynamicPageVersions.
+     * @example
+     * // Create many DynamicPageVersions
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DynamicPageVersions and only return the `id`
+     * const dynamicPageVersionWithIdOnly = await prisma.dynamicPageVersion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DynamicPageVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, DynamicPageVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DynamicPageVersion.
+     * @param {DynamicPageVersionDeleteArgs} args - Arguments to delete one DynamicPageVersion.
+     * @example
+     * // Delete one DynamicPageVersion
+     * const DynamicPageVersion = await prisma.dynamicPageVersion.delete({
+     *   where: {
+     *     // ... filter to delete one DynamicPageVersion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DynamicPageVersionDeleteArgs>(args: SelectSubset<T, DynamicPageVersionDeleteArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DynamicPageVersion.
+     * @param {DynamicPageVersionUpdateArgs} args - Arguments to update one DynamicPageVersion.
+     * @example
+     * // Update one DynamicPageVersion
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DynamicPageVersionUpdateArgs>(args: SelectSubset<T, DynamicPageVersionUpdateArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DynamicPageVersions.
+     * @param {DynamicPageVersionDeleteManyArgs} args - Arguments to filter DynamicPageVersions to delete.
+     * @example
+     * // Delete a few DynamicPageVersions
+     * const { count } = await prisma.dynamicPageVersion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DynamicPageVersionDeleteManyArgs>(args?: SelectSubset<T, DynamicPageVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DynamicPageVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DynamicPageVersions
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DynamicPageVersionUpdateManyArgs>(args: SelectSubset<T, DynamicPageVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DynamicPageVersions and returns the data updated in the database.
+     * @param {DynamicPageVersionUpdateManyAndReturnArgs} args - Arguments to update many DynamicPageVersions.
+     * @example
+     * // Update many DynamicPageVersions
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DynamicPageVersions and only return the `id`
+     * const dynamicPageVersionWithIdOnly = await prisma.dynamicPageVersion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DynamicPageVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, DynamicPageVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DynamicPageVersion.
+     * @param {DynamicPageVersionUpsertArgs} args - Arguments to update or create a DynamicPageVersion.
+     * @example
+     * // Update or create a DynamicPageVersion
+     * const dynamicPageVersion = await prisma.dynamicPageVersion.upsert({
+     *   create: {
+     *     // ... data to create a DynamicPageVersion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DynamicPageVersion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DynamicPageVersionUpsertArgs>(args: SelectSubset<T, DynamicPageVersionUpsertArgs<ExtArgs>>): Prisma__DynamicPageVersionClient<$Result.GetResult<Prisma.$DynamicPageVersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DynamicPageVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionCountArgs} args - Arguments to filter DynamicPageVersions to count.
+     * @example
+     * // Count the number of DynamicPageVersions
+     * const count = await prisma.dynamicPageVersion.count({
+     *   where: {
+     *     // ... the filter for the DynamicPageVersions we want to count
+     *   }
+     * })
+    **/
+    count<T extends DynamicPageVersionCountArgs>(
+      args?: Subset<T, DynamicPageVersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DynamicPageVersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DynamicPageVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DynamicPageVersionAggregateArgs>(args: Subset<T, DynamicPageVersionAggregateArgs>): Prisma.PrismaPromise<GetDynamicPageVersionAggregateType<T>>
+
+    /**
+     * Group by DynamicPageVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicPageVersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DynamicPageVersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DynamicPageVersionGroupByArgs['orderBy'] }
+        : { orderBy?: DynamicPageVersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DynamicPageVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDynamicPageVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DynamicPageVersion model
+   */
+  readonly fields: DynamicPageVersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DynamicPageVersion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DynamicPageVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    page<T extends DynamicPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DynamicPageDefaultArgs<ExtArgs>>): Prisma__DynamicPageClient<$Result.GetResult<Prisma.$DynamicPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    createdBy<T extends DynamicPageVersion$createdByArgs<ExtArgs> = {}>(args?: Subset<T, DynamicPageVersion$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DynamicPageVersion model
+   */
+  interface DynamicPageVersionFieldRefs {
+    readonly id: FieldRef<"DynamicPageVersion", 'Int'>
+    readonly pageId: FieldRef<"DynamicPageVersion", 'Int'>
+    readonly version: FieldRef<"DynamicPageVersion", 'Int'>
+    readonly title: FieldRef<"DynamicPageVersion", 'String'>
+    readonly content: FieldRef<"DynamicPageVersion", 'Json'>
+    readonly createdById: FieldRef<"DynamicPageVersion", 'Int'>
+    readonly createdAt: FieldRef<"DynamicPageVersion", 'DateTime'>
+    readonly tenantId: FieldRef<"DynamicPageVersion", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DynamicPageVersion findUnique
+   */
+  export type DynamicPageVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPageVersion to fetch.
+     */
+    where: DynamicPageVersionWhereUniqueInput
+  }
+
+  /**
+   * DynamicPageVersion findUniqueOrThrow
+   */
+  export type DynamicPageVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPageVersion to fetch.
+     */
+    where: DynamicPageVersionWhereUniqueInput
+  }
+
+  /**
+   * DynamicPageVersion findFirst
+   */
+  export type DynamicPageVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPageVersion to fetch.
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPageVersions to fetch.
+     */
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DynamicPageVersions.
+     */
+    cursor?: DynamicPageVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPageVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPageVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DynamicPageVersions.
+     */
+    distinct?: DynamicPageVersionScalarFieldEnum | DynamicPageVersionScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPageVersion findFirstOrThrow
+   */
+  export type DynamicPageVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPageVersion to fetch.
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPageVersions to fetch.
+     */
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DynamicPageVersions.
+     */
+    cursor?: DynamicPageVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPageVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPageVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DynamicPageVersions.
+     */
+    distinct?: DynamicPageVersionScalarFieldEnum | DynamicPageVersionScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPageVersion findMany
+   */
+  export type DynamicPageVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which DynamicPageVersions to fetch.
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DynamicPageVersions to fetch.
+     */
+    orderBy?: DynamicPageVersionOrderByWithRelationInput | DynamicPageVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DynamicPageVersions.
+     */
+    cursor?: DynamicPageVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DynamicPageVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DynamicPageVersions.
+     */
+    skip?: number
+    distinct?: DynamicPageVersionScalarFieldEnum | DynamicPageVersionScalarFieldEnum[]
+  }
+
+  /**
+   * DynamicPageVersion create
+   */
+  export type DynamicPageVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DynamicPageVersion.
+     */
+    data: XOR<DynamicPageVersionCreateInput, DynamicPageVersionUncheckedCreateInput>
+  }
+
+  /**
+   * DynamicPageVersion createMany
+   */
+  export type DynamicPageVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DynamicPageVersions.
+     */
+    data: DynamicPageVersionCreateManyInput | DynamicPageVersionCreateManyInput[]
+  }
+
+  /**
+   * DynamicPageVersion createManyAndReturn
+   */
+  export type DynamicPageVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * The data used to create many DynamicPageVersions.
+     */
+    data: DynamicPageVersionCreateManyInput | DynamicPageVersionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DynamicPageVersion update
+   */
+  export type DynamicPageVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DynamicPageVersion.
+     */
+    data: XOR<DynamicPageVersionUpdateInput, DynamicPageVersionUncheckedUpdateInput>
+    /**
+     * Choose, which DynamicPageVersion to update.
+     */
+    where: DynamicPageVersionWhereUniqueInput
+  }
+
+  /**
+   * DynamicPageVersion updateMany
+   */
+  export type DynamicPageVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DynamicPageVersions.
+     */
+    data: XOR<DynamicPageVersionUpdateManyMutationInput, DynamicPageVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which DynamicPageVersions to update
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * Limit how many DynamicPageVersions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DynamicPageVersion updateManyAndReturn
+   */
+  export type DynamicPageVersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * The data used to update DynamicPageVersions.
+     */
+    data: XOR<DynamicPageVersionUpdateManyMutationInput, DynamicPageVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which DynamicPageVersions to update
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * Limit how many DynamicPageVersions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DynamicPageVersion upsert
+   */
+  export type DynamicPageVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DynamicPageVersion to update in case it exists.
+     */
+    where: DynamicPageVersionWhereUniqueInput
+    /**
+     * In case the DynamicPageVersion found by the `where` argument doesn't exist, create a new DynamicPageVersion with this data.
+     */
+    create: XOR<DynamicPageVersionCreateInput, DynamicPageVersionUncheckedCreateInput>
+    /**
+     * In case the DynamicPageVersion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DynamicPageVersionUpdateInput, DynamicPageVersionUncheckedUpdateInput>
+  }
+
+  /**
+   * DynamicPageVersion delete
+   */
+  export type DynamicPageVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
+    /**
+     * Filter which DynamicPageVersion to delete.
+     */
+    where: DynamicPageVersionWhereUniqueInput
+  }
+
+  /**
+   * DynamicPageVersion deleteMany
+   */
+  export type DynamicPageVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DynamicPageVersions to delete
+     */
+    where?: DynamicPageVersionWhereInput
+    /**
+     * Limit how many DynamicPageVersions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DynamicPageVersion.createdBy
+   */
+  export type DynamicPageVersion$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * DynamicPageVersion without action
+   */
+  export type DynamicPageVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DynamicPageVersion
+     */
+    select?: DynamicPageVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DynamicPageVersion
+     */
+    omit?: DynamicPageVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicPageVersionInclude<ExtArgs> | null
   }
 
 
@@ -40497,6 +48399,8 @@ export namespace Prisma {
     role: 'role',
     twoFactorEnabled: 'twoFactorEnabled',
     twoFactorSecret: 'twoFactorSecret',
+    resetTokenHash: 'resetTokenHash',
+    resetTokenExpiresAt: 'resetTokenExpiresAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     tenantId: 'tenantId'
@@ -40737,6 +48641,16 @@ export namespace Prisma {
   export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
+  export const SystemSettingScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    value: 'value',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SystemSettingScalarFieldEnum = (typeof SystemSettingScalarFieldEnum)[keyof typeof SystemSettingScalarFieldEnum]
+
+
   export const FamilyRelationScalarFieldEnum: {
     parentId: 'parentId',
     childId: 'childId',
@@ -40923,6 +48837,83 @@ export namespace Prisma {
   export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
 
 
+  export const SubscriptionScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    plan: 'plan',
+    status: 'status',
+    seats: 'seats',
+    period: 'period',
+    price: 'price',
+    provider: 'provider',
+    providerCustomerId: 'providerCustomerId',
+    providerSubscriptionId: 'providerSubscriptionId',
+    currentPeriodStart: 'currentPeriodStart',
+    currentPeriodEnd: 'currentPeriodEnd',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+  export const UsageEventScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    userId: 'userId',
+    featureKey: 'featureKey',
+    event: 'event',
+    meta: 'meta',
+    createdAt: 'createdAt'
+  };
+
+  export type UsageEventScalarFieldEnum = (typeof UsageEventScalarFieldEnum)[keyof typeof UsageEventScalarFieldEnum]
+
+
+  export const ApiMetricScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    method: 'method',
+    path: 'path',
+    status: 'status',
+    durationMs: 'durationMs',
+    createdAt: 'createdAt'
+  };
+
+  export type ApiMetricScalarFieldEnum = (typeof ApiMetricScalarFieldEnum)[keyof typeof ApiMetricScalarFieldEnum]
+
+
+  export const DynamicPageScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    slug: 'slug',
+    title: 'title',
+    status: 'status',
+    content: 'content',
+    version: 'version',
+    createdById: 'createdById',
+    updatedById: 'updatedById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DynamicPageScalarFieldEnum = (typeof DynamicPageScalarFieldEnum)[keyof typeof DynamicPageScalarFieldEnum]
+
+
+  export const DynamicPageVersionScalarFieldEnum: {
+    id: 'id',
+    pageId: 'pageId',
+    version: 'version',
+    title: 'title',
+    content: 'content',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    tenantId: 'tenantId'
+  };
+
+  export type DynamicPageVersionScalarFieldEnum = (typeof DynamicPageVersionScalarFieldEnum)[keyof typeof DynamicPageVersionScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -40937,6 +48928,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const NullsOrder: {
@@ -41051,6 +49049,13 @@ export namespace Prisma {
    */
   export type EnumSermonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SermonType'>
     
+
+
+  /**
+   * Reference to a field of type 'SubscriptionPlan'
+   */
+  export type EnumSubscriptionPlanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPlan'>
+    
   /**
    * Deep Input Types
    */
@@ -41067,6 +49072,8 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     twoFactorEnabled?: BoolFilter<"User"> | boolean
     twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    resetTokenHash?: StringNullableFilter<"User"> | string | null
+    resetTokenExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tenantId?: IntNullableFilter<"User"> | number | null
@@ -41087,6 +49094,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionListRelationFilter
     businessMinuteVersionsCreated?: BusinessMinuteVersionListRelationFilter
     suggestionsCreated?: SuggestionListRelationFilter
+    pagesCreated?: DynamicPageListRelationFilter
+    pagesUpdated?: DynamicPageListRelationFilter
+    pageVersionsCreated?: DynamicPageVersionListRelationFilter
+    usageEvents?: UsageEventListRelationFilter
     member?: XOR<MemberNullableScalarRelationFilter, MemberWhereInput> | null
     tenant?: XOR<TenantNullableScalarRelationFilter, TenantWhereInput> | null
   }
@@ -41099,6 +49110,8 @@ export namespace Prisma {
     role?: SortOrder
     twoFactorEnabled?: SortOrder
     twoFactorSecret?: SortOrderInput | SortOrder
+    resetTokenHash?: SortOrderInput | SortOrder
+    resetTokenExpiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tenantId?: SortOrderInput | SortOrder
@@ -41119,6 +49132,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionOrderByRelationAggregateInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionOrderByRelationAggregateInput
     suggestionsCreated?: SuggestionOrderByRelationAggregateInput
+    pagesCreated?: DynamicPageOrderByRelationAggregateInput
+    pagesUpdated?: DynamicPageOrderByRelationAggregateInput
+    pageVersionsCreated?: DynamicPageVersionOrderByRelationAggregateInput
+    usageEvents?: UsageEventOrderByRelationAggregateInput
     member?: MemberOrderByWithRelationInput
     tenant?: TenantOrderByWithRelationInput
   }
@@ -41135,6 +49152,8 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     twoFactorEnabled?: BoolFilter<"User"> | boolean
     twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    resetTokenHash?: StringNullableFilter<"User"> | string | null
+    resetTokenExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tenantId?: IntNullableFilter<"User"> | number | null
@@ -41155,6 +49174,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionListRelationFilter
     businessMinuteVersionsCreated?: BusinessMinuteVersionListRelationFilter
     suggestionsCreated?: SuggestionListRelationFilter
+    pagesCreated?: DynamicPageListRelationFilter
+    pagesUpdated?: DynamicPageListRelationFilter
+    pageVersionsCreated?: DynamicPageVersionListRelationFilter
+    usageEvents?: UsageEventListRelationFilter
     member?: XOR<MemberNullableScalarRelationFilter, MemberWhereInput> | null
     tenant?: XOR<TenantNullableScalarRelationFilter, TenantWhereInput> | null
   }, "id" | "tenantId_email">
@@ -41167,6 +49190,8 @@ export namespace Prisma {
     role?: SortOrder
     twoFactorEnabled?: SortOrder
     twoFactorSecret?: SortOrderInput | SortOrder
+    resetTokenHash?: SortOrderInput | SortOrder
+    resetTokenExpiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tenantId?: SortOrderInput | SortOrder
@@ -41188,6 +49213,8 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     twoFactorEnabled?: BoolWithAggregatesFilter<"User"> | boolean
     twoFactorSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
+    resetTokenHash?: StringNullableWithAggregatesFilter<"User"> | string | null
+    resetTokenExpiresAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     tenantId?: IntNullableWithAggregatesFilter<"User"> | number | null
@@ -42512,6 +50539,55 @@ export namespace Prisma {
     tenantId?: IntWithAggregatesFilter<"Setting"> | number
   }
 
+  export type SystemSettingWhereInput = {
+    AND?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    OR?: SystemSettingWhereInput[]
+    NOT?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    id?: IntFilter<"SystemSetting"> | number
+    key?: StringFilter<"SystemSetting"> | string
+    value?: StringFilter<"SystemSetting"> | string
+    updatedAt?: DateTimeFilter<"SystemSetting"> | Date | string
+  }
+
+  export type SystemSettingOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    key?: string
+    AND?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    OR?: SystemSettingWhereInput[]
+    NOT?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    value?: StringFilter<"SystemSetting"> | string
+    updatedAt?: DateTimeFilter<"SystemSetting"> | Date | string
+  }, "id" | "key">
+
+  export type SystemSettingOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SystemSettingCountOrderByAggregateInput
+    _avg?: SystemSettingAvgOrderByAggregateInput
+    _max?: SystemSettingMaxOrderByAggregateInput
+    _min?: SystemSettingMinOrderByAggregateInput
+    _sum?: SystemSettingSumOrderByAggregateInput
+  }
+
+  export type SystemSettingScalarWhereWithAggregatesInput = {
+    AND?: SystemSettingScalarWhereWithAggregatesInput | SystemSettingScalarWhereWithAggregatesInput[]
+    OR?: SystemSettingScalarWhereWithAggregatesInput[]
+    NOT?: SystemSettingScalarWhereWithAggregatesInput | SystemSettingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SystemSetting"> | number
+    key?: StringWithAggregatesFilter<"SystemSetting"> | string
+    value?: StringWithAggregatesFilter<"SystemSetting"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SystemSetting"> | Date | string
+  }
+
   export type FamilyRelationWhereInput = {
     AND?: FamilyRelationWhereInput | FamilyRelationWhereInput[]
     OR?: FamilyRelationWhereInput[]
@@ -43505,6 +51581,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteListRelationFilter
     boardMinuteVersions?: BoardMinuteVersionListRelationFilter
     businessMinuteVersions?: BusinessMinuteVersionListRelationFilter
+    subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
+    usageEvents?: UsageEventListRelationFilter
+    apiMetrics?: ApiMetricListRelationFilter
+    pages?: DynamicPageListRelationFilter
+    pageVersions?: DynamicPageVersionListRelationFilter
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -43543,6 +51624,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteOrderByRelationAggregateInput
     boardMinuteVersions?: BoardMinuteVersionOrderByRelationAggregateInput
     businessMinuteVersions?: BusinessMinuteVersionOrderByRelationAggregateInput
+    subscription?: SubscriptionOrderByWithRelationInput
+    usageEvents?: UsageEventOrderByRelationAggregateInput
+    apiMetrics?: ApiMetricOrderByRelationAggregateInput
+    pages?: DynamicPageOrderByRelationAggregateInput
+    pageVersions?: DynamicPageVersionOrderByRelationAggregateInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -43584,6 +51670,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteListRelationFilter
     boardMinuteVersions?: BoardMinuteVersionListRelationFilter
     businessMinuteVersions?: BusinessMinuteVersionListRelationFilter
+    subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
+    usageEvents?: UsageEventListRelationFilter
+    apiMetrics?: ApiMetricListRelationFilter
+    pages?: DynamicPageListRelationFilter
+    pageVersions?: DynamicPageVersionListRelationFilter
   }, "id" | "slug">
 
   export type TenantOrderByWithAggregationInput = {
@@ -43616,6 +51707,420 @@ export namespace Prisma {
     archivedAt?: DateTimeNullableWithAggregatesFilter<"Tenant"> | Date | string | null
   }
 
+  export type SubscriptionWhereInput = {
+    AND?: SubscriptionWhereInput | SubscriptionWhereInput[]
+    OR?: SubscriptionWhereInput[]
+    NOT?: SubscriptionWhereInput | SubscriptionWhereInput[]
+    id?: IntFilter<"Subscription"> | number
+    tenantId?: IntFilter<"Subscription"> | number
+    plan?: EnumSubscriptionPlanFilter<"Subscription"> | $Enums.SubscriptionPlan
+    status?: StringFilter<"Subscription"> | string
+    seats?: IntFilter<"Subscription"> | number
+    period?: StringFilter<"Subscription"> | string
+    price?: FloatFilter<"Subscription"> | number
+    provider?: StringNullableFilter<"Subscription"> | string | null
+    providerCustomerId?: StringNullableFilter<"Subscription"> | string | null
+    providerSubscriptionId?: StringNullableFilter<"Subscription"> | string | null
+    currentPeriodStart?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    currentPeriodEnd?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    createdAt?: DateTimeFilter<"Subscription"> | Date | string
+    updatedAt?: DateTimeFilter<"Subscription"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }
+
+  export type SubscriptionOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    plan?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    period?: SortOrder
+    price?: SortOrder
+    provider?: SortOrderInput | SortOrder
+    providerCustomerId?: SortOrderInput | SortOrder
+    providerSubscriptionId?: SortOrderInput | SortOrder
+    currentPeriodStart?: SortOrderInput | SortOrder
+    currentPeriodEnd?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    tenantId?: number
+    AND?: SubscriptionWhereInput | SubscriptionWhereInput[]
+    OR?: SubscriptionWhereInput[]
+    NOT?: SubscriptionWhereInput | SubscriptionWhereInput[]
+    plan?: EnumSubscriptionPlanFilter<"Subscription"> | $Enums.SubscriptionPlan
+    status?: StringFilter<"Subscription"> | string
+    seats?: IntFilter<"Subscription"> | number
+    period?: StringFilter<"Subscription"> | string
+    price?: FloatFilter<"Subscription"> | number
+    provider?: StringNullableFilter<"Subscription"> | string | null
+    providerCustomerId?: StringNullableFilter<"Subscription"> | string | null
+    providerSubscriptionId?: StringNullableFilter<"Subscription"> | string | null
+    currentPeriodStart?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    currentPeriodEnd?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    createdAt?: DateTimeFilter<"Subscription"> | Date | string
+    updatedAt?: DateTimeFilter<"Subscription"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }, "id" | "tenantId">
+
+  export type SubscriptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    plan?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    period?: SortOrder
+    price?: SortOrder
+    provider?: SortOrderInput | SortOrder
+    providerCustomerId?: SortOrderInput | SortOrder
+    providerSubscriptionId?: SortOrderInput | SortOrder
+    currentPeriodStart?: SortOrderInput | SortOrder
+    currentPeriodEnd?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SubscriptionCountOrderByAggregateInput
+    _avg?: SubscriptionAvgOrderByAggregateInput
+    _max?: SubscriptionMaxOrderByAggregateInput
+    _min?: SubscriptionMinOrderByAggregateInput
+    _sum?: SubscriptionSumOrderByAggregateInput
+  }
+
+  export type SubscriptionScalarWhereWithAggregatesInput = {
+    AND?: SubscriptionScalarWhereWithAggregatesInput | SubscriptionScalarWhereWithAggregatesInput[]
+    OR?: SubscriptionScalarWhereWithAggregatesInput[]
+    NOT?: SubscriptionScalarWhereWithAggregatesInput | SubscriptionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Subscription"> | number
+    tenantId?: IntWithAggregatesFilter<"Subscription"> | number
+    plan?: EnumSubscriptionPlanWithAggregatesFilter<"Subscription"> | $Enums.SubscriptionPlan
+    status?: StringWithAggregatesFilter<"Subscription"> | string
+    seats?: IntWithAggregatesFilter<"Subscription"> | number
+    period?: StringWithAggregatesFilter<"Subscription"> | string
+    price?: FloatWithAggregatesFilter<"Subscription"> | number
+    provider?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
+    providerCustomerId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
+    providerSubscriptionId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
+    currentPeriodStart?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
+    currentPeriodEnd?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Subscription"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Subscription"> | Date | string
+  }
+
+  export type UsageEventWhereInput = {
+    AND?: UsageEventWhereInput | UsageEventWhereInput[]
+    OR?: UsageEventWhereInput[]
+    NOT?: UsageEventWhereInput | UsageEventWhereInput[]
+    id?: IntFilter<"UsageEvent"> | number
+    tenantId?: IntFilter<"UsageEvent"> | number
+    userId?: IntNullableFilter<"UsageEvent"> | number | null
+    featureKey?: StringFilter<"UsageEvent"> | string
+    event?: StringFilter<"UsageEvent"> | string
+    meta?: JsonNullableFilter<"UsageEvent">
+    createdAt?: DateTimeFilter<"UsageEvent"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type UsageEventOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    featureKey?: SortOrder
+    event?: SortOrder
+    meta?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UsageEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: UsageEventWhereInput | UsageEventWhereInput[]
+    OR?: UsageEventWhereInput[]
+    NOT?: UsageEventWhereInput | UsageEventWhereInput[]
+    tenantId?: IntFilter<"UsageEvent"> | number
+    userId?: IntNullableFilter<"UsageEvent"> | number | null
+    featureKey?: StringFilter<"UsageEvent"> | string
+    event?: StringFilter<"UsageEvent"> | string
+    meta?: JsonNullableFilter<"UsageEvent">
+    createdAt?: DateTimeFilter<"UsageEvent"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type UsageEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    featureKey?: SortOrder
+    event?: SortOrder
+    meta?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: UsageEventCountOrderByAggregateInput
+    _avg?: UsageEventAvgOrderByAggregateInput
+    _max?: UsageEventMaxOrderByAggregateInput
+    _min?: UsageEventMinOrderByAggregateInput
+    _sum?: UsageEventSumOrderByAggregateInput
+  }
+
+  export type UsageEventScalarWhereWithAggregatesInput = {
+    AND?: UsageEventScalarWhereWithAggregatesInput | UsageEventScalarWhereWithAggregatesInput[]
+    OR?: UsageEventScalarWhereWithAggregatesInput[]
+    NOT?: UsageEventScalarWhereWithAggregatesInput | UsageEventScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UsageEvent"> | number
+    tenantId?: IntWithAggregatesFilter<"UsageEvent"> | number
+    userId?: IntNullableWithAggregatesFilter<"UsageEvent"> | number | null
+    featureKey?: StringWithAggregatesFilter<"UsageEvent"> | string
+    event?: StringWithAggregatesFilter<"UsageEvent"> | string
+    meta?: JsonNullableWithAggregatesFilter<"UsageEvent">
+    createdAt?: DateTimeWithAggregatesFilter<"UsageEvent"> | Date | string
+  }
+
+  export type ApiMetricWhereInput = {
+    AND?: ApiMetricWhereInput | ApiMetricWhereInput[]
+    OR?: ApiMetricWhereInput[]
+    NOT?: ApiMetricWhereInput | ApiMetricWhereInput[]
+    id?: IntFilter<"ApiMetric"> | number
+    tenantId?: IntNullableFilter<"ApiMetric"> | number | null
+    method?: StringFilter<"ApiMetric"> | string
+    path?: StringFilter<"ApiMetric"> | string
+    status?: IntFilter<"ApiMetric"> | number
+    durationMs?: IntFilter<"ApiMetric"> | number
+    createdAt?: DateTimeFilter<"ApiMetric"> | Date | string
+    tenant?: XOR<TenantNullableScalarRelationFilter, TenantWhereInput> | null
+  }
+
+  export type ApiMetricOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    method?: SortOrder
+    path?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+    createdAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type ApiMetricWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ApiMetricWhereInput | ApiMetricWhereInput[]
+    OR?: ApiMetricWhereInput[]
+    NOT?: ApiMetricWhereInput | ApiMetricWhereInput[]
+    tenantId?: IntNullableFilter<"ApiMetric"> | number | null
+    method?: StringFilter<"ApiMetric"> | string
+    path?: StringFilter<"ApiMetric"> | string
+    status?: IntFilter<"ApiMetric"> | number
+    durationMs?: IntFilter<"ApiMetric"> | number
+    createdAt?: DateTimeFilter<"ApiMetric"> | Date | string
+    tenant?: XOR<TenantNullableScalarRelationFilter, TenantWhereInput> | null
+  }, "id">
+
+  export type ApiMetricOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrderInput | SortOrder
+    method?: SortOrder
+    path?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+    createdAt?: SortOrder
+    _count?: ApiMetricCountOrderByAggregateInput
+    _avg?: ApiMetricAvgOrderByAggregateInput
+    _max?: ApiMetricMaxOrderByAggregateInput
+    _min?: ApiMetricMinOrderByAggregateInput
+    _sum?: ApiMetricSumOrderByAggregateInput
+  }
+
+  export type ApiMetricScalarWhereWithAggregatesInput = {
+    AND?: ApiMetricScalarWhereWithAggregatesInput | ApiMetricScalarWhereWithAggregatesInput[]
+    OR?: ApiMetricScalarWhereWithAggregatesInput[]
+    NOT?: ApiMetricScalarWhereWithAggregatesInput | ApiMetricScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ApiMetric"> | number
+    tenantId?: IntNullableWithAggregatesFilter<"ApiMetric"> | number | null
+    method?: StringWithAggregatesFilter<"ApiMetric"> | string
+    path?: StringWithAggregatesFilter<"ApiMetric"> | string
+    status?: IntWithAggregatesFilter<"ApiMetric"> | number
+    durationMs?: IntWithAggregatesFilter<"ApiMetric"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ApiMetric"> | Date | string
+  }
+
+  export type DynamicPageWhereInput = {
+    AND?: DynamicPageWhereInput | DynamicPageWhereInput[]
+    OR?: DynamicPageWhereInput[]
+    NOT?: DynamicPageWhereInput | DynamicPageWhereInput[]
+    id?: IntFilter<"DynamicPage"> | number
+    tenantId?: IntFilter<"DynamicPage"> | number
+    slug?: StringFilter<"DynamicPage"> | string
+    title?: StringFilter<"DynamicPage"> | string
+    status?: StringFilter<"DynamicPage"> | string
+    content?: JsonFilter<"DynamicPage">
+    version?: IntFilter<"DynamicPage"> | number
+    createdById?: IntNullableFilter<"DynamicPage"> | number | null
+    updatedById?: IntNullableFilter<"DynamicPage"> | number | null
+    createdAt?: DateTimeFilter<"DynamicPage"> | Date | string
+    updatedAt?: DateTimeFilter<"DynamicPage"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    updatedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    versions?: DynamicPageVersionListRelationFilter
+  }
+
+  export type DynamicPageOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    slug?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    content?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    updatedById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+    createdBy?: UserOrderByWithRelationInput
+    updatedBy?: UserOrderByWithRelationInput
+    versions?: DynamicPageVersionOrderByRelationAggregateInput
+  }
+
+  export type DynamicPageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    tenantId_slug?: DynamicPageTenantIdSlugCompoundUniqueInput
+    AND?: DynamicPageWhereInput | DynamicPageWhereInput[]
+    OR?: DynamicPageWhereInput[]
+    NOT?: DynamicPageWhereInput | DynamicPageWhereInput[]
+    tenantId?: IntFilter<"DynamicPage"> | number
+    slug?: StringFilter<"DynamicPage"> | string
+    title?: StringFilter<"DynamicPage"> | string
+    status?: StringFilter<"DynamicPage"> | string
+    content?: JsonFilter<"DynamicPage">
+    version?: IntFilter<"DynamicPage"> | number
+    createdById?: IntNullableFilter<"DynamicPage"> | number | null
+    updatedById?: IntNullableFilter<"DynamicPage"> | number | null
+    createdAt?: DateTimeFilter<"DynamicPage"> | Date | string
+    updatedAt?: DateTimeFilter<"DynamicPage"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    updatedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    versions?: DynamicPageVersionListRelationFilter
+  }, "id" | "tenantId_slug">
+
+  export type DynamicPageOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    slug?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    content?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    updatedById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DynamicPageCountOrderByAggregateInput
+    _avg?: DynamicPageAvgOrderByAggregateInput
+    _max?: DynamicPageMaxOrderByAggregateInput
+    _min?: DynamicPageMinOrderByAggregateInput
+    _sum?: DynamicPageSumOrderByAggregateInput
+  }
+
+  export type DynamicPageScalarWhereWithAggregatesInput = {
+    AND?: DynamicPageScalarWhereWithAggregatesInput | DynamicPageScalarWhereWithAggregatesInput[]
+    OR?: DynamicPageScalarWhereWithAggregatesInput[]
+    NOT?: DynamicPageScalarWhereWithAggregatesInput | DynamicPageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DynamicPage"> | number
+    tenantId?: IntWithAggregatesFilter<"DynamicPage"> | number
+    slug?: StringWithAggregatesFilter<"DynamicPage"> | string
+    title?: StringWithAggregatesFilter<"DynamicPage"> | string
+    status?: StringWithAggregatesFilter<"DynamicPage"> | string
+    content?: JsonWithAggregatesFilter<"DynamicPage">
+    version?: IntWithAggregatesFilter<"DynamicPage"> | number
+    createdById?: IntNullableWithAggregatesFilter<"DynamicPage"> | number | null
+    updatedById?: IntNullableWithAggregatesFilter<"DynamicPage"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"DynamicPage"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DynamicPage"> | Date | string
+  }
+
+  export type DynamicPageVersionWhereInput = {
+    AND?: DynamicPageVersionWhereInput | DynamicPageVersionWhereInput[]
+    OR?: DynamicPageVersionWhereInput[]
+    NOT?: DynamicPageVersionWhereInput | DynamicPageVersionWhereInput[]
+    id?: IntFilter<"DynamicPageVersion"> | number
+    pageId?: IntFilter<"DynamicPageVersion"> | number
+    version?: IntFilter<"DynamicPageVersion"> | number
+    title?: StringFilter<"DynamicPageVersion"> | string
+    content?: JsonFilter<"DynamicPageVersion">
+    createdById?: IntNullableFilter<"DynamicPageVersion"> | number | null
+    createdAt?: DateTimeFilter<"DynamicPageVersion"> | Date | string
+    tenantId?: IntFilter<"DynamicPageVersion"> | number
+    page?: XOR<DynamicPageScalarRelationFilter, DynamicPageWhereInput>
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }
+
+  export type DynamicPageVersionOrderByWithRelationInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    tenantId?: SortOrder
+    page?: DynamicPageOrderByWithRelationInput
+    createdBy?: UserOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type DynamicPageVersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DynamicPageVersionWhereInput | DynamicPageVersionWhereInput[]
+    OR?: DynamicPageVersionWhereInput[]
+    NOT?: DynamicPageVersionWhereInput | DynamicPageVersionWhereInput[]
+    pageId?: IntFilter<"DynamicPageVersion"> | number
+    version?: IntFilter<"DynamicPageVersion"> | number
+    title?: StringFilter<"DynamicPageVersion"> | string
+    content?: JsonFilter<"DynamicPageVersion">
+    createdById?: IntNullableFilter<"DynamicPageVersion"> | number | null
+    createdAt?: DateTimeFilter<"DynamicPageVersion"> | Date | string
+    tenantId?: IntFilter<"DynamicPageVersion"> | number
+    page?: XOR<DynamicPageScalarRelationFilter, DynamicPageWhereInput>
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }, "id">
+
+  export type DynamicPageVersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    tenantId?: SortOrder
+    _count?: DynamicPageVersionCountOrderByAggregateInput
+    _avg?: DynamicPageVersionAvgOrderByAggregateInput
+    _max?: DynamicPageVersionMaxOrderByAggregateInput
+    _min?: DynamicPageVersionMinOrderByAggregateInput
+    _sum?: DynamicPageVersionSumOrderByAggregateInput
+  }
+
+  export type DynamicPageVersionScalarWhereWithAggregatesInput = {
+    AND?: DynamicPageVersionScalarWhereWithAggregatesInput | DynamicPageVersionScalarWhereWithAggregatesInput[]
+    OR?: DynamicPageVersionScalarWhereWithAggregatesInput[]
+    NOT?: DynamicPageVersionScalarWhereWithAggregatesInput | DynamicPageVersionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DynamicPageVersion"> | number
+    pageId?: IntWithAggregatesFilter<"DynamicPageVersion"> | number
+    version?: IntWithAggregatesFilter<"DynamicPageVersion"> | number
+    title?: StringWithAggregatesFilter<"DynamicPageVersion"> | string
+    content?: JsonWithAggregatesFilter<"DynamicPageVersion">
+    createdById?: IntNullableWithAggregatesFilter<"DynamicPageVersion"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"DynamicPageVersion"> | Date | string
+    tenantId?: IntWithAggregatesFilter<"DynamicPageVersion"> | number
+  }
+
   export type UserCreateInput = {
     email: string
     passwordHash: string
@@ -43623,6 +52128,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -43642,6 +52149,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -43654,6 +52165,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -43674,6 +52187,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -43684,6 +52201,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -43703,6 +52222,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -43715,6 +52238,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43735,6 +52260,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -43746,6 +52275,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -43758,6 +52289,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43770,6 +52303,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -45056,6 +53591,52 @@ export namespace Prisma {
     tenantId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type SystemSettingCreateInput = {
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type SystemSettingUncheckedCreateInput = {
+    id?: number
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type SystemSettingUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingCreateManyInput = {
+    id?: number
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type SystemSettingUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type FamilyRelationCreateInput = {
     createdAt?: Date | string
     parent: MemberCreateNestedOneWithoutParentsInput
@@ -46021,6 +54602,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -46059,6 +54645,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -46096,6 +54687,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -46134,6 +54730,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -46166,6 +54767,419 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SubscriptionCreateInput = {
+    plan?: $Enums.SubscriptionPlan
+    status?: string
+    seats?: number
+    period?: string
+    price?: number
+    provider?: string | null
+    providerCustomerId?: string | null
+    providerSubscriptionId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutSubscriptionInput
+  }
+
+  export type SubscriptionUncheckedCreateInput = {
+    id?: number
+    tenantId: number
+    plan?: $Enums.SubscriptionPlan
+    status?: string
+    seats?: number
+    period?: string
+    price?: number
+    provider?: string | null
+    providerCustomerId?: string | null
+    providerSubscriptionId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubscriptionUpdateInput = {
+    plan?: EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
+    status?: StringFieldUpdateOperationsInput | string
+    seats?: IntFieldUpdateOperationsInput | number
+    period?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    providerSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutSubscriptionNestedInput
+  }
+
+  export type SubscriptionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    plan?: EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
+    status?: StringFieldUpdateOperationsInput | string
+    seats?: IntFieldUpdateOperationsInput | number
+    period?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    providerSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubscriptionCreateManyInput = {
+    id?: number
+    tenantId: number
+    plan?: $Enums.SubscriptionPlan
+    status?: string
+    seats?: number
+    period?: string
+    price?: number
+    provider?: string | null
+    providerCustomerId?: string | null
+    providerSubscriptionId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubscriptionUpdateManyMutationInput = {
+    plan?: EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
+    status?: StringFieldUpdateOperationsInput | string
+    seats?: IntFieldUpdateOperationsInput | number
+    period?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    providerSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubscriptionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    plan?: EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
+    status?: StringFieldUpdateOperationsInput | string
+    seats?: IntFieldUpdateOperationsInput | number
+    period?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    providerSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventCreateInput = {
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutUsageEventsInput
+    user?: UserCreateNestedOneWithoutUsageEventsInput
+  }
+
+  export type UsageEventUncheckedCreateInput = {
+    id?: number
+    tenantId: number
+    userId?: number | null
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type UsageEventUpdateInput = {
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutUsageEventsNestedInput
+    user?: UserUpdateOneWithoutUsageEventsNestedInput
+  }
+
+  export type UsageEventUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventCreateManyInput = {
+    id?: number
+    tenantId: number
+    userId?: number | null
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type UsageEventUpdateManyMutationInput = {
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiMetricCreateInput = {
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt?: Date | string
+    tenant?: TenantCreateNestedOneWithoutApiMetricsInput
+  }
+
+  export type ApiMetricUncheckedCreateInput = {
+    id?: number
+    tenantId?: number | null
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt?: Date | string
+  }
+
+  export type ApiMetricUpdateInput = {
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneWithoutApiMetricsNestedInput
+  }
+
+  export type ApiMetricUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiMetricCreateManyInput = {
+    id?: number
+    tenantId?: number | null
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt?: Date | string
+  }
+
+  export type ApiMetricUpdateManyMutationInput = {
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiMetricUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageCreateInput = {
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutPagesInput
+    createdBy?: UserCreateNestedOneWithoutPagesCreatedInput
+    updatedBy?: UserCreateNestedOneWithoutPagesUpdatedInput
+    versions?: DynamicPageVersionCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageUncheckedCreateInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: DynamicPageVersionUncheckedCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageUpdateInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutPagesNestedInput
+    createdBy?: UserUpdateOneWithoutPagesCreatedNestedInput
+    updatedBy?: UserUpdateOneWithoutPagesUpdatedNestedInput
+    versions?: DynamicPageVersionUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: DynamicPageVersionUncheckedUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageCreateManyInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DynamicPageUpdateManyMutationInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageVersionCreateInput = {
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    page: DynamicPageCreateNestedOneWithoutVersionsInput
+    createdBy?: UserCreateNestedOneWithoutPageVersionsCreatedInput
+    tenant: TenantCreateNestedOneWithoutPageVersionsInput
+  }
+
+  export type DynamicPageVersionUncheckedCreateInput = {
+    id?: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdById?: number | null
+    createdAt?: Date | string
+    tenantId: number
+  }
+
+  export type DynamicPageVersionUpdateInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    page?: DynamicPageUpdateOneRequiredWithoutVersionsNestedInput
+    createdBy?: UserUpdateOneWithoutPageVersionsCreatedNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutPageVersionsNestedInput
+  }
+
+  export type DynamicPageVersionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pageId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DynamicPageVersionCreateManyInput = {
+    id?: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdById?: number | null
+    createdAt?: Date | string
+    tenantId: number
+  }
+
+  export type DynamicPageVersionUpdateManyMutationInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pageId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -46217,6 +55231,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -46319,6 +55344,24 @@ export namespace Prisma {
     none?: SuggestionWhereInput
   }
 
+  export type DynamicPageListRelationFilter = {
+    every?: DynamicPageWhereInput
+    some?: DynamicPageWhereInput
+    none?: DynamicPageWhereInput
+  }
+
+  export type DynamicPageVersionListRelationFilter = {
+    every?: DynamicPageVersionWhereInput
+    some?: DynamicPageVersionWhereInput
+    none?: DynamicPageVersionWhereInput
+  }
+
+  export type UsageEventListRelationFilter = {
+    every?: UsageEventWhereInput
+    some?: UsageEventWhereInput
+    none?: UsageEventWhereInput
+  }
+
   export type MemberNullableScalarRelationFilter = {
     is?: MemberWhereInput | null
     isNot?: MemberWhereInput | null
@@ -46386,6 +55429,18 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type DynamicPageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DynamicPageVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UsageEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserTenantIdEmailCompoundUniqueInput = {
     tenantId: number
     email: string
@@ -46399,6 +55454,8 @@ export namespace Prisma {
     role?: SortOrder
     twoFactorEnabled?: SortOrder
     twoFactorSecret?: SortOrder
+    resetTokenHash?: SortOrder
+    resetTokenExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tenantId?: SortOrder
@@ -46417,6 +55474,8 @@ export namespace Prisma {
     role?: SortOrder
     twoFactorEnabled?: SortOrder
     twoFactorSecret?: SortOrder
+    resetTokenHash?: SortOrder
+    resetTokenExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tenantId?: SortOrder
@@ -46430,6 +55489,8 @@ export namespace Prisma {
     role?: SortOrder
     twoFactorEnabled?: SortOrder
     twoFactorSecret?: SortOrder
+    resetTokenHash?: SortOrder
+    resetTokenExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tenantId?: SortOrder
@@ -46508,6 +55569,20 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -46550,17 +55625,6 @@ export namespace Prisma {
     in?: $Enums.DemographicGroup[] | null
     notIn?: $Enums.DemographicGroup[] | null
     not?: NestedEnumDemographicGroupNullableFilter<$PrismaModel> | $Enums.DemographicGroup | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -46784,20 +55848,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumDemographicGroupNullableFilter<$PrismaModel>
     _max?: NestedEnumDemographicGroupNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -47623,6 +56673,35 @@ export namespace Prisma {
     tenantId?: SortOrder
   }
 
+  export type SystemSettingCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SystemSettingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type FamilyRelationParentIdChildIdCompoundUniqueInput = {
     parentId: number
     childId: number
@@ -48274,6 +57353,17 @@ export namespace Prisma {
     none?: QRCodeLinkWhereInput
   }
 
+  export type SubscriptionNullableScalarRelationFilter = {
+    is?: SubscriptionWhereInput | null
+    isNot?: SubscriptionWhereInput | null
+  }
+
+  export type ApiMetricListRelationFilter = {
+    every?: ApiMetricWhereInput
+    some?: ApiMetricWhereInput
+    none?: ApiMetricWhereInput
+  }
+
   export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -48291,6 +57381,10 @@ export namespace Prisma {
   }
 
   export type QRCodeLinkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApiMetricOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48331,6 +57425,324 @@ export namespace Prisma {
 
   export type TenantSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type EnumSubscriptionPlanFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionPlan | EnumSubscriptionPlanFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionPlan[]
+    notIn?: $Enums.SubscriptionPlan[]
+    not?: NestedEnumSubscriptionPlanFilter<$PrismaModel> | $Enums.SubscriptionPlan
+  }
+
+  export type SubscriptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    plan?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    period?: SortOrder
+    price?: SortOrder
+    provider?: SortOrder
+    providerCustomerId?: SortOrder
+    providerSubscriptionId?: SortOrder
+    currentPeriodStart?: SortOrder
+    currentPeriodEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubscriptionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    seats?: SortOrder
+    price?: SortOrder
+  }
+
+  export type SubscriptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    plan?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    period?: SortOrder
+    price?: SortOrder
+    provider?: SortOrder
+    providerCustomerId?: SortOrder
+    providerSubscriptionId?: SortOrder
+    currentPeriodStart?: SortOrder
+    currentPeriodEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubscriptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    plan?: SortOrder
+    status?: SortOrder
+    seats?: SortOrder
+    period?: SortOrder
+    price?: SortOrder
+    provider?: SortOrder
+    providerCustomerId?: SortOrder
+    providerSubscriptionId?: SortOrder
+    currentPeriodStart?: SortOrder
+    currentPeriodEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubscriptionSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    seats?: SortOrder
+    price?: SortOrder
+  }
+
+  export type EnumSubscriptionPlanWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionPlan | EnumSubscriptionPlanFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionPlan[]
+    notIn?: $Enums.SubscriptionPlan[]
+    not?: NestedEnumSubscriptionPlanWithAggregatesFilter<$PrismaModel> | $Enums.SubscriptionPlan
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubscriptionPlanFilter<$PrismaModel>
+    _max?: NestedEnumSubscriptionPlanFilter<$PrismaModel>
+  }
+
+  export type UsageEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    featureKey?: SortOrder
+    event?: SortOrder
+    meta?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UsageEventAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UsageEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    featureKey?: SortOrder
+    event?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UsageEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+    featureKey?: SortOrder
+    event?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UsageEventSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ApiMetricCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    method?: SortOrder
+    path?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApiMetricAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+  }
+
+  export type ApiMetricMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    method?: SortOrder
+    path?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApiMetricMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    method?: SortOrder
+    path?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApiMetricSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    status?: SortOrder
+    durationMs?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type DynamicPageTenantIdSlugCompoundUniqueInput = {
+    tenantId: number
+    slug: string
+  }
+
+  export type DynamicPageCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    slug?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    content?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DynamicPageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+  }
+
+  export type DynamicPageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    slug?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DynamicPageMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    slug?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DynamicPageSumOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type DynamicPageScalarRelationFilter = {
+    is?: DynamicPageWhereInput
+    isNot?: DynamicPageWhereInput
+  }
+
+  export type DynamicPageVersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type DynamicPageVersionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type DynamicPageVersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type DynamicPageVersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    tenantId?: SortOrder
+  }
+
+  export type DynamicPageVersionSumOrderByAggregateInput = {
+    id?: SortOrder
+    pageId?: SortOrder
+    version?: SortOrder
+    createdById?: SortOrder
+    tenantId?: SortOrder
   }
 
   export type AuditLogCreateNestedManyWithoutUserInput = {
@@ -48450,6 +57862,34 @@ export namespace Prisma {
     connectOrCreate?: SuggestionCreateOrConnectWithoutCreatedByInput | SuggestionCreateOrConnectWithoutCreatedByInput[]
     createMany?: SuggestionCreateManyCreatedByInputEnvelope
     connect?: SuggestionWhereUniqueInput | SuggestionWhereUniqueInput[]
+  }
+
+  export type DynamicPageCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DynamicPageCreateWithoutCreatedByInput, DynamicPageUncheckedCreateWithoutCreatedByInput> | DynamicPageCreateWithoutCreatedByInput[] | DynamicPageUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutCreatedByInput | DynamicPageCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DynamicPageCreateManyCreatedByInputEnvelope
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+  }
+
+  export type DynamicPageCreateNestedManyWithoutUpdatedByInput = {
+    create?: XOR<DynamicPageCreateWithoutUpdatedByInput, DynamicPageUncheckedCreateWithoutUpdatedByInput> | DynamicPageCreateWithoutUpdatedByInput[] | DynamicPageUncheckedCreateWithoutUpdatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutUpdatedByInput | DynamicPageCreateOrConnectWithoutUpdatedByInput[]
+    createMany?: DynamicPageCreateManyUpdatedByInputEnvelope
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+  }
+
+  export type DynamicPageVersionCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutCreatedByInput, DynamicPageVersionUncheckedCreateWithoutCreatedByInput> | DynamicPageVersionCreateWithoutCreatedByInput[] | DynamicPageVersionUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutCreatedByInput | DynamicPageVersionCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DynamicPageVersionCreateManyCreatedByInputEnvelope
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+  }
+
+  export type UsageEventCreateNestedManyWithoutUserInput = {
+    create?: XOR<UsageEventCreateWithoutUserInput, UsageEventUncheckedCreateWithoutUserInput> | UsageEventCreateWithoutUserInput[] | UsageEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutUserInput | UsageEventCreateOrConnectWithoutUserInput[]
+    createMany?: UsageEventCreateManyUserInputEnvelope
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
   }
 
   export type MemberCreateNestedOneWithoutUserInput = {
@@ -48583,6 +58023,34 @@ export namespace Prisma {
     connect?: SuggestionWhereUniqueInput | SuggestionWhereUniqueInput[]
   }
 
+  export type DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DynamicPageCreateWithoutCreatedByInput, DynamicPageUncheckedCreateWithoutCreatedByInput> | DynamicPageCreateWithoutCreatedByInput[] | DynamicPageUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutCreatedByInput | DynamicPageCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DynamicPageCreateManyCreatedByInputEnvelope
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+  }
+
+  export type DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput = {
+    create?: XOR<DynamicPageCreateWithoutUpdatedByInput, DynamicPageUncheckedCreateWithoutUpdatedByInput> | DynamicPageCreateWithoutUpdatedByInput[] | DynamicPageUncheckedCreateWithoutUpdatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutUpdatedByInput | DynamicPageCreateOrConnectWithoutUpdatedByInput[]
+    createMany?: DynamicPageCreateManyUpdatedByInputEnvelope
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+  }
+
+  export type DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutCreatedByInput, DynamicPageVersionUncheckedCreateWithoutCreatedByInput> | DynamicPageVersionCreateWithoutCreatedByInput[] | DynamicPageVersionUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutCreatedByInput | DynamicPageVersionCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DynamicPageVersionCreateManyCreatedByInputEnvelope
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+  }
+
+  export type UsageEventUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UsageEventCreateWithoutUserInput, UsageEventUncheckedCreateWithoutUserInput> | UsageEventCreateWithoutUserInput[] | UsageEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutUserInput | UsageEventCreateOrConnectWithoutUserInput[]
+    createMany?: UsageEventCreateManyUserInputEnvelope
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+  }
+
   export type MemberUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
     connectOrCreate?: MemberCreateOrConnectWithoutUserInput
@@ -48603,6 +58071,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -48845,6 +58317,62 @@ export namespace Prisma {
     update?: SuggestionUpdateWithWhereUniqueWithoutCreatedByInput | SuggestionUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: SuggestionUpdateManyWithWhereWithoutCreatedByInput | SuggestionUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: SuggestionScalarWhereInput | SuggestionScalarWhereInput[]
+  }
+
+  export type DynamicPageUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutCreatedByInput, DynamicPageUncheckedCreateWithoutCreatedByInput> | DynamicPageCreateWithoutCreatedByInput[] | DynamicPageUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutCreatedByInput | DynamicPageCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DynamicPageUpsertWithWhereUniqueWithoutCreatedByInput | DynamicPageUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DynamicPageCreateManyCreatedByInputEnvelope
+    set?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    disconnect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    delete?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    update?: DynamicPageUpdateWithWhereUniqueWithoutCreatedByInput | DynamicPageUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DynamicPageUpdateManyWithWhereWithoutCreatedByInput | DynamicPageUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+  }
+
+  export type DynamicPageUpdateManyWithoutUpdatedByNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutUpdatedByInput, DynamicPageUncheckedCreateWithoutUpdatedByInput> | DynamicPageCreateWithoutUpdatedByInput[] | DynamicPageUncheckedCreateWithoutUpdatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutUpdatedByInput | DynamicPageCreateOrConnectWithoutUpdatedByInput[]
+    upsert?: DynamicPageUpsertWithWhereUniqueWithoutUpdatedByInput | DynamicPageUpsertWithWhereUniqueWithoutUpdatedByInput[]
+    createMany?: DynamicPageCreateManyUpdatedByInputEnvelope
+    set?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    disconnect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    delete?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    update?: DynamicPageUpdateWithWhereUniqueWithoutUpdatedByInput | DynamicPageUpdateWithWhereUniqueWithoutUpdatedByInput[]
+    updateMany?: DynamicPageUpdateManyWithWhereWithoutUpdatedByInput | DynamicPageUpdateManyWithWhereWithoutUpdatedByInput[]
+    deleteMany?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+  }
+
+  export type DynamicPageVersionUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutCreatedByInput, DynamicPageVersionUncheckedCreateWithoutCreatedByInput> | DynamicPageVersionCreateWithoutCreatedByInput[] | DynamicPageVersionUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutCreatedByInput | DynamicPageVersionCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DynamicPageVersionUpsertWithWhereUniqueWithoutCreatedByInput | DynamicPageVersionUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DynamicPageVersionCreateManyCreatedByInputEnvelope
+    set?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    disconnect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    delete?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    update?: DynamicPageVersionUpdateWithWhereUniqueWithoutCreatedByInput | DynamicPageVersionUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DynamicPageVersionUpdateManyWithWhereWithoutCreatedByInput | DynamicPageVersionUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+  }
+
+  export type UsageEventUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UsageEventCreateWithoutUserInput, UsageEventUncheckedCreateWithoutUserInput> | UsageEventCreateWithoutUserInput[] | UsageEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutUserInput | UsageEventCreateOrConnectWithoutUserInput[]
+    upsert?: UsageEventUpsertWithWhereUniqueWithoutUserInput | UsageEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UsageEventCreateManyUserInputEnvelope
+    set?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    disconnect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    delete?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    update?: UsageEventUpdateWithWhereUniqueWithoutUserInput | UsageEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UsageEventUpdateManyWithWhereWithoutUserInput | UsageEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UsageEventScalarWhereInput | UsageEventScalarWhereInput[]
   }
 
   export type MemberUpdateOneWithoutUserNestedInput = {
@@ -49121,6 +58649,62 @@ export namespace Prisma {
     deleteMany?: SuggestionScalarWhereInput | SuggestionScalarWhereInput[]
   }
 
+  export type DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutCreatedByInput, DynamicPageUncheckedCreateWithoutCreatedByInput> | DynamicPageCreateWithoutCreatedByInput[] | DynamicPageUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutCreatedByInput | DynamicPageCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DynamicPageUpsertWithWhereUniqueWithoutCreatedByInput | DynamicPageUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DynamicPageCreateManyCreatedByInputEnvelope
+    set?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    disconnect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    delete?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    update?: DynamicPageUpdateWithWhereUniqueWithoutCreatedByInput | DynamicPageUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DynamicPageUpdateManyWithWhereWithoutCreatedByInput | DynamicPageUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+  }
+
+  export type DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutUpdatedByInput, DynamicPageUncheckedCreateWithoutUpdatedByInput> | DynamicPageCreateWithoutUpdatedByInput[] | DynamicPageUncheckedCreateWithoutUpdatedByInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutUpdatedByInput | DynamicPageCreateOrConnectWithoutUpdatedByInput[]
+    upsert?: DynamicPageUpsertWithWhereUniqueWithoutUpdatedByInput | DynamicPageUpsertWithWhereUniqueWithoutUpdatedByInput[]
+    createMany?: DynamicPageCreateManyUpdatedByInputEnvelope
+    set?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    disconnect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    delete?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    update?: DynamicPageUpdateWithWhereUniqueWithoutUpdatedByInput | DynamicPageUpdateWithWhereUniqueWithoutUpdatedByInput[]
+    updateMany?: DynamicPageUpdateManyWithWhereWithoutUpdatedByInput | DynamicPageUpdateManyWithWhereWithoutUpdatedByInput[]
+    deleteMany?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutCreatedByInput, DynamicPageVersionUncheckedCreateWithoutCreatedByInput> | DynamicPageVersionCreateWithoutCreatedByInput[] | DynamicPageVersionUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutCreatedByInput | DynamicPageVersionCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DynamicPageVersionUpsertWithWhereUniqueWithoutCreatedByInput | DynamicPageVersionUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DynamicPageVersionCreateManyCreatedByInputEnvelope
+    set?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    disconnect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    delete?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    update?: DynamicPageVersionUpdateWithWhereUniqueWithoutCreatedByInput | DynamicPageVersionUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DynamicPageVersionUpdateManyWithWhereWithoutCreatedByInput | DynamicPageVersionUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+  }
+
+  export type UsageEventUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UsageEventCreateWithoutUserInput, UsageEventUncheckedCreateWithoutUserInput> | UsageEventCreateWithoutUserInput[] | UsageEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutUserInput | UsageEventCreateOrConnectWithoutUserInput[]
+    upsert?: UsageEventUpsertWithWhereUniqueWithoutUserInput | UsageEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UsageEventCreateManyUserInputEnvelope
+    set?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    disconnect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    delete?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    update?: UsageEventUpdateWithWhereUniqueWithoutUserInput | UsageEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UsageEventUpdateManyWithWhereWithoutUserInput | UsageEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UsageEventScalarWhereInput | UsageEventScalarWhereInput[]
+  }
+
   export type MemberUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
     connectOrCreate?: MemberCreateOrConnectWithoutUserInput
@@ -49295,10 +58879,6 @@ export namespace Prisma {
 
   export type NullableEnumDemographicGroupFieldUpdateOperationsInput = {
     set?: $Enums.DemographicGroup | null
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type UserUpdateOneWithoutMemberNestedInput = {
@@ -51304,6 +60884,40 @@ export namespace Prisma {
     connect?: BusinessMinuteVersionWhereUniqueInput | BusinessMinuteVersionWhereUniqueInput[]
   }
 
+  export type SubscriptionCreateNestedOneWithoutTenantInput = {
+    create?: XOR<SubscriptionCreateWithoutTenantInput, SubscriptionUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: SubscriptionCreateOrConnectWithoutTenantInput
+    connect?: SubscriptionWhereUniqueInput
+  }
+
+  export type UsageEventCreateNestedManyWithoutTenantInput = {
+    create?: XOR<UsageEventCreateWithoutTenantInput, UsageEventUncheckedCreateWithoutTenantInput> | UsageEventCreateWithoutTenantInput[] | UsageEventUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutTenantInput | UsageEventCreateOrConnectWithoutTenantInput[]
+    createMany?: UsageEventCreateManyTenantInputEnvelope
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+  }
+
+  export type ApiMetricCreateNestedManyWithoutTenantInput = {
+    create?: XOR<ApiMetricCreateWithoutTenantInput, ApiMetricUncheckedCreateWithoutTenantInput> | ApiMetricCreateWithoutTenantInput[] | ApiMetricUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: ApiMetricCreateOrConnectWithoutTenantInput | ApiMetricCreateOrConnectWithoutTenantInput[]
+    createMany?: ApiMetricCreateManyTenantInputEnvelope
+    connect?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+  }
+
+  export type DynamicPageCreateNestedManyWithoutTenantInput = {
+    create?: XOR<DynamicPageCreateWithoutTenantInput, DynamicPageUncheckedCreateWithoutTenantInput> | DynamicPageCreateWithoutTenantInput[] | DynamicPageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutTenantInput | DynamicPageCreateOrConnectWithoutTenantInput[]
+    createMany?: DynamicPageCreateManyTenantInputEnvelope
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+  }
+
+  export type DynamicPageVersionCreateNestedManyWithoutTenantInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutTenantInput, DynamicPageVersionUncheckedCreateWithoutTenantInput> | DynamicPageVersionCreateWithoutTenantInput[] | DynamicPageVersionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutTenantInput | DynamicPageVersionCreateOrConnectWithoutTenantInput[]
+    createMany?: DynamicPageVersionCreateManyTenantInputEnvelope
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutTenantInput = {
     create?: XOR<UserCreateWithoutTenantInput, UserUncheckedCreateWithoutTenantInput> | UserCreateWithoutTenantInput[] | UserUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutTenantInput | UserCreateOrConnectWithoutTenantInput[]
@@ -51491,6 +61105,40 @@ export namespace Prisma {
     connectOrCreate?: BusinessMinuteVersionCreateOrConnectWithoutTenantInput | BusinessMinuteVersionCreateOrConnectWithoutTenantInput[]
     createMany?: BusinessMinuteVersionCreateManyTenantInputEnvelope
     connect?: BusinessMinuteVersionWhereUniqueInput | BusinessMinuteVersionWhereUniqueInput[]
+  }
+
+  export type SubscriptionUncheckedCreateNestedOneWithoutTenantInput = {
+    create?: XOR<SubscriptionCreateWithoutTenantInput, SubscriptionUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: SubscriptionCreateOrConnectWithoutTenantInput
+    connect?: SubscriptionWhereUniqueInput
+  }
+
+  export type UsageEventUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<UsageEventCreateWithoutTenantInput, UsageEventUncheckedCreateWithoutTenantInput> | UsageEventCreateWithoutTenantInput[] | UsageEventUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutTenantInput | UsageEventCreateOrConnectWithoutTenantInput[]
+    createMany?: UsageEventCreateManyTenantInputEnvelope
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+  }
+
+  export type ApiMetricUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<ApiMetricCreateWithoutTenantInput, ApiMetricUncheckedCreateWithoutTenantInput> | ApiMetricCreateWithoutTenantInput[] | ApiMetricUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: ApiMetricCreateOrConnectWithoutTenantInput | ApiMetricCreateOrConnectWithoutTenantInput[]
+    createMany?: ApiMetricCreateManyTenantInputEnvelope
+    connect?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+  }
+
+  export type DynamicPageUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<DynamicPageCreateWithoutTenantInput, DynamicPageUncheckedCreateWithoutTenantInput> | DynamicPageCreateWithoutTenantInput[] | DynamicPageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutTenantInput | DynamicPageCreateOrConnectWithoutTenantInput[]
+    createMany?: DynamicPageCreateManyTenantInputEnvelope
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+  }
+
+  export type DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutTenantInput, DynamicPageVersionUncheckedCreateWithoutTenantInput> | DynamicPageVersionCreateWithoutTenantInput[] | DynamicPageVersionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutTenantInput | DynamicPageVersionCreateOrConnectWithoutTenantInput[]
+    createMany?: DynamicPageVersionCreateManyTenantInputEnvelope
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
   }
 
   export type UserUpdateManyWithoutTenantNestedInput = {
@@ -51871,6 +61519,72 @@ export namespace Prisma {
     deleteMany?: BusinessMinuteVersionScalarWhereInput | BusinessMinuteVersionScalarWhereInput[]
   }
 
+  export type SubscriptionUpdateOneWithoutTenantNestedInput = {
+    create?: XOR<SubscriptionCreateWithoutTenantInput, SubscriptionUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: SubscriptionCreateOrConnectWithoutTenantInput
+    upsert?: SubscriptionUpsertWithoutTenantInput
+    disconnect?: SubscriptionWhereInput | boolean
+    delete?: SubscriptionWhereInput | boolean
+    connect?: SubscriptionWhereUniqueInput
+    update?: XOR<XOR<SubscriptionUpdateToOneWithWhereWithoutTenantInput, SubscriptionUpdateWithoutTenantInput>, SubscriptionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type UsageEventUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<UsageEventCreateWithoutTenantInput, UsageEventUncheckedCreateWithoutTenantInput> | UsageEventCreateWithoutTenantInput[] | UsageEventUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutTenantInput | UsageEventCreateOrConnectWithoutTenantInput[]
+    upsert?: UsageEventUpsertWithWhereUniqueWithoutTenantInput | UsageEventUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: UsageEventCreateManyTenantInputEnvelope
+    set?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    disconnect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    delete?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    update?: UsageEventUpdateWithWhereUniqueWithoutTenantInput | UsageEventUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: UsageEventUpdateManyWithWhereWithoutTenantInput | UsageEventUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: UsageEventScalarWhereInput | UsageEventScalarWhereInput[]
+  }
+
+  export type ApiMetricUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<ApiMetricCreateWithoutTenantInput, ApiMetricUncheckedCreateWithoutTenantInput> | ApiMetricCreateWithoutTenantInput[] | ApiMetricUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: ApiMetricCreateOrConnectWithoutTenantInput | ApiMetricCreateOrConnectWithoutTenantInput[]
+    upsert?: ApiMetricUpsertWithWhereUniqueWithoutTenantInput | ApiMetricUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: ApiMetricCreateManyTenantInputEnvelope
+    set?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    disconnect?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    delete?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    connect?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    update?: ApiMetricUpdateWithWhereUniqueWithoutTenantInput | ApiMetricUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: ApiMetricUpdateManyWithWhereWithoutTenantInput | ApiMetricUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: ApiMetricScalarWhereInput | ApiMetricScalarWhereInput[]
+  }
+
+  export type DynamicPageUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutTenantInput, DynamicPageUncheckedCreateWithoutTenantInput> | DynamicPageCreateWithoutTenantInput[] | DynamicPageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutTenantInput | DynamicPageCreateOrConnectWithoutTenantInput[]
+    upsert?: DynamicPageUpsertWithWhereUniqueWithoutTenantInput | DynamicPageUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: DynamicPageCreateManyTenantInputEnvelope
+    set?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    disconnect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    delete?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    update?: DynamicPageUpdateWithWhereUniqueWithoutTenantInput | DynamicPageUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: DynamicPageUpdateManyWithWhereWithoutTenantInput | DynamicPageUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+  }
+
+  export type DynamicPageVersionUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutTenantInput, DynamicPageVersionUncheckedCreateWithoutTenantInput> | DynamicPageVersionCreateWithoutTenantInput[] | DynamicPageVersionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutTenantInput | DynamicPageVersionCreateOrConnectWithoutTenantInput[]
+    upsert?: DynamicPageVersionUpsertWithWhereUniqueWithoutTenantInput | DynamicPageVersionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: DynamicPageVersionCreateManyTenantInputEnvelope
+    set?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    disconnect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    delete?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    update?: DynamicPageVersionUpdateWithWhereUniqueWithoutTenantInput | DynamicPageVersionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: DynamicPageVersionUpdateManyWithWhereWithoutTenantInput | DynamicPageVersionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutTenantNestedInput = {
     create?: XOR<UserCreateWithoutTenantInput, UserUncheckedCreateWithoutTenantInput> | UserCreateWithoutTenantInput[] | UserUncheckedCreateWithoutTenantInput[]
     connectOrCreate?: UserCreateOrConnectWithoutTenantInput | UserCreateOrConnectWithoutTenantInput[]
@@ -52249,6 +61963,268 @@ export namespace Prisma {
     deleteMany?: BusinessMinuteVersionScalarWhereInput | BusinessMinuteVersionScalarWhereInput[]
   }
 
+  export type SubscriptionUncheckedUpdateOneWithoutTenantNestedInput = {
+    create?: XOR<SubscriptionCreateWithoutTenantInput, SubscriptionUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: SubscriptionCreateOrConnectWithoutTenantInput
+    upsert?: SubscriptionUpsertWithoutTenantInput
+    disconnect?: SubscriptionWhereInput | boolean
+    delete?: SubscriptionWhereInput | boolean
+    connect?: SubscriptionWhereUniqueInput
+    update?: XOR<XOR<SubscriptionUpdateToOneWithWhereWithoutTenantInput, SubscriptionUpdateWithoutTenantInput>, SubscriptionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type UsageEventUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<UsageEventCreateWithoutTenantInput, UsageEventUncheckedCreateWithoutTenantInput> | UsageEventCreateWithoutTenantInput[] | UsageEventUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: UsageEventCreateOrConnectWithoutTenantInput | UsageEventCreateOrConnectWithoutTenantInput[]
+    upsert?: UsageEventUpsertWithWhereUniqueWithoutTenantInput | UsageEventUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: UsageEventCreateManyTenantInputEnvelope
+    set?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    disconnect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    delete?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    connect?: UsageEventWhereUniqueInput | UsageEventWhereUniqueInput[]
+    update?: UsageEventUpdateWithWhereUniqueWithoutTenantInput | UsageEventUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: UsageEventUpdateManyWithWhereWithoutTenantInput | UsageEventUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: UsageEventScalarWhereInput | UsageEventScalarWhereInput[]
+  }
+
+  export type ApiMetricUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<ApiMetricCreateWithoutTenantInput, ApiMetricUncheckedCreateWithoutTenantInput> | ApiMetricCreateWithoutTenantInput[] | ApiMetricUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: ApiMetricCreateOrConnectWithoutTenantInput | ApiMetricCreateOrConnectWithoutTenantInput[]
+    upsert?: ApiMetricUpsertWithWhereUniqueWithoutTenantInput | ApiMetricUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: ApiMetricCreateManyTenantInputEnvelope
+    set?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    disconnect?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    delete?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    connect?: ApiMetricWhereUniqueInput | ApiMetricWhereUniqueInput[]
+    update?: ApiMetricUpdateWithWhereUniqueWithoutTenantInput | ApiMetricUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: ApiMetricUpdateManyWithWhereWithoutTenantInput | ApiMetricUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: ApiMetricScalarWhereInput | ApiMetricScalarWhereInput[]
+  }
+
+  export type DynamicPageUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutTenantInput, DynamicPageUncheckedCreateWithoutTenantInput> | DynamicPageCreateWithoutTenantInput[] | DynamicPageUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutTenantInput | DynamicPageCreateOrConnectWithoutTenantInput[]
+    upsert?: DynamicPageUpsertWithWhereUniqueWithoutTenantInput | DynamicPageUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: DynamicPageCreateManyTenantInputEnvelope
+    set?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    disconnect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    delete?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    connect?: DynamicPageWhereUniqueInput | DynamicPageWhereUniqueInput[]
+    update?: DynamicPageUpdateWithWhereUniqueWithoutTenantInput | DynamicPageUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: DynamicPageUpdateManyWithWhereWithoutTenantInput | DynamicPageUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutTenantInput, DynamicPageVersionUncheckedCreateWithoutTenantInput> | DynamicPageVersionCreateWithoutTenantInput[] | DynamicPageVersionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutTenantInput | DynamicPageVersionCreateOrConnectWithoutTenantInput[]
+    upsert?: DynamicPageVersionUpsertWithWhereUniqueWithoutTenantInput | DynamicPageVersionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: DynamicPageVersionCreateManyTenantInputEnvelope
+    set?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    disconnect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    delete?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    update?: DynamicPageVersionUpdateWithWhereUniqueWithoutTenantInput | DynamicPageVersionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: DynamicPageVersionUpdateManyWithWhereWithoutTenantInput | DynamicPageVersionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+  }
+
+  export type TenantCreateNestedOneWithoutSubscriptionInput = {
+    create?: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSubscriptionInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type EnumSubscriptionPlanFieldUpdateOperationsInput = {
+    set?: $Enums.SubscriptionPlan
+  }
+
+  export type TenantUpdateOneRequiredWithoutSubscriptionNestedInput = {
+    create?: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutSubscriptionInput
+    upsert?: TenantUpsertWithoutSubscriptionInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutSubscriptionInput, TenantUpdateWithoutSubscriptionInput>, TenantUncheckedUpdateWithoutSubscriptionInput>
+  }
+
+  export type TenantCreateNestedOneWithoutUsageEventsInput = {
+    create?: XOR<TenantCreateWithoutUsageEventsInput, TenantUncheckedCreateWithoutUsageEventsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutUsageEventsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutUsageEventsInput = {
+    create?: XOR<UserCreateWithoutUsageEventsInput, UserUncheckedCreateWithoutUsageEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUsageEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantUpdateOneRequiredWithoutUsageEventsNestedInput = {
+    create?: XOR<TenantCreateWithoutUsageEventsInput, TenantUncheckedCreateWithoutUsageEventsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutUsageEventsInput
+    upsert?: TenantUpsertWithoutUsageEventsInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutUsageEventsInput, TenantUpdateWithoutUsageEventsInput>, TenantUncheckedUpdateWithoutUsageEventsInput>
+  }
+
+  export type UserUpdateOneWithoutUsageEventsNestedInput = {
+    create?: XOR<UserCreateWithoutUsageEventsInput, UserUncheckedCreateWithoutUsageEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUsageEventsInput
+    upsert?: UserUpsertWithoutUsageEventsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUsageEventsInput, UserUpdateWithoutUsageEventsInput>, UserUncheckedUpdateWithoutUsageEventsInput>
+  }
+
+  export type TenantCreateNestedOneWithoutApiMetricsInput = {
+    create?: XOR<TenantCreateWithoutApiMetricsInput, TenantUncheckedCreateWithoutApiMetricsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutApiMetricsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type TenantUpdateOneWithoutApiMetricsNestedInput = {
+    create?: XOR<TenantCreateWithoutApiMetricsInput, TenantUncheckedCreateWithoutApiMetricsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutApiMetricsInput
+    upsert?: TenantUpsertWithoutApiMetricsInput
+    disconnect?: TenantWhereInput | boolean
+    delete?: TenantWhereInput | boolean
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutApiMetricsInput, TenantUpdateWithoutApiMetricsInput>, TenantUncheckedUpdateWithoutApiMetricsInput>
+  }
+
+  export type TenantCreateNestedOneWithoutPagesInput = {
+    create?: XOR<TenantCreateWithoutPagesInput, TenantUncheckedCreateWithoutPagesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPagesInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutPagesCreatedInput = {
+    create?: XOR<UserCreateWithoutPagesCreatedInput, UserUncheckedCreateWithoutPagesCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPagesCreatedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutPagesUpdatedInput = {
+    create?: XOR<UserCreateWithoutPagesUpdatedInput, UserUncheckedCreateWithoutPagesUpdatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPagesUpdatedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DynamicPageVersionCreateNestedManyWithoutPageInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutPageInput, DynamicPageVersionUncheckedCreateWithoutPageInput> | DynamicPageVersionCreateWithoutPageInput[] | DynamicPageVersionUncheckedCreateWithoutPageInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutPageInput | DynamicPageVersionCreateOrConnectWithoutPageInput[]
+    createMany?: DynamicPageVersionCreateManyPageInputEnvelope
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+  }
+
+  export type DynamicPageVersionUncheckedCreateNestedManyWithoutPageInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutPageInput, DynamicPageVersionUncheckedCreateWithoutPageInput> | DynamicPageVersionCreateWithoutPageInput[] | DynamicPageVersionUncheckedCreateWithoutPageInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutPageInput | DynamicPageVersionCreateOrConnectWithoutPageInput[]
+    createMany?: DynamicPageVersionCreateManyPageInputEnvelope
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+  }
+
+  export type TenantUpdateOneRequiredWithoutPagesNestedInput = {
+    create?: XOR<TenantCreateWithoutPagesInput, TenantUncheckedCreateWithoutPagesInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPagesInput
+    upsert?: TenantUpsertWithoutPagesInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutPagesInput, TenantUpdateWithoutPagesInput>, TenantUncheckedUpdateWithoutPagesInput>
+  }
+
+  export type UserUpdateOneWithoutPagesCreatedNestedInput = {
+    create?: XOR<UserCreateWithoutPagesCreatedInput, UserUncheckedCreateWithoutPagesCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPagesCreatedInput
+    upsert?: UserUpsertWithoutPagesCreatedInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPagesCreatedInput, UserUpdateWithoutPagesCreatedInput>, UserUncheckedUpdateWithoutPagesCreatedInput>
+  }
+
+  export type UserUpdateOneWithoutPagesUpdatedNestedInput = {
+    create?: XOR<UserCreateWithoutPagesUpdatedInput, UserUncheckedCreateWithoutPagesUpdatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPagesUpdatedInput
+    upsert?: UserUpsertWithoutPagesUpdatedInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPagesUpdatedInput, UserUpdateWithoutPagesUpdatedInput>, UserUncheckedUpdateWithoutPagesUpdatedInput>
+  }
+
+  export type DynamicPageVersionUpdateManyWithoutPageNestedInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutPageInput, DynamicPageVersionUncheckedCreateWithoutPageInput> | DynamicPageVersionCreateWithoutPageInput[] | DynamicPageVersionUncheckedCreateWithoutPageInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutPageInput | DynamicPageVersionCreateOrConnectWithoutPageInput[]
+    upsert?: DynamicPageVersionUpsertWithWhereUniqueWithoutPageInput | DynamicPageVersionUpsertWithWhereUniqueWithoutPageInput[]
+    createMany?: DynamicPageVersionCreateManyPageInputEnvelope
+    set?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    disconnect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    delete?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    update?: DynamicPageVersionUpdateWithWhereUniqueWithoutPageInput | DynamicPageVersionUpdateWithWhereUniqueWithoutPageInput[]
+    updateMany?: DynamicPageVersionUpdateManyWithWhereWithoutPageInput | DynamicPageVersionUpdateManyWithWhereWithoutPageInput[]
+    deleteMany?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyWithoutPageNestedInput = {
+    create?: XOR<DynamicPageVersionCreateWithoutPageInput, DynamicPageVersionUncheckedCreateWithoutPageInput> | DynamicPageVersionCreateWithoutPageInput[] | DynamicPageVersionUncheckedCreateWithoutPageInput[]
+    connectOrCreate?: DynamicPageVersionCreateOrConnectWithoutPageInput | DynamicPageVersionCreateOrConnectWithoutPageInput[]
+    upsert?: DynamicPageVersionUpsertWithWhereUniqueWithoutPageInput | DynamicPageVersionUpsertWithWhereUniqueWithoutPageInput[]
+    createMany?: DynamicPageVersionCreateManyPageInputEnvelope
+    set?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    disconnect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    delete?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    connect?: DynamicPageVersionWhereUniqueInput | DynamicPageVersionWhereUniqueInput[]
+    update?: DynamicPageVersionUpdateWithWhereUniqueWithoutPageInput | DynamicPageVersionUpdateWithWhereUniqueWithoutPageInput[]
+    updateMany?: DynamicPageVersionUpdateManyWithWhereWithoutPageInput | DynamicPageVersionUpdateManyWithWhereWithoutPageInput[]
+    deleteMany?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+  }
+
+  export type DynamicPageCreateNestedOneWithoutVersionsInput = {
+    create?: XOR<DynamicPageCreateWithoutVersionsInput, DynamicPageUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutVersionsInput
+    connect?: DynamicPageWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutPageVersionsCreatedInput = {
+    create?: XOR<UserCreateWithoutPageVersionsCreatedInput, UserUncheckedCreateWithoutPageVersionsCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPageVersionsCreatedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutPageVersionsInput = {
+    create?: XOR<TenantCreateWithoutPageVersionsInput, TenantUncheckedCreateWithoutPageVersionsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPageVersionsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type DynamicPageUpdateOneRequiredWithoutVersionsNestedInput = {
+    create?: XOR<DynamicPageCreateWithoutVersionsInput, DynamicPageUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: DynamicPageCreateOrConnectWithoutVersionsInput
+    upsert?: DynamicPageUpsertWithoutVersionsInput
+    connect?: DynamicPageWhereUniqueInput
+    update?: XOR<XOR<DynamicPageUpdateToOneWithWhereWithoutVersionsInput, DynamicPageUpdateWithoutVersionsInput>, DynamicPageUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type UserUpdateOneWithoutPageVersionsCreatedNestedInput = {
+    create?: XOR<UserCreateWithoutPageVersionsCreatedInput, UserUncheckedCreateWithoutPageVersionsCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPageVersionsCreatedInput
+    upsert?: UserUpsertWithoutPageVersionsCreatedInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPageVersionsCreatedInput, UserUpdateWithoutPageVersionsCreatedInput>, UserUncheckedUpdateWithoutPageVersionsCreatedInput>
+  }
+
+  export type TenantUpdateOneRequiredWithoutPageVersionsNestedInput = {
+    create?: XOR<TenantCreateWithoutPageVersionsInput, TenantUncheckedCreateWithoutPageVersionsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutPageVersionsInput
+    upsert?: TenantUpsertWithoutPageVersionsInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutPageVersionsInput, TenantUpdateWithoutPageVersionsInput>, TenantUncheckedUpdateWithoutPageVersionsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -52298,6 +62274,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -52401,6 +62388,20 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -52456,17 +62457,6 @@ export namespace Prisma {
     not?: NestedEnumDemographicGroupNullableFilter<$PrismaModel> | $Enums.DemographicGroup | null
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedEnumGenderWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
     in?: $Enums.Gender[]
@@ -52485,20 +62475,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumDemographicGroupNullableFilter<$PrismaModel>
     _max?: NestedEnumDemographicGroupNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -52567,6 +62543,41 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSermonTypeFilter<$PrismaModel>
     _max?: NestedEnumSermonTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumSubscriptionPlanFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionPlan | EnumSubscriptionPlanFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionPlan[]
+    notIn?: $Enums.SubscriptionPlan[]
+    not?: NestedEnumSubscriptionPlanFilter<$PrismaModel> | $Enums.SubscriptionPlan
+  }
+
+  export type NestedEnumSubscriptionPlanWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubscriptionPlan | EnumSubscriptionPlanFieldRefInput<$PrismaModel>
+    in?: $Enums.SubscriptionPlan[]
+    notIn?: $Enums.SubscriptionPlan[]
+    not?: NestedEnumSubscriptionPlanWithAggregatesFilter<$PrismaModel> | $Enums.SubscriptionPlan
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubscriptionPlanFilter<$PrismaModel>
+    _max?: NestedEnumSubscriptionPlanFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type AuditLogCreateWithoutUserInput = {
@@ -53209,6 +63220,132 @@ export namespace Prisma {
     data: SuggestionCreateManyCreatedByInput | SuggestionCreateManyCreatedByInput[]
   }
 
+  export type DynamicPageCreateWithoutCreatedByInput = {
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutPagesInput
+    updatedBy?: UserCreateNestedOneWithoutPagesUpdatedInput
+    versions?: DynamicPageVersionCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageUncheckedCreateWithoutCreatedByInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: DynamicPageVersionUncheckedCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageCreateOrConnectWithoutCreatedByInput = {
+    where: DynamicPageWhereUniqueInput
+    create: XOR<DynamicPageCreateWithoutCreatedByInput, DynamicPageUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DynamicPageCreateManyCreatedByInputEnvelope = {
+    data: DynamicPageCreateManyCreatedByInput | DynamicPageCreateManyCreatedByInput[]
+  }
+
+  export type DynamicPageCreateWithoutUpdatedByInput = {
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutPagesInput
+    createdBy?: UserCreateNestedOneWithoutPagesCreatedInput
+    versions?: DynamicPageVersionCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageUncheckedCreateWithoutUpdatedByInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: DynamicPageVersionUncheckedCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageCreateOrConnectWithoutUpdatedByInput = {
+    where: DynamicPageWhereUniqueInput
+    create: XOR<DynamicPageCreateWithoutUpdatedByInput, DynamicPageUncheckedCreateWithoutUpdatedByInput>
+  }
+
+  export type DynamicPageCreateManyUpdatedByInputEnvelope = {
+    data: DynamicPageCreateManyUpdatedByInput | DynamicPageCreateManyUpdatedByInput[]
+  }
+
+  export type DynamicPageVersionCreateWithoutCreatedByInput = {
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    page: DynamicPageCreateNestedOneWithoutVersionsInput
+    tenant: TenantCreateNestedOneWithoutPageVersionsInput
+  }
+
+  export type DynamicPageVersionUncheckedCreateWithoutCreatedByInput = {
+    id?: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    tenantId: number
+  }
+
+  export type DynamicPageVersionCreateOrConnectWithoutCreatedByInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    create: XOR<DynamicPageVersionCreateWithoutCreatedByInput, DynamicPageVersionUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DynamicPageVersionCreateManyCreatedByInputEnvelope = {
+    data: DynamicPageVersionCreateManyCreatedByInput | DynamicPageVersionCreateManyCreatedByInput[]
+  }
+
+  export type UsageEventCreateWithoutUserInput = {
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutUsageEventsInput
+  }
+
+  export type UsageEventUncheckedCreateWithoutUserInput = {
+    id?: number
+    tenantId: number
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type UsageEventCreateOrConnectWithoutUserInput = {
+    where: UsageEventWhereUniqueInput
+    create: XOR<UsageEventCreateWithoutUserInput, UsageEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type UsageEventCreateManyUserInputEnvelope = {
+    data: UsageEventCreateManyUserInput | UsageEventCreateManyUserInput[]
+  }
+
   export type MemberCreateWithoutUserInput = {
     firstName: string
     lastName: string
@@ -53325,6 +63462,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutUsersInput = {
@@ -53362,6 +63504,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutUsersInput = {
@@ -53847,6 +63994,114 @@ export namespace Prisma {
     tenantId?: IntFilter<"Suggestion"> | number
   }
 
+  export type DynamicPageUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: DynamicPageWhereUniqueInput
+    update: XOR<DynamicPageUpdateWithoutCreatedByInput, DynamicPageUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<DynamicPageCreateWithoutCreatedByInput, DynamicPageUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DynamicPageUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: DynamicPageWhereUniqueInput
+    data: XOR<DynamicPageUpdateWithoutCreatedByInput, DynamicPageUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type DynamicPageUpdateManyWithWhereWithoutCreatedByInput = {
+    where: DynamicPageScalarWhereInput
+    data: XOR<DynamicPageUpdateManyMutationInput, DynamicPageUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type DynamicPageScalarWhereInput = {
+    AND?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+    OR?: DynamicPageScalarWhereInput[]
+    NOT?: DynamicPageScalarWhereInput | DynamicPageScalarWhereInput[]
+    id?: IntFilter<"DynamicPage"> | number
+    tenantId?: IntFilter<"DynamicPage"> | number
+    slug?: StringFilter<"DynamicPage"> | string
+    title?: StringFilter<"DynamicPage"> | string
+    status?: StringFilter<"DynamicPage"> | string
+    content?: JsonFilter<"DynamicPage">
+    version?: IntFilter<"DynamicPage"> | number
+    createdById?: IntNullableFilter<"DynamicPage"> | number | null
+    updatedById?: IntNullableFilter<"DynamicPage"> | number | null
+    createdAt?: DateTimeFilter<"DynamicPage"> | Date | string
+    updatedAt?: DateTimeFilter<"DynamicPage"> | Date | string
+  }
+
+  export type DynamicPageUpsertWithWhereUniqueWithoutUpdatedByInput = {
+    where: DynamicPageWhereUniqueInput
+    update: XOR<DynamicPageUpdateWithoutUpdatedByInput, DynamicPageUncheckedUpdateWithoutUpdatedByInput>
+    create: XOR<DynamicPageCreateWithoutUpdatedByInput, DynamicPageUncheckedCreateWithoutUpdatedByInput>
+  }
+
+  export type DynamicPageUpdateWithWhereUniqueWithoutUpdatedByInput = {
+    where: DynamicPageWhereUniqueInput
+    data: XOR<DynamicPageUpdateWithoutUpdatedByInput, DynamicPageUncheckedUpdateWithoutUpdatedByInput>
+  }
+
+  export type DynamicPageUpdateManyWithWhereWithoutUpdatedByInput = {
+    where: DynamicPageScalarWhereInput
+    data: XOR<DynamicPageUpdateManyMutationInput, DynamicPageUncheckedUpdateManyWithoutUpdatedByInput>
+  }
+
+  export type DynamicPageVersionUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    update: XOR<DynamicPageVersionUpdateWithoutCreatedByInput, DynamicPageVersionUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<DynamicPageVersionCreateWithoutCreatedByInput, DynamicPageVersionUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DynamicPageVersionUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    data: XOR<DynamicPageVersionUpdateWithoutCreatedByInput, DynamicPageVersionUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type DynamicPageVersionUpdateManyWithWhereWithoutCreatedByInput = {
+    where: DynamicPageVersionScalarWhereInput
+    data: XOR<DynamicPageVersionUpdateManyMutationInput, DynamicPageVersionUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type DynamicPageVersionScalarWhereInput = {
+    AND?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+    OR?: DynamicPageVersionScalarWhereInput[]
+    NOT?: DynamicPageVersionScalarWhereInput | DynamicPageVersionScalarWhereInput[]
+    id?: IntFilter<"DynamicPageVersion"> | number
+    pageId?: IntFilter<"DynamicPageVersion"> | number
+    version?: IntFilter<"DynamicPageVersion"> | number
+    title?: StringFilter<"DynamicPageVersion"> | string
+    content?: JsonFilter<"DynamicPageVersion">
+    createdById?: IntNullableFilter<"DynamicPageVersion"> | number | null
+    createdAt?: DateTimeFilter<"DynamicPageVersion"> | Date | string
+    tenantId?: IntFilter<"DynamicPageVersion"> | number
+  }
+
+  export type UsageEventUpsertWithWhereUniqueWithoutUserInput = {
+    where: UsageEventWhereUniqueInput
+    update: XOR<UsageEventUpdateWithoutUserInput, UsageEventUncheckedUpdateWithoutUserInput>
+    create: XOR<UsageEventCreateWithoutUserInput, UsageEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type UsageEventUpdateWithWhereUniqueWithoutUserInput = {
+    where: UsageEventWhereUniqueInput
+    data: XOR<UsageEventUpdateWithoutUserInput, UsageEventUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UsageEventUpdateManyWithWhereWithoutUserInput = {
+    where: UsageEventScalarWhereInput
+    data: XOR<UsageEventUpdateManyMutationInput, UsageEventUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UsageEventScalarWhereInput = {
+    AND?: UsageEventScalarWhereInput | UsageEventScalarWhereInput[]
+    OR?: UsageEventScalarWhereInput[]
+    NOT?: UsageEventScalarWhereInput | UsageEventScalarWhereInput[]
+    id?: IntFilter<"UsageEvent"> | number
+    tenantId?: IntFilter<"UsageEvent"> | number
+    userId?: IntNullableFilter<"UsageEvent"> | number | null
+    featureKey?: StringFilter<"UsageEvent"> | string
+    event?: StringFilter<"UsageEvent"> | string
+    meta?: JsonNullableFilter<"UsageEvent">
+    createdAt?: DateTimeFilter<"UsageEvent"> | Date | string
+  }
+
   export type MemberUpsertWithoutUserInput = {
     update: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
     create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
@@ -53980,6 +64235,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -54017,6 +64277,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutMemberInput = {
@@ -54026,6 +64291,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -54045,6 +64312,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
 
@@ -54056,6 +64327,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -54076,6 +64349,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMemberInput = {
@@ -54396,6 +64673,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutMembersInput = {
@@ -54433,6 +64715,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutMembersInput = {
@@ -54458,6 +64745,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -54477,6 +64766,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
 
@@ -54488,6 +64781,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -54508,6 +64803,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DepartmentUpsertWithoutMembersInput = {
@@ -54833,6 +65132,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutMembersInput = {
@@ -54870,6 +65174,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutMinistriesLedInput = {
@@ -54879,6 +65188,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -54897,6 +65208,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -54909,6 +65224,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -54928,6 +65245,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -55137,6 +65458,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutDepartmentsInput = {
@@ -55174,6 +65500,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutDepartmentsInput = {
@@ -55199,6 +65530,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -55217,6 +65550,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -55229,6 +65566,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55248,6 +65587,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -55420,6 +65763,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutDepartmentsInput = {
@@ -55457,6 +65805,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type DepartmentCreateWithoutEventsInput = {
@@ -55571,6 +65924,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutEventsInput = {
@@ -55608,6 +65966,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutEventsInput = {
@@ -55728,6 +66091,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutEventsInput = {
@@ -55765,6 +66133,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutProgramsCreatedInput = {
@@ -55774,6 +66147,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -55792,6 +66167,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -55804,6 +66183,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -55823,6 +66204,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -55865,6 +66250,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutProgramsInput = {
@@ -55902,6 +66292,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutProgramsInput = {
@@ -55927,6 +66322,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -55945,6 +66342,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -55957,6 +66358,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55976,6 +66379,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -56024,6 +66431,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutProgramsInput = {
@@ -56061,6 +66473,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CellGroupMembershipCreateWithoutGroupInput = {
@@ -56100,6 +66517,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -56118,6 +66537,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -56130,6 +66553,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -56149,6 +66574,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -56191,6 +66620,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCellGroupsInput = {
@@ -56228,6 +66662,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCellGroupsInput = {
@@ -56269,6 +66708,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -56287,6 +66728,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -56299,6 +66744,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56318,6 +66765,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -56366,6 +66817,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCellGroupsInput = {
@@ -56403,6 +66859,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CellGroupCreateWithoutMembershipsInput = {
@@ -56520,6 +66981,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -56538,6 +67001,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -56550,6 +67017,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -56569,6 +67038,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -56637,6 +67110,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCellGroupMembershipsInput = {
@@ -56674,6 +67152,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCellGroupMembershipsInput = {
@@ -56819,6 +67302,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -56837,6 +67322,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -56849,6 +67338,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56868,6 +67359,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -56932,6 +67427,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCellGroupMembershipsInput = {
@@ -56969,6 +67469,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CellGroupMembershipCreateWithoutContributionsInput = {
@@ -57004,6 +67509,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -57022,6 +67529,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -57034,6 +67545,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -57053,6 +67566,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -57095,6 +67612,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCellGroupContributionsInput = {
@@ -57132,6 +67654,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCellGroupContributionsInput = {
@@ -57189,6 +67716,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -57207,6 +67736,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -57219,6 +67752,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -57238,6 +67773,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -57286,6 +67825,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCellGroupContributionsInput = {
@@ -57323,6 +67867,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type EventCreateWithoutRegistrationsInput = {
@@ -57471,6 +68020,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutEventRegistrationsInput = {
@@ -57508,6 +68062,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutEventRegistrationsInput = {
@@ -57684,6 +68243,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutEventRegistrationsInput = {
@@ -57721,6 +68285,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type DepartmentCreateWithoutAttendanceRecordsInput = {
@@ -57811,6 +68380,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAttendanceInput = {
@@ -57848,6 +68422,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAttendanceInput = {
@@ -57952,6 +68531,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAttendanceInput = {
@@ -57989,6 +68573,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type AttendanceRecordCreateWithoutEntriesInput = {
@@ -58159,6 +68748,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAttendanceEntriesInput = {
@@ -58196,6 +68790,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAttendanceEntriesInput = {
@@ -58400,6 +68999,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAttendanceEntriesInput = {
@@ -58437,6 +69041,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type MemberCreateWithoutContributionsInput = {
@@ -58528,6 +69137,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -58546,6 +69157,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -58558,6 +69173,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -58577,6 +69194,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -58619,6 +69240,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFinanceInput = {
@@ -58656,6 +69282,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFinanceInput = {
@@ -58769,6 +69400,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -58787,6 +69420,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -58799,6 +69436,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -58818,6 +69457,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -58866,6 +69509,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFinanceInput = {
@@ -58903,6 +69551,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutAnnouncementsCreatedInput = {
@@ -58912,6 +69565,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -58930,6 +69585,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -58942,6 +69601,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -58961,6 +69622,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -59003,6 +69668,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAnnouncementsInput = {
@@ -59040,6 +69710,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAnnouncementsInput = {
@@ -59065,6 +69740,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -59083,6 +69760,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -59095,6 +69776,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59114,6 +69797,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -59162,6 +69849,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAnnouncementsInput = {
@@ -59199,6 +69891,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateWithoutSermonsInput = {
@@ -59235,6 +69932,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSermonsInput = {
@@ -59272,6 +69974,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSermonsInput = {
@@ -59324,6 +70031,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSermonsInput = {
@@ -59361,6 +70073,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutAuditLogsInput = {
@@ -59370,6 +70087,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     announcementsCreated?: AnnouncementCreateNestedManyWithoutCreatedByInput
@@ -59388,6 +70107,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -59400,6 +70123,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -59419,6 +70144,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -59461,6 +70190,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutAuditLogsInput = {
@@ -59498,6 +70232,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -59523,6 +70262,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     announcementsCreated?: AnnouncementUpdateManyWithoutCreatedByNestedInput
@@ -59541,6 +70282,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -59553,6 +70298,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -59572,6 +70319,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -59620,6 +70371,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutAuditLogsInput = {
@@ -59657,6 +70413,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type MemberCreateWithoutMemberDepartmentsInput = {
@@ -59929,6 +70690,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSettingsInput = {
@@ -59966,6 +70732,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSettingsInput = {
@@ -60018,6 +70789,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSettingsInput = {
@@ -60055,6 +70831,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type MemberCreateWithoutParentsInput = {
@@ -60255,6 +71036,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFamilyRelationsInput = {
@@ -60292,6 +71078,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFamilyRelationsInput = {
@@ -60520,6 +71311,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFamilyRelationsInput = {
@@ -60557,6 +71353,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutBoardMinutesApprovedInput = {
@@ -60566,6 +71367,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -60584,6 +71387,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -60596,6 +71403,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -60615,6 +71424,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -60630,6 +71443,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -60648,6 +71463,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -60660,6 +71479,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -60679,6 +71500,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -60694,6 +71519,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -60712,6 +71539,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -60724,6 +71555,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -60743,6 +71576,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -60813,6 +71650,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutBoardMinutesInput = {
@@ -60850,6 +71692,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutBoardMinutesInput = {
@@ -60875,6 +71722,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -60893,6 +71742,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -60905,6 +71758,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -60924,6 +71779,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -60945,6 +71804,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -60963,6 +71824,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -60975,6 +71840,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -60994,6 +71861,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -61015,6 +71886,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -61033,6 +71906,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -61045,6 +71922,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -61064,6 +71943,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -61128,6 +72011,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutBoardMinutesInput = {
@@ -61165,6 +72053,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type BoardMinuteCreateWithoutVersionsInput = {
@@ -61222,6 +72115,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -61240,6 +72135,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -61252,6 +72151,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -61271,6 +72172,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -61313,6 +72218,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutBoardMinuteVersionsInput = {
@@ -61350,6 +72260,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutBoardMinuteVersionsInput = {
@@ -61429,6 +72344,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -61447,6 +72364,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -61459,6 +72380,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -61478,6 +72401,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -61526,6 +72453,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutBoardMinuteVersionsInput = {
@@ -61563,6 +72495,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutBusinessMinutesApprovedInput = {
@@ -61572,6 +72509,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -61590,6 +72529,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -61602,6 +72545,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -61621,6 +72566,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -61636,6 +72585,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -61654,6 +72605,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -61666,6 +72621,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -61685,6 +72642,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -61700,6 +72661,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -61718,6 +72681,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -61730,6 +72697,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -61749,6 +72718,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -61819,6 +72792,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutBusinessMinutesInput = {
@@ -61856,6 +72834,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutBusinessMinutesInput = {
@@ -61881,6 +72864,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -61899,6 +72884,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -61911,6 +72900,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -61930,6 +72921,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -61951,6 +72946,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -61969,6 +72966,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -61981,6 +72982,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -62000,6 +73003,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -62021,6 +73028,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -62039,6 +73048,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -62051,6 +73064,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -62070,6 +73085,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -62134,6 +73153,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutBusinessMinutesInput = {
@@ -62171,6 +73195,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type BusinessMinuteCreateWithoutVersionsInput = {
@@ -62230,6 +73259,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -62248,6 +73279,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -62260,6 +73295,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -62279,6 +73316,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -62321,6 +73362,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutBusinessMinuteVersionsInput = {
@@ -62358,6 +73404,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutBusinessMinuteVersionsInput = {
@@ -62439,6 +73490,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -62457,6 +73510,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -62469,6 +73526,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -62488,6 +73547,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -62536,6 +73599,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutBusinessMinuteVersionsInput = {
@@ -62573,6 +73641,11 @@ export namespace Prisma {
     boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CouncilMemberCreateWithoutCouncilInput = {
@@ -62633,6 +73706,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCouncilsInput = {
@@ -62670,6 +73748,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCouncilsInput = {
@@ -62738,6 +73821,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCouncilsInput = {
@@ -62775,6 +73863,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CouncilCreateWithoutMembersInput = {
@@ -62919,6 +74012,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCouncilMembersInput = {
@@ -62956,6 +74054,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCouncilMembersInput = {
@@ -63128,6 +74231,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCouncilMembersInput = {
@@ -63165,6 +74273,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type MemberCreateWithoutCommitteesChairedInput = {
@@ -63307,6 +74420,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCommitteesInput = {
@@ -63344,6 +74462,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCommitteesInput = {
@@ -63500,6 +74623,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCommitteesInput = {
@@ -63537,6 +74665,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type CommitteeCreateWithoutMembersInput = {
@@ -63681,6 +74814,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutCommitteeMembersInput = {
@@ -63718,6 +74856,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutCommitteeMembersInput = {
@@ -63890,6 +75033,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutCommitteeMembersInput = {
@@ -63927,6 +75075,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutSuggestionsCreatedInput = {
@@ -63936,6 +75089,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -63954,6 +75109,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
     tenant?: TenantCreateNestedOneWithoutUsersInput
   }
@@ -63966,6 +75125,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tenantId?: number | null
@@ -63985,6 +75146,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -64027,6 +75192,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutSuggestionsInput = {
@@ -64064,6 +75234,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutSuggestionsInput = {
@@ -64089,6 +75264,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -64107,6 +75284,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
     tenant?: TenantUpdateOneWithoutUsersNestedInput
   }
@@ -64119,6 +75300,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -64138,6 +75321,10 @@ export namespace Prisma {
     businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -64186,6 +75373,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutSuggestionsInput = {
@@ -64223,6 +75415,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantCreateWithoutQrLinksInput = {
@@ -64259,6 +75456,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutQrLinksInput = {
@@ -64296,6 +75498,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutQrLinksInput = {
@@ -64348,6 +75555,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutQrLinksInput = {
@@ -64385,6 +75597,11 @@ export namespace Prisma {
     businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
     boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
     businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
   }
 
   export type UserCreateWithoutTenantInput = {
@@ -64394,6 +75611,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
@@ -64413,6 +75632,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
     member?: MemberCreateNestedOneWithoutUserInput
   }
 
@@ -64424,6 +75647,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -64443,6 +75668,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
     suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
     member?: MemberUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -65290,6 +76519,158 @@ export namespace Prisma {
     data: BusinessMinuteVersionCreateManyTenantInput | BusinessMinuteVersionCreateManyTenantInput[]
   }
 
+  export type SubscriptionCreateWithoutTenantInput = {
+    plan?: $Enums.SubscriptionPlan
+    status?: string
+    seats?: number
+    period?: string
+    price?: number
+    provider?: string | null
+    providerCustomerId?: string | null
+    providerSubscriptionId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubscriptionUncheckedCreateWithoutTenantInput = {
+    id?: number
+    plan?: $Enums.SubscriptionPlan
+    status?: string
+    seats?: number
+    period?: string
+    price?: number
+    provider?: string | null
+    providerCustomerId?: string | null
+    providerSubscriptionId?: string | null
+    currentPeriodStart?: Date | string | null
+    currentPeriodEnd?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubscriptionCreateOrConnectWithoutTenantInput = {
+    where: SubscriptionWhereUniqueInput
+    create: XOR<SubscriptionCreateWithoutTenantInput, SubscriptionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type UsageEventCreateWithoutTenantInput = {
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutUsageEventsInput
+  }
+
+  export type UsageEventUncheckedCreateWithoutTenantInput = {
+    id?: number
+    userId?: number | null
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type UsageEventCreateOrConnectWithoutTenantInput = {
+    where: UsageEventWhereUniqueInput
+    create: XOR<UsageEventCreateWithoutTenantInput, UsageEventUncheckedCreateWithoutTenantInput>
+  }
+
+  export type UsageEventCreateManyTenantInputEnvelope = {
+    data: UsageEventCreateManyTenantInput | UsageEventCreateManyTenantInput[]
+  }
+
+  export type ApiMetricCreateWithoutTenantInput = {
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt?: Date | string
+  }
+
+  export type ApiMetricUncheckedCreateWithoutTenantInput = {
+    id?: number
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt?: Date | string
+  }
+
+  export type ApiMetricCreateOrConnectWithoutTenantInput = {
+    where: ApiMetricWhereUniqueInput
+    create: XOR<ApiMetricCreateWithoutTenantInput, ApiMetricUncheckedCreateWithoutTenantInput>
+  }
+
+  export type ApiMetricCreateManyTenantInputEnvelope = {
+    data: ApiMetricCreateManyTenantInput | ApiMetricCreateManyTenantInput[]
+  }
+
+  export type DynamicPageCreateWithoutTenantInput = {
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutPagesCreatedInput
+    updatedBy?: UserCreateNestedOneWithoutPagesUpdatedInput
+    versions?: DynamicPageVersionCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageUncheckedCreateWithoutTenantInput = {
+    id?: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: DynamicPageVersionUncheckedCreateNestedManyWithoutPageInput
+  }
+
+  export type DynamicPageCreateOrConnectWithoutTenantInput = {
+    where: DynamicPageWhereUniqueInput
+    create: XOR<DynamicPageCreateWithoutTenantInput, DynamicPageUncheckedCreateWithoutTenantInput>
+  }
+
+  export type DynamicPageCreateManyTenantInputEnvelope = {
+    data: DynamicPageCreateManyTenantInput | DynamicPageCreateManyTenantInput[]
+  }
+
+  export type DynamicPageVersionCreateWithoutTenantInput = {
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    page: DynamicPageCreateNestedOneWithoutVersionsInput
+    createdBy?: UserCreateNestedOneWithoutPageVersionsCreatedInput
+  }
+
+  export type DynamicPageVersionUncheckedCreateWithoutTenantInput = {
+    id?: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdById?: number | null
+    createdAt?: Date | string
+  }
+
+  export type DynamicPageVersionCreateOrConnectWithoutTenantInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    create: XOR<DynamicPageVersionCreateWithoutTenantInput, DynamicPageVersionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type DynamicPageVersionCreateManyTenantInputEnvelope = {
+    data: DynamicPageVersionCreateManyTenantInput | DynamicPageVersionCreateManyTenantInput[]
+  }
+
   export type UserUpsertWithWhereUniqueWithoutTenantInput = {
     where: UserWhereUniqueInput
     update: XOR<UserUpdateWithoutTenantInput, UserUncheckedUpdateWithoutTenantInput>
@@ -65317,6 +76698,8 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     twoFactorEnabled?: BoolFilter<"User"> | boolean
     twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    resetTokenHash?: StringNullableFilter<"User"> | string | null
+    resetTokenExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tenantId?: IntNullableFilter<"User"> | number | null
@@ -65794,6 +77177,1781 @@ export namespace Prisma {
     data: XOR<BusinessMinuteVersionUpdateManyMutationInput, BusinessMinuteVersionUncheckedUpdateManyWithoutTenantInput>
   }
 
+  export type SubscriptionUpsertWithoutTenantInput = {
+    update: XOR<SubscriptionUpdateWithoutTenantInput, SubscriptionUncheckedUpdateWithoutTenantInput>
+    create: XOR<SubscriptionCreateWithoutTenantInput, SubscriptionUncheckedCreateWithoutTenantInput>
+    where?: SubscriptionWhereInput
+  }
+
+  export type SubscriptionUpdateToOneWithWhereWithoutTenantInput = {
+    where?: SubscriptionWhereInput
+    data: XOR<SubscriptionUpdateWithoutTenantInput, SubscriptionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type SubscriptionUpdateWithoutTenantInput = {
+    plan?: EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
+    status?: StringFieldUpdateOperationsInput | string
+    seats?: IntFieldUpdateOperationsInput | number
+    period?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    providerSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubscriptionUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    plan?: EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
+    status?: StringFieldUpdateOperationsInput | string
+    seats?: IntFieldUpdateOperationsInput | number
+    period?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    providerCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    providerSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    currentPeriodStart?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventUpsertWithWhereUniqueWithoutTenantInput = {
+    where: UsageEventWhereUniqueInput
+    update: XOR<UsageEventUpdateWithoutTenantInput, UsageEventUncheckedUpdateWithoutTenantInput>
+    create: XOR<UsageEventCreateWithoutTenantInput, UsageEventUncheckedCreateWithoutTenantInput>
+  }
+
+  export type UsageEventUpdateWithWhereUniqueWithoutTenantInput = {
+    where: UsageEventWhereUniqueInput
+    data: XOR<UsageEventUpdateWithoutTenantInput, UsageEventUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type UsageEventUpdateManyWithWhereWithoutTenantInput = {
+    where: UsageEventScalarWhereInput
+    data: XOR<UsageEventUpdateManyMutationInput, UsageEventUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type ApiMetricUpsertWithWhereUniqueWithoutTenantInput = {
+    where: ApiMetricWhereUniqueInput
+    update: XOR<ApiMetricUpdateWithoutTenantInput, ApiMetricUncheckedUpdateWithoutTenantInput>
+    create: XOR<ApiMetricCreateWithoutTenantInput, ApiMetricUncheckedCreateWithoutTenantInput>
+  }
+
+  export type ApiMetricUpdateWithWhereUniqueWithoutTenantInput = {
+    where: ApiMetricWhereUniqueInput
+    data: XOR<ApiMetricUpdateWithoutTenantInput, ApiMetricUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type ApiMetricUpdateManyWithWhereWithoutTenantInput = {
+    where: ApiMetricScalarWhereInput
+    data: XOR<ApiMetricUpdateManyMutationInput, ApiMetricUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type ApiMetricScalarWhereInput = {
+    AND?: ApiMetricScalarWhereInput | ApiMetricScalarWhereInput[]
+    OR?: ApiMetricScalarWhereInput[]
+    NOT?: ApiMetricScalarWhereInput | ApiMetricScalarWhereInput[]
+    id?: IntFilter<"ApiMetric"> | number
+    tenantId?: IntNullableFilter<"ApiMetric"> | number | null
+    method?: StringFilter<"ApiMetric"> | string
+    path?: StringFilter<"ApiMetric"> | string
+    status?: IntFilter<"ApiMetric"> | number
+    durationMs?: IntFilter<"ApiMetric"> | number
+    createdAt?: DateTimeFilter<"ApiMetric"> | Date | string
+  }
+
+  export type DynamicPageUpsertWithWhereUniqueWithoutTenantInput = {
+    where: DynamicPageWhereUniqueInput
+    update: XOR<DynamicPageUpdateWithoutTenantInput, DynamicPageUncheckedUpdateWithoutTenantInput>
+    create: XOR<DynamicPageCreateWithoutTenantInput, DynamicPageUncheckedCreateWithoutTenantInput>
+  }
+
+  export type DynamicPageUpdateWithWhereUniqueWithoutTenantInput = {
+    where: DynamicPageWhereUniqueInput
+    data: XOR<DynamicPageUpdateWithoutTenantInput, DynamicPageUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type DynamicPageUpdateManyWithWhereWithoutTenantInput = {
+    where: DynamicPageScalarWhereInput
+    data: XOR<DynamicPageUpdateManyMutationInput, DynamicPageUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type DynamicPageVersionUpsertWithWhereUniqueWithoutTenantInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    update: XOR<DynamicPageVersionUpdateWithoutTenantInput, DynamicPageVersionUncheckedUpdateWithoutTenantInput>
+    create: XOR<DynamicPageVersionCreateWithoutTenantInput, DynamicPageVersionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type DynamicPageVersionUpdateWithWhereUniqueWithoutTenantInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    data: XOR<DynamicPageVersionUpdateWithoutTenantInput, DynamicPageVersionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type DynamicPageVersionUpdateManyWithWhereWithoutTenantInput = {
+    where: DynamicPageVersionScalarWhereInput
+    data: XOR<DynamicPageVersionUpdateManyMutationInput, DynamicPageVersionUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type TenantCreateWithoutSubscriptionInput = {
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    members?: MemberCreateNestedManyWithoutTenantInput
+    departments?: DepartmentCreateNestedManyWithoutTenantInput
+    events?: EventCreateNestedManyWithoutTenantInput
+    programs?: ProgramCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementCreateNestedManyWithoutTenantInput
+    sermons?: SermonCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    settings?: SettingCreateNestedManyWithoutTenantInput
+    councils?: CouncilCreateNestedManyWithoutTenantInput
+    committees?: CommitteeCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutSubscriptionInput = {
+    id?: number
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    members?: MemberUncheckedCreateNestedManyWithoutTenantInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutTenantInput
+    events?: EventUncheckedCreateNestedManyWithoutTenantInput
+    programs?: ProgramUncheckedCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupUncheckedCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+    sermons?: SermonUncheckedCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    settings?: SettingUncheckedCreateNestedManyWithoutTenantInput
+    councils?: CouncilUncheckedCreateNestedManyWithoutTenantInput
+    committees?: CommitteeUncheckedCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionUncheckedCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionUncheckedCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationUncheckedCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryUncheckedCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationUncheckedCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberUncheckedCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberUncheckedCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutSubscriptionInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+  }
+
+  export type TenantUpsertWithoutSubscriptionInput = {
+    update: XOR<TenantUpdateWithoutSubscriptionInput, TenantUncheckedUpdateWithoutSubscriptionInput>
+    create: XOR<TenantCreateWithoutSubscriptionInput, TenantUncheckedCreateWithoutSubscriptionInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutSubscriptionInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutSubscriptionInput, TenantUncheckedUpdateWithoutSubscriptionInput>
+  }
+
+  export type TenantUpdateWithoutSubscriptionInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    members?: MemberUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUpdateManyWithoutTenantNestedInput
+    events?: EventUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    settings?: SettingUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutSubscriptionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    members?: MemberUncheckedUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutTenantNestedInput
+    events?: EventUncheckedUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUncheckedUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUncheckedUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    settings?: SettingUncheckedUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUncheckedUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUncheckedUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUncheckedUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUncheckedUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUncheckedUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUncheckedUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUncheckedUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUncheckedUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantCreateWithoutUsageEventsInput = {
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    members?: MemberCreateNestedManyWithoutTenantInput
+    departments?: DepartmentCreateNestedManyWithoutTenantInput
+    events?: EventCreateNestedManyWithoutTenantInput
+    programs?: ProgramCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementCreateNestedManyWithoutTenantInput
+    sermons?: SermonCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    settings?: SettingCreateNestedManyWithoutTenantInput
+    councils?: CouncilCreateNestedManyWithoutTenantInput
+    committees?: CommitteeCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutUsageEventsInput = {
+    id?: number
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    members?: MemberUncheckedCreateNestedManyWithoutTenantInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutTenantInput
+    events?: EventUncheckedCreateNestedManyWithoutTenantInput
+    programs?: ProgramUncheckedCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupUncheckedCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+    sermons?: SermonUncheckedCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    settings?: SettingUncheckedCreateNestedManyWithoutTenantInput
+    councils?: CouncilUncheckedCreateNestedManyWithoutTenantInput
+    committees?: CommitteeUncheckedCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionUncheckedCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionUncheckedCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationUncheckedCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryUncheckedCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationUncheckedCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberUncheckedCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberUncheckedCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutUsageEventsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutUsageEventsInput, TenantUncheckedCreateWithoutUsageEventsInput>
+  }
+
+  export type UserCreateWithoutUsageEventsInput = {
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    member?: MemberCreateNestedOneWithoutUserInput
+    tenant?: TenantCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutUsageEventsInput = {
+    id?: number
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenantId?: number | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordUncheckedCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentUncheckedCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    member?: MemberUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUsageEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUsageEventsInput, UserUncheckedCreateWithoutUsageEventsInput>
+  }
+
+  export type TenantUpsertWithoutUsageEventsInput = {
+    update: XOR<TenantUpdateWithoutUsageEventsInput, TenantUncheckedUpdateWithoutUsageEventsInput>
+    create: XOR<TenantCreateWithoutUsageEventsInput, TenantUncheckedCreateWithoutUsageEventsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutUsageEventsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutUsageEventsInput, TenantUncheckedUpdateWithoutUsageEventsInput>
+  }
+
+  export type TenantUpdateWithoutUsageEventsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    members?: MemberUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUpdateManyWithoutTenantNestedInput
+    events?: EventUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    settings?: SettingUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutUsageEventsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    members?: MemberUncheckedUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutTenantNestedInput
+    events?: EventUncheckedUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUncheckedUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUncheckedUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    settings?: SettingUncheckedUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUncheckedUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUncheckedUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUncheckedUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUncheckedUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUncheckedUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUncheckedUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUncheckedUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUncheckedUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type UserUpsertWithoutUsageEventsInput = {
+    update: XOR<UserUpdateWithoutUsageEventsInput, UserUncheckedUpdateWithoutUsageEventsInput>
+    create: XOR<UserCreateWithoutUsageEventsInput, UserUncheckedCreateWithoutUsageEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUsageEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUsageEventsInput, UserUncheckedUpdateWithoutUsageEventsInput>
+  }
+
+  export type UserUpdateWithoutUsageEventsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    member?: MemberUpdateOneWithoutUserNestedInput
+    tenant?: TenantUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUsageEventsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUncheckedUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    member?: MemberUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type TenantCreateWithoutApiMetricsInput = {
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    members?: MemberCreateNestedManyWithoutTenantInput
+    departments?: DepartmentCreateNestedManyWithoutTenantInput
+    events?: EventCreateNestedManyWithoutTenantInput
+    programs?: ProgramCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementCreateNestedManyWithoutTenantInput
+    sermons?: SermonCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    settings?: SettingCreateNestedManyWithoutTenantInput
+    councils?: CouncilCreateNestedManyWithoutTenantInput
+    committees?: CommitteeCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutApiMetricsInput = {
+    id?: number
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    members?: MemberUncheckedCreateNestedManyWithoutTenantInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutTenantInput
+    events?: EventUncheckedCreateNestedManyWithoutTenantInput
+    programs?: ProgramUncheckedCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupUncheckedCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+    sermons?: SermonUncheckedCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    settings?: SettingUncheckedCreateNestedManyWithoutTenantInput
+    councils?: CouncilUncheckedCreateNestedManyWithoutTenantInput
+    committees?: CommitteeUncheckedCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionUncheckedCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionUncheckedCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationUncheckedCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryUncheckedCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationUncheckedCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberUncheckedCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberUncheckedCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutApiMetricsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutApiMetricsInput, TenantUncheckedCreateWithoutApiMetricsInput>
+  }
+
+  export type TenantUpsertWithoutApiMetricsInput = {
+    update: XOR<TenantUpdateWithoutApiMetricsInput, TenantUncheckedUpdateWithoutApiMetricsInput>
+    create: XOR<TenantCreateWithoutApiMetricsInput, TenantUncheckedCreateWithoutApiMetricsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutApiMetricsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutApiMetricsInput, TenantUncheckedUpdateWithoutApiMetricsInput>
+  }
+
+  export type TenantUpdateWithoutApiMetricsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    members?: MemberUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUpdateManyWithoutTenantNestedInput
+    events?: EventUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    settings?: SettingUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutApiMetricsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    members?: MemberUncheckedUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutTenantNestedInput
+    events?: EventUncheckedUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUncheckedUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUncheckedUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    settings?: SettingUncheckedUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUncheckedUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUncheckedUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUncheckedUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUncheckedUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUncheckedUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUncheckedUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUncheckedUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUncheckedUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantCreateWithoutPagesInput = {
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    members?: MemberCreateNestedManyWithoutTenantInput
+    departments?: DepartmentCreateNestedManyWithoutTenantInput
+    events?: EventCreateNestedManyWithoutTenantInput
+    programs?: ProgramCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementCreateNestedManyWithoutTenantInput
+    sermons?: SermonCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    settings?: SettingCreateNestedManyWithoutTenantInput
+    councils?: CouncilCreateNestedManyWithoutTenantInput
+    committees?: CommitteeCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutPagesInput = {
+    id?: number
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    members?: MemberUncheckedCreateNestedManyWithoutTenantInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutTenantInput
+    events?: EventUncheckedCreateNestedManyWithoutTenantInput
+    programs?: ProgramUncheckedCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupUncheckedCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+    sermons?: SermonUncheckedCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    settings?: SettingUncheckedCreateNestedManyWithoutTenantInput
+    councils?: CouncilUncheckedCreateNestedManyWithoutTenantInput
+    committees?: CommitteeUncheckedCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionUncheckedCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionUncheckedCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationUncheckedCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryUncheckedCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationUncheckedCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberUncheckedCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberUncheckedCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pageVersions?: DynamicPageVersionUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutPagesInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutPagesInput, TenantUncheckedCreateWithoutPagesInput>
+  }
+
+  export type UserCreateWithoutPagesCreatedInput = {
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
+    member?: MemberCreateNestedOneWithoutUserInput
+    tenant?: TenantCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutPagesCreatedInput = {
+    id?: number
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenantId?: number | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordUncheckedCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentUncheckedCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
+    member?: MemberUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPagesCreatedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPagesCreatedInput, UserUncheckedCreateWithoutPagesCreatedInput>
+  }
+
+  export type UserCreateWithoutPagesUpdatedInput = {
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pageVersionsCreated?: DynamicPageVersionCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
+    member?: MemberCreateNestedOneWithoutUserInput
+    tenant?: TenantCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutPagesUpdatedInput = {
+    id?: number
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenantId?: number | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordUncheckedCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentUncheckedCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
+    member?: MemberUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPagesUpdatedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPagesUpdatedInput, UserUncheckedCreateWithoutPagesUpdatedInput>
+  }
+
+  export type DynamicPageVersionCreateWithoutPageInput = {
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutPageVersionsCreatedInput
+    tenant: TenantCreateNestedOneWithoutPageVersionsInput
+  }
+
+  export type DynamicPageVersionUncheckedCreateWithoutPageInput = {
+    id?: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdById?: number | null
+    createdAt?: Date | string
+    tenantId: number
+  }
+
+  export type DynamicPageVersionCreateOrConnectWithoutPageInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    create: XOR<DynamicPageVersionCreateWithoutPageInput, DynamicPageVersionUncheckedCreateWithoutPageInput>
+  }
+
+  export type DynamicPageVersionCreateManyPageInputEnvelope = {
+    data: DynamicPageVersionCreateManyPageInput | DynamicPageVersionCreateManyPageInput[]
+  }
+
+  export type TenantUpsertWithoutPagesInput = {
+    update: XOR<TenantUpdateWithoutPagesInput, TenantUncheckedUpdateWithoutPagesInput>
+    create: XOR<TenantCreateWithoutPagesInput, TenantUncheckedCreateWithoutPagesInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutPagesInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutPagesInput, TenantUncheckedUpdateWithoutPagesInput>
+  }
+
+  export type TenantUpdateWithoutPagesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    members?: MemberUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUpdateManyWithoutTenantNestedInput
+    events?: EventUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    settings?: SettingUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutPagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    members?: MemberUncheckedUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutTenantNestedInput
+    events?: EventUncheckedUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUncheckedUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUncheckedUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    settings?: SettingUncheckedUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUncheckedUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUncheckedUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUncheckedUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUncheckedUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUncheckedUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUncheckedUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUncheckedUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUncheckedUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pageVersions?: DynamicPageVersionUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type UserUpsertWithoutPagesCreatedInput = {
+    update: XOR<UserUpdateWithoutPagesCreatedInput, UserUncheckedUpdateWithoutPagesCreatedInput>
+    create: XOR<UserCreateWithoutPagesCreatedInput, UserUncheckedCreateWithoutPagesCreatedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPagesCreatedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPagesCreatedInput, UserUncheckedUpdateWithoutPagesCreatedInput>
+  }
+
+  export type UserUpdateWithoutPagesCreatedInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
+    member?: MemberUpdateOneWithoutUserNestedInput
+    tenant?: TenantUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPagesCreatedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUncheckedUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
+    member?: MemberUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutPagesUpdatedInput = {
+    update: XOR<UserUpdateWithoutPagesUpdatedInput, UserUncheckedUpdateWithoutPagesUpdatedInput>
+    create: XOR<UserCreateWithoutPagesUpdatedInput, UserUncheckedCreateWithoutPagesUpdatedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPagesUpdatedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPagesUpdatedInput, UserUncheckedUpdateWithoutPagesUpdatedInput>
+  }
+
+  export type UserUpdateWithoutPagesUpdatedInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
+    member?: MemberUpdateOneWithoutUserNestedInput
+    tenant?: TenantUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPagesUpdatedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUncheckedUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
+    member?: MemberUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type DynamicPageVersionUpsertWithWhereUniqueWithoutPageInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    update: XOR<DynamicPageVersionUpdateWithoutPageInput, DynamicPageVersionUncheckedUpdateWithoutPageInput>
+    create: XOR<DynamicPageVersionCreateWithoutPageInput, DynamicPageVersionUncheckedCreateWithoutPageInput>
+  }
+
+  export type DynamicPageVersionUpdateWithWhereUniqueWithoutPageInput = {
+    where: DynamicPageVersionWhereUniqueInput
+    data: XOR<DynamicPageVersionUpdateWithoutPageInput, DynamicPageVersionUncheckedUpdateWithoutPageInput>
+  }
+
+  export type DynamicPageVersionUpdateManyWithWhereWithoutPageInput = {
+    where: DynamicPageVersionScalarWhereInput
+    data: XOR<DynamicPageVersionUpdateManyMutationInput, DynamicPageVersionUncheckedUpdateManyWithoutPageInput>
+  }
+
+  export type DynamicPageCreateWithoutVersionsInput = {
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutPagesInput
+    createdBy?: UserCreateNestedOneWithoutPagesCreatedInput
+    updatedBy?: UserCreateNestedOneWithoutPagesUpdatedInput
+  }
+
+  export type DynamicPageUncheckedCreateWithoutVersionsInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DynamicPageCreateOrConnectWithoutVersionsInput = {
+    where: DynamicPageWhereUniqueInput
+    create: XOR<DynamicPageCreateWithoutVersionsInput, DynamicPageUncheckedCreateWithoutVersionsInput>
+  }
+
+  export type UserCreateWithoutPageVersionsCreatedInput = {
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageCreateNestedManyWithoutUpdatedByInput
+    usageEvents?: UsageEventCreateNestedManyWithoutUserInput
+    member?: MemberCreateNestedOneWithoutUserInput
+    tenant?: TenantCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutPageVersionsCreatedInput = {
+    id?: number
+    email: string
+    passwordHash: string
+    name: string
+    role: $Enums.Role
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenantId?: number | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    announcementsCreated?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+    financeRecordsCreated?: FinanceRecordUncheckedCreateNestedManyWithoutCreatedByInput
+    ministriesLed?: DepartmentUncheckedCreateNestedManyWithoutLeaderInput
+    programsCreated?: ProgramUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupsCreated?: CellGroupUncheckedCreateNestedManyWithoutCreatedByInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedCreateNestedManyWithoutRegisteredByInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesApproved?: BoardMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    boardMinutesCreated?: BoardMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    boardMinutesUpdated?: BoardMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    businessMinutesApproved?: BusinessMinuteUncheckedCreateNestedManyWithoutApprovedByInput
+    businessMinutesCreated?: BusinessMinuteUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedCreateNestedManyWithoutUpdatedByInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutCreatedByInput
+    suggestionsCreated?: SuggestionUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesCreated?: DynamicPageUncheckedCreateNestedManyWithoutCreatedByInput
+    pagesUpdated?: DynamicPageUncheckedCreateNestedManyWithoutUpdatedByInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutUserInput
+    member?: MemberUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPageVersionsCreatedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPageVersionsCreatedInput, UserUncheckedCreateWithoutPageVersionsCreatedInput>
+  }
+
+  export type TenantCreateWithoutPageVersionsInput = {
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserCreateNestedManyWithoutTenantInput
+    members?: MemberCreateNestedManyWithoutTenantInput
+    departments?: DepartmentCreateNestedManyWithoutTenantInput
+    events?: EventCreateNestedManyWithoutTenantInput
+    programs?: ProgramCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementCreateNestedManyWithoutTenantInput
+    sermons?: SermonCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogCreateNestedManyWithoutTenantInput
+    settings?: SettingCreateNestedManyWithoutTenantInput
+    councils?: CouncilCreateNestedManyWithoutTenantInput
+    committees?: CommitteeCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutPageVersionsInput = {
+    id?: number
+    name: string
+    slug: string
+    status?: string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivedAt?: Date | string | null
+    users?: UserUncheckedCreateNestedManyWithoutTenantInput
+    members?: MemberUncheckedCreateNestedManyWithoutTenantInput
+    departments?: DepartmentUncheckedCreateNestedManyWithoutTenantInput
+    events?: EventUncheckedCreateNestedManyWithoutTenantInput
+    programs?: ProgramUncheckedCreateNestedManyWithoutTenantInput
+    cellGroups?: CellGroupUncheckedCreateNestedManyWithoutTenantInput
+    attendance?: AttendanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    finance?: FinanceRecordUncheckedCreateNestedManyWithoutTenantInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutTenantInput
+    sermons?: SermonUncheckedCreateNestedManyWithoutTenantInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutTenantInput
+    settings?: SettingUncheckedCreateNestedManyWithoutTenantInput
+    councils?: CouncilUncheckedCreateNestedManyWithoutTenantInput
+    committees?: CommitteeUncheckedCreateNestedManyWithoutTenantInput
+    suggestions?: SuggestionUncheckedCreateNestedManyWithoutTenantInput
+    qrLinks?: QRCodeLinkUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedCreateNestedManyWithoutTenantInput
+    cellGroupContributions?: CellGroupContributionUncheckedCreateNestedManyWithoutTenantInput
+    eventRegistrations?: EventRegistrationUncheckedCreateNestedManyWithoutTenantInput
+    attendanceEntries?: AttendanceEntryUncheckedCreateNestedManyWithoutTenantInput
+    familyRelations?: FamilyRelationUncheckedCreateNestedManyWithoutTenantInput
+    councilMembers?: CouncilMemberUncheckedCreateNestedManyWithoutTenantInput
+    committeeMembers?: CommitteeMemberUncheckedCreateNestedManyWithoutTenantInput
+    boardMinutes?: BoardMinuteUncheckedCreateNestedManyWithoutTenantInput
+    businessMinutes?: BusinessMinuteUncheckedCreateNestedManyWithoutTenantInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedCreateNestedManyWithoutTenantInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutTenantInput
+    usageEvents?: UsageEventUncheckedCreateNestedManyWithoutTenantInput
+    apiMetrics?: ApiMetricUncheckedCreateNestedManyWithoutTenantInput
+    pages?: DynamicPageUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutPageVersionsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutPageVersionsInput, TenantUncheckedCreateWithoutPageVersionsInput>
+  }
+
+  export type DynamicPageUpsertWithoutVersionsInput = {
+    update: XOR<DynamicPageUpdateWithoutVersionsInput, DynamicPageUncheckedUpdateWithoutVersionsInput>
+    create: XOR<DynamicPageCreateWithoutVersionsInput, DynamicPageUncheckedCreateWithoutVersionsInput>
+    where?: DynamicPageWhereInput
+  }
+
+  export type DynamicPageUpdateToOneWithWhereWithoutVersionsInput = {
+    where?: DynamicPageWhereInput
+    data: XOR<DynamicPageUpdateWithoutVersionsInput, DynamicPageUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type DynamicPageUpdateWithoutVersionsInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutPagesNestedInput
+    createdBy?: UserUpdateOneWithoutPagesCreatedNestedInput
+    updatedBy?: UserUpdateOneWithoutPagesUpdatedNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateWithoutVersionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutPageVersionsCreatedInput = {
+    update: XOR<UserUpdateWithoutPageVersionsCreatedInput, UserUncheckedUpdateWithoutPageVersionsCreatedInput>
+    create: XOR<UserCreateWithoutPageVersionsCreatedInput, UserUncheckedCreateWithoutPageVersionsCreatedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPageVersionsCreatedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPageVersionsCreatedInput, UserUncheckedUpdateWithoutPageVersionsCreatedInput>
+  }
+
+  export type UserUpdateWithoutPageVersionsCreatedInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
+    member?: MemberUpdateOneWithoutUserNestedInput
+    tenant?: TenantUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPageVersionsCreatedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: NullableIntFieldUpdateOperationsInput | number | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    announcementsCreated?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+    financeRecordsCreated?: FinanceRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+    ministriesLed?: DepartmentUncheckedUpdateManyWithoutLeaderNestedInput
+    programsCreated?: ProgramUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupsCreated?: CellGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    cellGroupMembershipsRegistered?: CellGroupMembershipUncheckedUpdateManyWithoutRegisteredByNestedInput
+    cellGroupContributionsCreated?: CellGroupContributionUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesApproved?: BoardMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    boardMinutesCreated?: BoardMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    boardMinutesUpdated?: BoardMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    businessMinutesApproved?: BusinessMinuteUncheckedUpdateManyWithoutApprovedByNestedInput
+    businessMinutesCreated?: BusinessMinuteUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinutesUpdated?: BusinessMinuteUncheckedUpdateManyWithoutUpdatedByNestedInput
+    boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
+    member?: MemberUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type TenantUpsertWithoutPageVersionsInput = {
+    update: XOR<TenantUpdateWithoutPageVersionsInput, TenantUncheckedUpdateWithoutPageVersionsInput>
+    create: XOR<TenantCreateWithoutPageVersionsInput, TenantUncheckedCreateWithoutPageVersionsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutPageVersionsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutPageVersionsInput, TenantUncheckedUpdateWithoutPageVersionsInput>
+  }
+
+  export type TenantUpdateWithoutPageVersionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUpdateManyWithoutTenantNestedInput
+    members?: MemberUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUpdateManyWithoutTenantNestedInput
+    events?: EventUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutTenantNestedInput
+    settings?: SettingUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutPageVersionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: UserUncheckedUpdateManyWithoutTenantNestedInput
+    members?: MemberUncheckedUpdateManyWithoutTenantNestedInput
+    departments?: DepartmentUncheckedUpdateManyWithoutTenantNestedInput
+    events?: EventUncheckedUpdateManyWithoutTenantNestedInput
+    programs?: ProgramUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroups?: CellGroupUncheckedUpdateManyWithoutTenantNestedInput
+    attendance?: AttendanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    finance?: FinanceRecordUncheckedUpdateManyWithoutTenantNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutTenantNestedInput
+    sermons?: SermonUncheckedUpdateManyWithoutTenantNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+    settings?: SettingUncheckedUpdateManyWithoutTenantNestedInput
+    councils?: CouncilUncheckedUpdateManyWithoutTenantNestedInput
+    committees?: CommitteeUncheckedUpdateManyWithoutTenantNestedInput
+    suggestions?: SuggestionUncheckedUpdateManyWithoutTenantNestedInput
+    qrLinks?: QRCodeLinkUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupMemberships?: CellGroupMembershipUncheckedUpdateManyWithoutTenantNestedInput
+    cellGroupContributions?: CellGroupContributionUncheckedUpdateManyWithoutTenantNestedInput
+    eventRegistrations?: EventRegistrationUncheckedUpdateManyWithoutTenantNestedInput
+    attendanceEntries?: AttendanceEntryUncheckedUpdateManyWithoutTenantNestedInput
+    familyRelations?: FamilyRelationUncheckedUpdateManyWithoutTenantNestedInput
+    councilMembers?: CouncilMemberUncheckedUpdateManyWithoutTenantNestedInput
+    committeeMembers?: CommitteeMemberUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinutes?: BoardMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinutes?: BusinessMinuteUncheckedUpdateManyWithoutTenantNestedInput
+    boardMinuteVersions?: BoardMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    businessMinuteVersions?: BusinessMinuteVersionUncheckedUpdateManyWithoutTenantNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutTenantNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutTenantNestedInput
+    apiMetrics?: ApiMetricUncheckedUpdateManyWithoutTenantNestedInput
+    pages?: DynamicPageUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
   export type AuditLogCreateManyUserInput = {
     id?: number
     action: string
@@ -66032,6 +79190,51 @@ export namespace Prisma {
     status?: string | null
     createdAt?: Date | string
     tenantId: number
+  }
+
+  export type DynamicPageCreateManyCreatedByInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DynamicPageCreateManyUpdatedByInput = {
+    id?: number
+    tenantId: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DynamicPageVersionCreateManyCreatedByInput = {
+    id?: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    tenantId: number
+  }
+
+  export type UsageEventCreateManyUserInput = {
+    id?: number
+    tenantId: number
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
   }
 
   export type AuditLogUpdateWithoutUserInput = {
@@ -66759,6 +79962,141 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tenantId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DynamicPageUpdateWithoutCreatedByInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutPagesNestedInput
+    updatedBy?: UserUpdateOneWithoutPagesUpdatedNestedInput
+    versions?: DynamicPageVersionUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateWithoutCreatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: DynamicPageVersionUncheckedUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageUpdateWithoutUpdatedByInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutPagesNestedInput
+    createdBy?: UserUpdateOneWithoutPagesCreatedNestedInput
+    versions?: DynamicPageVersionUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateWithoutUpdatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: DynamicPageVersionUncheckedUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateManyWithoutUpdatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageVersionUpdateWithoutCreatedByInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    page?: DynamicPageUpdateOneRequiredWithoutVersionsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutPageVersionsNestedInput
+  }
+
+  export type DynamicPageVersionUncheckedUpdateWithoutCreatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pageId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pageId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UsageEventUpdateWithoutUserInput = {
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutUsageEventsNestedInput
+  }
+
+  export type UsageEventUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantId?: IntFieldUpdateOperationsInput | number
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AttendanceEntryCreateManyMemberInput = {
@@ -67638,6 +80976,8 @@ export namespace Prisma {
     role: $Enums.Role
     twoFactorEnabled?: boolean
     twoFactorSecret?: string | null
+    resetTokenHash?: string | null
+    resetTokenExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -67932,6 +81272,47 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type UsageEventCreateManyTenantInput = {
+    id?: number
+    userId?: number | null
+    featureKey: string
+    event: string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ApiMetricCreateManyTenantInput = {
+    id?: number
+    method: string
+    path: string
+    status: number
+    durationMs: number
+    createdAt?: Date | string
+  }
+
+  export type DynamicPageCreateManyTenantInput = {
+    id?: number
+    slug: string
+    title: string
+    status?: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    createdById?: number | null
+    updatedById?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DynamicPageVersionCreateManyTenantInput = {
+    id?: number
+    pageId: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdById?: number | null
+    createdAt?: Date | string
+  }
+
   export type UserUpdateWithoutTenantInput = {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -67939,6 +81320,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
@@ -67958,6 +81341,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUpdateManyWithoutUserNestedInput
     member?: MemberUpdateOneWithoutUserNestedInput
   }
 
@@ -67969,6 +81356,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -67988,6 +81377,10 @@ export namespace Prisma {
     boardMinuteVersionsCreated?: BoardMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     businessMinuteVersionsCreated?: BusinessMinuteVersionUncheckedUpdateManyWithoutCreatedByNestedInput
     suggestionsCreated?: SuggestionUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesCreated?: DynamicPageUncheckedUpdateManyWithoutCreatedByNestedInput
+    pagesUpdated?: DynamicPageUncheckedUpdateManyWithoutUpdatedByNestedInput
+    pageVersionsCreated?: DynamicPageVersionUncheckedUpdateManyWithoutCreatedByNestedInput
+    usageEvents?: UsageEventUncheckedUpdateManyWithoutUserNestedInput
     member?: MemberUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -67999,6 +81392,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -68892,6 +82287,166 @@ export namespace Prisma {
     changeNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventUpdateWithoutTenantInput = {
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutUsageEventsNestedInput
+  }
+
+  export type UsageEventUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageEventUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    featureKey?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiMetricUpdateWithoutTenantInput = {
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiMetricUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiMetricUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageUpdateWithoutTenantInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutPagesCreatedNestedInput
+    updatedBy?: UserUpdateOneWithoutPagesUpdatedNestedInput
+    versions?: DynamicPageVersionUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: DynamicPageVersionUncheckedUpdateManyWithoutPageNestedInput
+  }
+
+  export type DynamicPageUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageVersionUpdateWithoutTenantInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    page?: DynamicPageUpdateOneRequiredWithoutVersionsNestedInput
+    createdBy?: UserUpdateOneWithoutPageVersionsCreatedNestedInput
+  }
+
+  export type DynamicPageVersionUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pageId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    pageId?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DynamicPageVersionCreateManyPageInput = {
+    id?: number
+    version: number
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    createdById?: number | null
+    createdAt?: Date | string
+    tenantId: number
+  }
+
+  export type DynamicPageVersionUpdateWithoutPageInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutPageVersionsCreatedNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutPageVersionsNestedInput
+  }
+
+  export type DynamicPageVersionUncheckedUpdateWithoutPageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DynamicPageVersionUncheckedUpdateManyWithoutPageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenantId?: IntFieldUpdateOperationsInput | number
   }
 
 

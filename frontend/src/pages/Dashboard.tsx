@@ -27,14 +27,47 @@ export default function Dashboard() {
   const [activeQr, setActiveQr] = useState<any | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [reminders, setReminders] = useState<Array<{ id: number; title: string; content?: string; createdAt?: string }>>([]);
+  const [providerOverview, setProviderOverview] = useState<any | null>(null);
+  const [providerActivity, setProviderActivity] = useState<any[]>([]);
+  const [providerVersion, setProviderVersion] = useState<{ version: string; buildTime: string | null; nodeEnv: string; checkedAt: string } | null>(null);
+  const [providerVersionStatus, setProviderVersionStatus] = useState<{ current: any; expected: { version: string | null }; updateAvailable: boolean; warnings: string[] } | null>(null);
+  const [providerVersionLogs, setProviderVersionLogs] = useState<any[]>([]);
+  const [providerHealth, setProviderHealth] = useState<any | null>(null);
   const role = localStorage.getItem('fc_role') || 'ADMIN';
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [autoRefresh, setAutoRefresh] = useState<boolean>(true);
 
+  const acknowledgeDeployment = async () => {
+    try {
+      await api.post('/provider/maintenance/version/ack', {});
+      const logs = await api.get('/provider/maintenance/version/logs', { params: { limit: 10 } });
+      setProviderVersionLogs(Array.isArray(logs.data) ? logs.data : []);
+      setToast('Deployment acknowledgement logged');
+      setTimeout(() => setToast(null), 2500);
+    } catch (err: any) {
+      setToast(err?.response?.data?.message || err.message || 'Failed to acknowledge');
+      setTimeout(() => setToast(null), 2500);
+    }
+  };
+
   const fetchStats = async () => {
     try {
       setRefreshing(true);
-      if (role === 'MEMBER') {
+      if (role === 'PROVIDER_ADMIN') {
+        const [overview, activity, versionStatus, versionLogs, health] = await Promise.all([
+          api.get('/provider/stats/overview', { params: { days: 30 } }),
+          api.get('/provider/activity', { params: { limit: 25 } }),
+          api.get('/provider/maintenance/version/status'),
+          api.get('/provider/maintenance/version/logs', { params: { limit: 10 } }),
+          api.get('/provider/maintenance/health'),
+        ]);
+        setProviderOverview(overview.data || null);
+        setProviderActivity(Array.isArray(activity.data) ? activity.data : []);
+        setProviderVersionStatus(versionStatus.data || null);
+        setProviderVersion(versionStatus.data?.current || null);
+        setProviderVersionLogs(Array.isArray(versionLogs.data) ? versionLogs.data : []);
+        setProviderHealth(health.data || null);
+      } else if (role === 'MEMBER') {
         const [ev, prof, mine, active] = await Promise.all([
           api.get('/events'),
           api.get('/members/me'),
@@ -55,7 +88,7 @@ export default function Dashboard() {
         setAttendanceSummary(att.data);
         setFinanceSummary(fin.data);
       }
-      if (role !== 'MEMBER') {
+      if (role !== 'MEMBER' && role !== 'PROVIDER_ADMIN') {
         try {
           const anns = await api.get('/announcements');
           const all: any[] = anns.data || [];
@@ -102,6 +135,20 @@ export default function Dashboard() {
     ],
   };
 
+  const providerCreatedChart = {
+    labels: (providerOverview?.createdSeries?.labels || []).map((d: string) => String(d).slice(5)),
+    datasets: [
+      { label: 'New Tenants', data: (providerOverview?.createdSeries?.values || []), backgroundColor: 'rgba(59,130,246,0.7)' },
+    ],
+  };
+
+  const providerStatusChart = {
+    labels: ['Active', 'Suspended', 'Archived'],
+    datasets: [
+      { label: 'Tenants', data: [providerOverview?.tenants?.active || 0, providerOverview?.tenants?.suspended || 0, providerOverview?.tenants?.archived || 0], backgroundColor: ['rgba(34,197,94,0.7)','rgba(234,179,8,0.7)','rgba(239,68,68,0.7)'] },
+    ],
+  };
+
   // Member helpers
   const upcoming = useMemo(() => {
     const now = new Date();
@@ -134,7 +181,134 @@ export default function Dashboard() {
         <div className="p-2 border border-green-300 bg-green-50 text-green-700 rounded">{toast}</div>
       )}
 
-      {role !== 'MEMBER' && (
+      {role === 'PROVIDER_ADMIN' && (
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <div className="card">
+            <div className="text-sm">Tenants</div>
+            <div className="text-3xl font-bold">{providerOverview?.tenants?.total ?? '—'}</div>
+            <div className="mt-2 text-xs text-gray-600">Active {providerOverview?.tenants?.active ?? '—'} · Suspended {providerOverview?.tenants?.suspended ?? '—'} · Archived {providerOverview?.tenants?.archived ?? '—'}</div>
+          </div>
+          <div className="card">
+            <div className="text-sm">Health</div>
+            <div className="text-3xl font-bold">{providerHealth?.db?.ok ? 'OK' : '—'}</div>
+            <div className="mt-2 text-xs text-gray-600">Uptime {typeof providerHealth?.uptimeSec === 'number' ? `${providerHealth.uptimeSec}s` : '—'}</div>
+          </div>
+          <div className="card lg:col-span-2">
+            <div className="text-sm">Actions</div>
+            <div className="mt-2 flex items-center gap-2 flex-wrap">
+              <a className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" href="/provider/tenants">Tenants</a>
+              <a className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" href="/account/password">Password</a>
+              <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={fetchStats} disabled={refreshing}>{refreshing ? 'Refreshing…' : 'Refresh'}</button>
+              <label className="text-sm flex items-center gap-2"><input type="checkbox" checked={autoRefresh} onChange={e=>setAutoRefresh(e.target.checked)} /> Auto-refresh</label>
+            </div>
+          </div>
+
+          <div className="card lg:col-span-4">
+            <h3 className="text-lg font-semibold mb-2">Deployment Verification</h3>
+            {(providerVersionStatus?.updateAvailable || (providerVersionStatus?.warnings || []).length > 0) && (
+              <div className="mb-3 p-3 border rounded bg-yellow-50 text-yellow-800 text-sm">
+                <div className="font-semibold">Update Notice</div>
+                {providerVersionStatus?.updateAvailable && (
+                  <div>Update available: expected {providerVersionStatus?.expected?.version || '—'} · current {providerVersion?.version || '—'}</div>
+                )}
+                {(providerVersionStatus?.warnings || []).map((w, i) => (
+                  <div key={i}>{w}</div>
+                ))}
+              </div>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+              <div className="p-3 border rounded">
+                <div className="text-gray-600">Backend Version</div>
+                <div className="font-semibold">{providerVersion?.version || '—'}</div>
+              </div>
+              <div className="p-3 border rounded">
+                <div className="text-gray-600">Build Time</div>
+                <div className="font-semibold">{providerVersion?.buildTime ? new Date(providerVersion.buildTime).toLocaleString() : '—'}</div>
+              </div>
+              <div className="p-3 border rounded">
+                <div className="text-gray-600">Checked</div>
+                <div className="font-semibold">{providerVersion?.checkedAt ? new Date(providerVersion.checkedAt).toLocaleString() : '—'}</div>
+              </div>
+            </div>
+            <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
+              <div className="text-xs text-gray-600">Set `APP_VERSION`, `BUILD_SHA`, `BUILD_TIME`, and optionally `EXPECTED_APP_VERSION`.</div>
+              <div className="flex items-center gap-2">
+                <button className="btn" onClick={fetchStats} disabled={refreshing}>{refreshing ? 'Checking…' : 'Verify Now'}</button>
+                <button className="btn" onClick={acknowledgeDeployment} disabled={refreshing}>Acknowledge</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="card lg:col-span-2">
+            <h3 className="text-lg font-semibold mb-2">Tenant Status</h3>
+            <Bar data={providerStatusChart} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Status Distribution' } } }} />
+          </div>
+          <div className="card lg:col-span-2">
+            <h3 className="text-lg font-semibold mb-2">Tenant Creation</h3>
+            <Bar data={providerCreatedChart} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'New Tenants (30 days)' } } }} />
+          </div>
+
+          <div className="card lg:col-span-4">
+            <h3 className="text-lg font-semibold mb-2">Recent Verification Activity</h3>
+            {providerVersionLogs.length === 0 ? (
+              <div className="text-sm text-gray-600">No verification logs.</div>
+            ) : (
+              <div className="overflow-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-left">
+                      <th className="p-2">Action</th>
+                      <th className="p-2">User</th>
+                      <th className="p-2">At</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {providerVersionLogs.map((l, i) => (
+                      <tr key={i} className="border-t">
+                        <td className="p-2">{l.action}</td>
+                        <td className="p-2">{l?.user?.email || l?.user?.name || '—'}</td>
+                        <td className="p-2">{l.timestamp ? new Date(l.timestamp).toLocaleString() : '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          <div className="card lg:col-span-4">
+            <h3 className="text-lg font-semibold mb-2">Recent Provider Activity</h3>
+            {providerActivity.length === 0 ? (
+              <div className="text-sm text-gray-600">No activity logs.</div>
+            ) : (
+              <div className="overflow-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-left">
+                      <th className="p-2">Action</th>
+                      <th className="p-2">User</th>
+                      <th className="p-2">Tenant</th>
+                      <th className="p-2">At</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {providerActivity.map((l: any, i: number) => (
+                      <tr key={l?.id || i} className="border-t">
+                        <td className="p-2">{l.action}</td>
+                        <td className="p-2">{l?.user?.email || l?.user?.name || '—'}</td>
+                        <td className="p-2">{l?.tenant?.name || l?.tenant?.slug || '—'}</td>
+                        <td className="p-2">{l.timestamp ? new Date(l.timestamp).toLocaleString() : '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {role !== 'MEMBER' && role !== 'PROVIDER_ADMIN' && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="card"><div className="text-sm">Total Members</div><div className="text-3xl font-bold">{data?.membersCount ?? '...'}</div></div>
           <div className="card"><div className="text-sm">Upcoming Events</div><div className="text-3xl font-bold">{data?.eventsUpcoming ?? '...'}</div></div>

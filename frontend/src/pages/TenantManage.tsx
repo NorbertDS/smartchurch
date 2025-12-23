@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/client';
 
 type Tenant = { id: number; name: string; slug: string; status: string; createdAt: string; archivedAt?: string | null; config?: any };
+type TenantOption = { id: number; name: string; slug: string };
 
 export default function TenantManage() {
   const { id } = useParams();
@@ -17,6 +18,19 @@ export default function TenantManage() {
   const [features, setFeatures] = useState<{ members: boolean; finance: boolean; attendance: boolean; reports: boolean }>({ members: true, finance: true, attendance: true, reports: true });
   const [logs, setLogs] = useState<any[]>([]);
   const [logQuery, setLogQuery] = useState('');
+  const [verified, setVerified] = useState<{ at: string; computedFeatures: any } | null>(null);
+  const [maintenanceTenants, setMaintenanceTenants] = useState<TenantOption[]>([]);
+  const [maintenanceTenantId, setMaintenanceTenantId] = useState<number>(() => tid);
+  const [maintenanceLogs, setMaintenanceLogs] = useState<any[]>([]);
+  const [reauthModal, setReauthModal] = useState<{ open: boolean; action: 'FULL' | 'TENANT' | null }>({ open: false, action: null });
+  const [reauthPassword, setReauthPassword] = useState('');
+  const [reauthOtp, setReauthOtp] = useState('');
+  const [reauthNeedOtp, setReauthNeedOtp] = useState(false);
+  const [reauthToken, setReauthToken] = useState<string | null>(null);
+  const [reauthTokenExpAt, setReauthTokenExpAt] = useState<number>(0);
+  const [restartOpId, setRestartOpId] = useState<string | null>(null);
+  const [restartStatus, setRestartStatus] = useState<any | null>(null);
+  const [restartWorking, setRestartWorking] = useState(false);
 
   async function load() {
     setError(''); setInfo('');
@@ -39,6 +53,130 @@ export default function TenantManage() {
   }
 
   useEffect(() => { if (!isNaN(tid)) load(); }, [tid]);
+  useEffect(() => { if (!isNaN(tid)) setMaintenanceTenantId(tid); }, [tid]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await api.get('/provider/tenants', { params: { pageSize: 100 } });
+        const items = (data?.items || []) as any[];
+        setMaintenanceTenants(items.map((x) => ({ id: Number(x.id), name: String(x.name || ''), slug: String(x.slug || '') })));
+      } catch {}
+    })();
+  }, []);
+
+  async function loadMaintenanceLogs() {
+    try {
+      const { data } = await api.get('/provider/maintenance/restart/logs', { params: { limit: 25 } });
+      setMaintenanceLogs(Array.isArray(data) ? data : []);
+    } catch {}
+  }
+
+  useEffect(() => {
+    loadMaintenanceLogs();
+  }, []);
+
+  function hasValidReauth() {
+    return !!reauthToken && Date.now() < reauthTokenExpAt;
+  }
+
+  async function openReauthFor(action: 'FULL' | 'TENANT') {
+    setReauthModal({ open: true, action });
+    setReauthPassword('');
+    setReauthOtp('');
+    setReauthNeedOtp(false);
+  }
+
+  async function submitReauth() {
+    setError('');
+    setInfo('');
+    try {
+      const payload: any = { password: reauthPassword };
+      if (reauthOtp.trim()) payload.otp = reauthOtp.trim();
+      const { data } = await api.post('/provider/maintenance/reauth', payload);
+      const token = String(data?.reauthToken || '');
+      const expiresInSec = Number(data?.expiresInSec || 0);
+      if (!token) throw new Error('Re-authentication failed');
+      setReauthToken(token);
+      setReauthTokenExpAt(Date.now() + Math.max(1, expiresInSec) * 1000 - 5000);
+      setReauthModal({ open: false, action: null });
+      setReauthPassword('');
+      setReauthOtp('');
+      setReauthNeedOtp(false);
+      if (reauthModal.action) await performRestart(reauthModal.action, token);
+    } catch (e: any) {
+      const needOtp = e?.response?.data?.require2fa === true;
+      if (needOtp) setReauthNeedOtp(true);
+      setError(e?.response?.data?.message || e?.message || 'Re-authentication failed');
+    }
+  }
+
+  async function requestRestart(action: 'FULL' | 'TENANT') {
+    setError('');
+    setInfo('');
+    if (action === 'FULL') {
+      const ok = window.confirm('Full system restart will restart the whole server for all tenants. Continue?');
+      if (!ok) return;
+    } else {
+      const ok = window.confirm('Restart this tenant? This is a logical restart simulation and will be logged.');
+      if (!ok) return;
+    }
+    if (!hasValidReauth()) return openReauthFor(action);
+    await performRestart(action, reauthToken as string);
+  }
+
+  async function performRestart(action: 'FULL' | 'TENANT', token: string) {
+    setRestartWorking(true);
+    setRestartOpId(null);
+    setRestartStatus(null);
+    try {
+      if (action === 'FULL') {
+        const { data } = await api.post('/provider/maintenance/restart/full', {}, { headers: { 'x-reauth-token': token } });
+        const opId = String(data?.operationId || '');
+        if (opId) setRestartOpId(opId);
+        setInfo(String(data?.message || 'Restart scheduled'));
+      } else {
+        const tenantId = Number(maintenanceTenantId);
+        if (!tenantId || !isFinite(tenantId)) {
+          setError('Select a valid tenant');
+          return;
+        }
+        const { data } = await api.post('/provider/maintenance/restart/tenant', { tenantId }, { headers: { 'x-reauth-token': token } });
+        const opId = String(data?.operationId || '');
+        if (opId) setRestartOpId(opId);
+        setInfo('Tenant restart initiated');
+      }
+      loadMaintenanceLogs();
+    } catch (e: any) {
+      const retryAfter = Number(e?.response?.headers?.['retry-after'] || 0);
+      const base = e?.response?.data?.message || 'Failed to initiate restart';
+      setError(retryAfter ? `${base} Retry-After: ${retryAfter}s` : base);
+    } finally {
+      setRestartWorking(false);
+    }
+  }
+
+  useEffect(() => {
+    if (!restartOpId) return;
+    let stopped = false;
+    const interval = window.setInterval(async () => {
+      if (stopped) return;
+      try {
+        const { data } = await api.get(`/provider/maintenance/restart/status/${encodeURIComponent(restartOpId)}`);
+        setRestartStatus(data);
+        const st = String(data?.status || '');
+        if (st === 'COMPLETED' || st === 'FAILED') {
+          stopped = true;
+          window.clearInterval(interval);
+          loadMaintenanceLogs();
+        }
+      } catch {}
+    }, 1000);
+    return () => {
+      stopped = true;
+      window.clearInterval(interval);
+    };
+  }, [restartOpId]);
 
   async function assignAdmin(reset = false) {
     setError(''); setInfo('');
@@ -91,12 +229,49 @@ export default function TenantManage() {
 
   async function saveFeatures() {
     setError(''); setInfo('');
-    try { await api.put(`/provider/tenants/${tid}/config`, { features }); setInfo('Feature flags updated'); await load(); } catch (e: any) { setError(e?.response?.data?.message || 'Failed to update features'); }
+    try {
+      await api.put(`/provider/tenants/${tid}/config`, { features });
+      setInfo('Feature flags updated');
+      await load();
+      await verifyConfig();
+    } catch (e: any) {
+      setError(e?.response?.data?.message || 'Failed to update features');
+    }
+  }
+
+  async function verifyConfig() {
+    setError('');
+    setInfo('');
+    try {
+      const { data } = await api.get(`/provider/tenants/${tid}/config/verify`);
+      setVerified({ at: String(data?.verifiedAt || new Date().toISOString()), computedFeatures: data?.computedFeatures || {} });
+      setInfo('Config verified');
+    } catch (e: any) {
+      setError(e?.response?.data?.message || 'Failed to verify config');
+    }
   }
 
   async function searchLogs() {
     setError('');
     try { const { data: l } = await api.get(`/provider/tenants/${tid}/audit-logs?limit=50&q=${encodeURIComponent(logQuery)}`); setLogs(l || []); } catch {}
+  }
+
+  async function clearAuditLogs() {
+    setError('');
+    setInfo('');
+    const q = logQuery.trim();
+    const ok = window.confirm(q ? `Delete audit logs matching "${q}"?` : 'Delete all audit logs for this tenant?');
+    if (!ok) return;
+    try {
+      const { data } = await api.delete(`/provider/tenants/${tid}/audit-logs`, { params: q ? { q } : undefined });
+      const deleted = Number(data?.deleted || 0);
+      setInfo(`Deleted ${deleted} audit log(s)`);
+      setLogs([]);
+      if (q) await searchLogs();
+      else await load();
+    } catch (e: any) {
+      setError(e?.response?.data?.message || 'Failed to delete audit logs');
+    }
   }
 
   async function saveBilling() {
@@ -147,6 +322,75 @@ export default function TenantManage() {
           <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={activate}>Activate</button>
           <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={suspend}>Suspend</button>
           <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={archive}>Archive</button>
+        </div>
+      </div>
+      <div className="card mb-4 p-6 space-y-3">
+        <div className="font-semibold">System Maintenance</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-2">
+            <div className="text-sm text-gray-600">Tenant restart</div>
+            <select className="fc-input" value={String(maintenanceTenantId || '')} onChange={(e) => setMaintenanceTenantId(Number(e.target.value || '0'))}>
+              <option value="">Select tenant</option>
+              {maintenanceTenants.map((x) => (
+                <option key={x.id} value={x.id}>{x.name} ({x.slug})</option>
+              ))}
+            </select>
+            <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" disabled={restartWorking} onClick={() => requestRestart('TENANT')}>Restart Tenant</button>
+          </div>
+          <div className="space-y-2">
+            <div className="text-sm text-gray-600">Full system restart</div>
+            <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" disabled={restartWorking} onClick={() => requestRestart('FULL')}>Restart Server</button>
+            <div className="text-xs text-gray-600">Production requires `ENABLE_PROVIDER_RESTART=true`.</div>
+          </div>
+        </div>
+        {restartOpId && (
+          <div className="text-sm">
+            <div>Operation: <span className="font-mono">{restartOpId}</span></div>
+            <div>Status: {String(restartStatus?.status || 'pending')}</div>
+          </div>
+        )}
+        {reauthModal.open && (
+          <div className="border rounded p-4 bg-white dark:bg-gray-800 space-y-3">
+            <div className="font-semibold text-sm">Re-authentication required</div>
+            <label className="block">
+              <span className="text-sm">Password</span>
+              <input className="fc-input" type="password" value={reauthPassword} onChange={(e) => setReauthPassword(e.target.value)} />
+            </label>
+            <label className="block">
+              <span className="text-sm">Two-factor code {reauthNeedOtp ? '(required)' : '(optional)'}</span>
+              <input className="fc-input" value={reauthOtp} onChange={(e) => setReauthOtp(e.target.value)} />
+            </label>
+            <div className="flex gap-2">
+              <button className="btn-primary" onClick={submitReauth}>Confirm</button>
+              <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setReauthModal({ open: false, action: null })}>Cancel</button>
+            </div>
+          </div>
+        )}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="font-semibold text-sm">Restart Logs</div>
+            <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={loadMaintenanceLogs}>Refresh</button>
+          </div>
+          <div className="overflow-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr>
+                  <th className="p-2 text-left">Action</th>
+                  <th className="p-2 text-left">Tenant</th>
+                  <th className="p-2 text-left">At</th>
+                </tr>
+              </thead>
+              <tbody>
+                {maintenanceLogs.map((l, i) => (
+                  <tr key={i} className="border-t">
+                    <td className="p-2">{l.action}</td>
+                    <td className="p-2">{l?.tenant?.name || l?.tenant?.slug || '—'}</td>
+                    <td className="p-2">{l.timestamp ? new Date(l.timestamp).toLocaleString() : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -207,10 +451,25 @@ export default function TenantManage() {
           <label className="flex items-center gap-2"><input type="checkbox" checked={features.attendance} onChange={e=>setFeatures(v=>({ ...v, attendance: e.target.checked }))} /><span>Attendance</span></label>
           <label className="flex items-center gap-2"><input type="checkbox" checked={features.reports} onChange={e=>setFeatures(v=>({ ...v, reports: e.target.checked }))} /><span>Reports</span></label>
         </div>
-        <button className="btn-primary mt-2" onClick={saveFeatures}>Save Feature Flags</button>
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
+          <button className="btn-primary" onClick={saveFeatures}>Save Feature Flags</button>
+          <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={verifyConfig}>Verify Config</button>
+        </div>
+        {verified?.at && (
+          <div className="mt-2 space-y-2">
+            <div className="text-xs text-gray-600">Verified: {new Date(verified.at).toLocaleString()}</div>
+            <pre className="text-xs p-2 border rounded overflow-auto">{JSON.stringify(verified.computedFeatures || {}, null, 2)}</pre>
+          </div>
+        )}
       </div>
       <div className="card mt-4 p-6">
         <div className="font-semibold mb-2">Audit Logs</div>
+        <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
+          <div className="flex gap-2">
+            <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={load}>Refresh</button>
+            <button className="btn border hover:bg-gray-100 dark:hover:bg-gray-700" onClick={clearAuditLogs}>Clear</button>
+          </div>
+        </div>
         <div className="flex gap-2 mb-2">
           <input className="fc-input" placeholder="Search action" value={logQuery} onChange={e=>setLogQuery(e.target.value)} />
           <button className="btn-primary" onClick={searchLogs}>Search</button>

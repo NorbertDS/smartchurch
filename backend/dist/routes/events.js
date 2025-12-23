@@ -9,21 +9,26 @@ router.use(auth_1.authenticate);
 router.use(tenant_1.tenantContext);
 // Simple SSE stream for event updates
 const clients = [];
-function publish(type, payload) {
+function publish(tenantId, type, payload) {
     const msg = JSON.stringify({ type, payload, ts: new Date().toISOString() });
-    clients.forEach(({ res }) => { try {
-        res.write(`data: ${msg}\n\n`);
-    }
-    catch { } });
+    clients.forEach(({ res, tenantId: tid }) => {
+        if (tid !== tenantId)
+            return;
+        try {
+            res.write(`data: ${msg}\n\n`);
+        }
+        catch { }
+    });
 }
 global.eventStreamPublish = publish;
-router.get('/stream', async (req, res) => {
+router.get('/stream', tenant_1.requireTenant, async (req, res) => {
+    const tid = req.tenantId;
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         Connection: 'keep-alive',
     });
-    clients.push({ res });
+    clients.push({ res, tenantId: tid });
     res.write(`data: ${JSON.stringify({ type: 'hello', ts: new Date().toISOString() })}\n\n`);
     const keep = setInterval(() => { try {
         res.write(':keepalive\n\n');
@@ -63,7 +68,7 @@ router.post('/', (0, auth_1.requireRole)(['ADMIN', 'CLERK', 'PASTOR']), tenant_1
         // Publish SSE update if stream is enabled
         try {
             if (global.eventStreamPublish)
-                global.eventStreamPublish('created', { id: event.id, title: event.title, date: event.date, location: event.location });
+                global.eventStreamPublish(tid, 'created', { id: event.id, title: event.title, date: event.date, location: event.location });
         }
         catch { }
         return res.status(201).json(event);
@@ -106,7 +111,7 @@ router.put('/:id', (0, auth_1.requireRole)(['ADMIN', 'CLERK', 'PASTOR']), tenant
         const updated = await prisma_1.prisma.event.update({ where: { id }, data });
         try {
             if (global.eventStreamPublish)
-                global.eventStreamPublish('updated', { id: updated.id, title: updated.title, date: updated.date, location: updated.location });
+                global.eventStreamPublish(tid, 'updated', { id: updated.id, title: updated.title, date: updated.date, location: updated.location });
         }
         catch { }
         return res.json(updated);
@@ -130,7 +135,7 @@ router.delete('/:id', (0, auth_1.requireRole)(['ADMIN', 'CLERK', 'PASTOR']), ten
     await prisma_1.prisma.event.delete({ where: { id } });
     try {
         if (global.eventStreamPublish)
-            global.eventStreamPublish('deleted', { id, title: ev.title });
+            global.eventStreamPublish(tid, 'deleted', { id, title: ev.title });
     }
     catch { }
     res.status(204).end();

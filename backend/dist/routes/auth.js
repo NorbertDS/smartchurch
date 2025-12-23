@@ -7,11 +7,30 @@ const express_1 = require("express");
 const prisma_1 = require("../config/prisma");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const crypto_1 = __importDefault(require("crypto"));
 const auth_1 = require("../middleware/auth");
 const tenant_1 = require("../middleware/tenant");
 const otplib_1 = require("otplib");
 const qrcode_1 = __importDefault(require("qrcode"));
+const email_1 = require("../services/email");
 const router = (0, express_1.Router)();
+async function upsertDashboardSnapshot(tenantId, patch) {
+    const key = 'dashboard_snapshot';
+    const existing = await prisma_1.prisma.setting.findUnique({ where: { tenantId_key: { tenantId, key } } });
+    let prev = {};
+    try {
+        prev = existing ? JSON.parse(existing.value) : {};
+    }
+    catch {
+        prev = {};
+    }
+    const next = { ...(prev && typeof prev === 'object' ? prev : {}), ...patch, updatedAt: new Date().toISOString() };
+    const value = JSON.stringify(next);
+    if (existing)
+        await prisma_1.prisma.setting.update({ where: { id: existing.id }, data: { value } });
+    else
+        await prisma_1.prisma.setting.create({ data: { tenantId, key, value } });
+}
 router.post('/provider-login', async (req, res) => {
     const { email, password, otp } = req.body;
     if (!email || !password)
@@ -31,7 +50,57 @@ router.post('/provider-login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid two-factor code', require2fa: true });
     }
     const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role, name: user.name, email: user.email, tenantId: null }, process.env.JWT_SECRET || 'changeme-super-secret-key', { expiresIn: '8h' });
-    res.json({ token, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: null });
+    const csrfToken = (0, auth_1.signCsrfTokenForJwt)(token);
+    res.json({ token, csrfToken, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: null });
+});
+router.post('/provider-forgot-password', async (req, res) => {
+    const email = String(req.body?.email || '').trim().toLowerCase();
+    if (!email)
+        return res.status(400).json({ message: 'Email is required' });
+    const user = await prisma_1.prisma.user.findFirst({ where: { email, role: 'PROVIDER_ADMIN' } });
+    if (!user)
+        return res.json({ status: 'ok' });
+    const rawToken = crypto_1.default.randomBytes(32).toString('hex');
+    const tokenHash = crypto_1.default.createHash('sha256').update(rawToken).digest('hex');
+    const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+    await prisma_1.prisma.user.update({
+        where: { id: user.id },
+        data: { resetTokenHash: tokenHash, resetTokenExpiresAt: expiresAt },
+    });
+    const baseUrl = String(process.env.FRONTEND_URL || process.env.APP_BASE_URL || 'http://localhost:5173').replace(/\/+$/, '');
+    const resetUrl = `${baseUrl}/provider/reset?token=${encodeURIComponent(rawToken)}`;
+    const subject = 'FaithConnect: Provider password reset';
+    const text = `A password reset was requested for your provider account.\n\nReset link (valid for 30 minutes):\n${resetUrl}\n\nIf you did not request this, you can ignore this email.`;
+    await (0, email_1.sendEmail)({ to: user.email, subject, text });
+    const isProd = String(process.env.NODE_ENV || '').toLowerCase() === 'production';
+    if (!isProd && !process.env.SMTP_HOST) {
+        return res.json({ status: 'ok', resetUrl });
+    }
+    return res.json({ status: 'ok' });
+});
+router.post('/provider-reset-password', async (req, res) => {
+    const token = String(req.body?.token || '').trim();
+    const newPassword = String(req.body?.newPassword || '');
+    if (!token || !newPassword)
+        return res.status(400).json({ message: 'token and newPassword are required' });
+    if (newPassword.length < 8)
+        return res.status(400).json({ message: 'Password must be at least 8 characters' });
+    const tokenHash = crypto_1.default.createHash('sha256').update(token).digest('hex');
+    const user = await prisma_1.prisma.user.findFirst({
+        where: {
+            role: 'PROVIDER_ADMIN',
+            resetTokenHash: tokenHash,
+            resetTokenExpiresAt: { gt: new Date() },
+        },
+    });
+    if (!user)
+        return res.status(400).json({ message: 'Invalid or expired reset token' });
+    const passwordHash = await bcryptjs_1.default.hash(newPassword, 10);
+    await prisma_1.prisma.user.update({
+        where: { id: user.id },
+        data: { passwordHash, resetTokenHash: null, resetTokenExpiresAt: null },
+    });
+    return res.json({ status: 'password_reset' });
 });
 router.post('/login', async (req, res) => {
     const { email, password, otp, tenantSlug } = req.body;
@@ -91,7 +160,8 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid two-factor code', require2fa: true });
     }
     const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role, name: user.name, email: user.email, tenantId: user.tenantId || null }, process.env.JWT_SECRET || 'changeme-super-secret-key', { expiresIn: '8h' });
-    res.json({ token, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: user.tenantId || null });
+    const csrfToken = (0, auth_1.signCsrfTokenForJwt)(token);
+    res.json({ token, csrfToken, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: user.tenantId || null });
 });
 // Public: resolve tenant by name or slug for validation on signup
 router.get('/tenant-resolve', async (req, res) => {
@@ -182,6 +252,13 @@ router.put('/users/:id/role', auth_1.authenticate, tenant_1.tenantContext, (0, a
     if (!user)
         return res.status(404).json({ message: 'User not found' });
     const updated = await prisma_1.prisma.user.update({ where: { id }, data: { role } });
+    (0, auth_1.invalidateUserAuthCache)(id);
+    try {
+        const staffUsers = await prisma_1.prisma.user.count({ where: { tenantId: tid, role: { in: ['ADMIN', 'CLERK', 'PASTOR'] } } });
+        await upsertDashboardSnapshot(tid, { staffUsers, lastUserRoleChangeAt: new Date().toISOString() });
+        await prisma_1.prisma.auditLog.create({ data: { userId: req.user?.id, action: 'USER_ROLE_UPDATED', entityType: 'User', entityId: id, tenantId: tid } });
+    }
+    catch { }
     res.json({ id: updated.id, role: updated.role });
 });
 // Delete user (Admin only)
@@ -195,6 +272,13 @@ router.delete('/users/:id', auth_1.authenticate, tenant_1.tenantContext, (0, aut
     if (!user)
         return res.status(404).json({ message: 'User not found' });
     await prisma_1.prisma.user.delete({ where: { id } });
+    (0, auth_1.invalidateUserAuthCache)(id);
+    try {
+        const staffUsers = await prisma_1.prisma.user.count({ where: { tenantId: tid, role: { in: ['ADMIN', 'CLERK', 'PASTOR'] } } });
+        await upsertDashboardSnapshot(tid, { staffUsers, lastUserDeleteAt: new Date().toISOString() });
+        await prisma_1.prisma.auditLog.create({ data: { userId: actor?.id, action: 'USER_DELETED', entityType: 'User', entityId: id, tenantId: tid } });
+    }
+    catch { }
     res.status(204).end();
 });
 // Self password change
@@ -343,6 +427,45 @@ router.post('/disable-2fa', auth_1.authenticate, (0, auth_1.requireRole)(['ADMIN
     const { otp } = req.body;
     const user = await prisma_1.prisma.user.findUnique({ where: { id: userJwt.id } });
     if (!user || !user.twoFactorSecret)
+        return res.status(400).json({ message: '2FA not enabled' });
+    const ok = otplib_1.authenticator.verify({ token: String(otp), secret: user.twoFactorSecret });
+    if (!ok)
+        return res.status(401).json({ message: 'Invalid code' });
+    await prisma_1.prisma.user.update({ where: { id: user.id }, data: { twoFactorEnabled: false, twoFactorSecret: null } });
+    res.json({ status: '2fa_disabled' });
+});
+router.post('/provider/setup-2fa', auth_1.authenticate, (0, auth_1.requireRole)(['PROVIDER_ADMIN']), async (req, res) => {
+    const userJwt = req.user;
+    const user = await prisma_1.prisma.user.findUnique({ where: { id: userJwt.id } });
+    if (!user || user.role !== 'PROVIDER_ADMIN')
+        return res.status(404).json({ message: 'User not found' });
+    const secret = otplib_1.authenticator.generateSecret();
+    const label = encodeURIComponent(`FaithConnect:${user.email}`);
+    const issuer = encodeURIComponent('FaithConnect');
+    const otpauth = `otpauth://totp/${label}?secret=${secret}&issuer=${issuer}`;
+    const qrDataUrl = await qrcode_1.default.toDataURL(otpauth);
+    await prisma_1.prisma.user.update({ where: { id: user.id }, data: { twoFactorSecret: secret } });
+    res.json({ otpauth, qrDataUrl });
+});
+router.post('/provider/verify-2fa', auth_1.authenticate, (0, auth_1.requireRole)(['PROVIDER_ADMIN']), async (req, res) => {
+    const userJwt = req.user;
+    const { otp } = req.body;
+    if (!otp)
+        return res.status(400).json({ message: 'otp required' });
+    const user = await prisma_1.prisma.user.findUnique({ where: { id: userJwt.id } });
+    if (!user || user.role !== 'PROVIDER_ADMIN' || !user.twoFactorSecret)
+        return res.status(400).json({ message: '2FA not initialized' });
+    const ok = otplib_1.authenticator.verify({ token: String(otp), secret: user.twoFactorSecret });
+    if (!ok)
+        return res.status(401).json({ message: 'Invalid code' });
+    await prisma_1.prisma.user.update({ where: { id: user.id }, data: { twoFactorEnabled: true } });
+    res.json({ status: '2fa_enabled' });
+});
+router.post('/provider/disable-2fa', auth_1.authenticate, (0, auth_1.requireRole)(['PROVIDER_ADMIN']), async (req, res) => {
+    const userJwt = req.user;
+    const { otp } = req.body;
+    const user = await prisma_1.prisma.user.findUnique({ where: { id: userJwt.id } });
+    if (!user || user.role !== 'PROVIDER_ADMIN' || !user.twoFactorSecret)
         return res.status(400).json({ message: '2FA not enabled' });
     const ok = otplib_1.authenticator.verify({ token: String(otp), secret: user.twoFactorSecret });
     if (!ok)

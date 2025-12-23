@@ -41,6 +41,11 @@ FaithConnect (SmartChurch) – Project Documentation
 - `PROVIDER_ADMIN_EMAIL`: Superadmin login email for provider-level admin (recommended to set).
 - `PROVIDER_ADMIN_PASSWORD`: Superadmin login password (recommended to set; use a strong value).
 - `PROVIDER_ADMIN_NAME`: Display name for the provider admin (optional).
+- `ENABLE_PROVIDER_RESTART`: Allows provider-initiated restarts in production when set to `true`.
+- `APP_VERSION`: Human-readable build version (recommended in production).
+- `BUILD_SHA`: Git SHA or build identifier (fallback when `APP_VERSION` is unset).
+- `BUILD_TIME`: ISO timestamp for build time (recommended in production).
+- `EXPECTED_APP_VERSION`: Optional “target” version for update mismatch warnings.
 
 Sample `.env` (backend):
 ```
@@ -79,6 +84,23 @@ PROVIDER_ADMIN_NAME="Provider Admin"
   - `POST /auth/provider-bootstrap-dev` with header `x-admin-bootstrap: faithconnect-dev` to create if missing using env values.
   - `POST /auth/provider-reset-dev` with the same header to reset to env values.
 - Requests to protected routes require `Authorization: Bearer <jwt>`.
+
+**Provider Portal (PROVIDER_ADMIN)**
+- The provider portal is intended for system-level administration only (no tenant “in-app” features).
+- Allowed functionality:
+  - Dashboard viewing (includes deployment verification widgets)
+  - Tenant management (`/provider/tenants`, `/provider/tenants/:id/manage`)
+  - Tenant config validation (`GET /provider/tenants/:id/config/verify`)
+  - Audit log viewing/clearing per tenant (`GET`/`DELETE /provider/tenants/:id/audit-logs`)
+  - Controlled maintenance actions (restart and related logs)
+
+**Update Verification & Logs (PROVIDER_ADMIN)**
+- Backend version status:
+  - `GET /provider/maintenance/version/status` → current version/build metadata + warnings and update mismatch when `EXPECTED_APP_VERSION` is set.
+  - `POST /provider/maintenance/version/ack` → records an acknowledgement in audit logs (requires CSRF token).
+  - `GET /provider/maintenance/version/logs` → recent verification activity from audit logs.
+- Health check (provider-only):
+  - `GET /provider/maintenance/health` → validates DB connectivity and returns basic process health information.
 
 **Settings & Configuration**
 - Endpoints (`/settings`):

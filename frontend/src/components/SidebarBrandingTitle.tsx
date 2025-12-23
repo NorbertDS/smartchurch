@@ -7,6 +7,11 @@ export default function SidebarBrandingTitle() {
   useEffect(() => {
     (async () => {
       try {
+        const role = (typeof window !== 'undefined' ? localStorage.getItem('fc_role') : null) as string | null;
+        if (role === 'PROVIDER_ADMIN') {
+          setTitle('FaithConnect');
+          return;
+        }
         const res = await api.get('/settings/info');
         const name = res?.data?.sidebarName || res?.data?.name || 'FaithConnect';
         setTitle(String(name));

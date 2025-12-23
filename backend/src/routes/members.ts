@@ -14,6 +14,33 @@ const router = Router();
 router.use(authenticate);
 router.use(tenantContext);
 
+const streamClients: Array<{ res: any; tenantId: number }> = [];
+function publish(tenantId: number, type: string, payload: any) {
+  const msg = JSON.stringify({ type, payload, ts: new Date().toISOString() });
+  streamClients.forEach(({ res, tenantId: tid }) => {
+    if (tid !== tenantId) return;
+    try { res.write(`data: ${msg}\n\n`); } catch {}
+  });
+}
+(global as any).memberStreamPublish = publish;
+
+router.get('/stream', requireTenant, async (req, res) => {
+  const tid = (req as any).tenantId as number;
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive',
+  });
+  streamClients.push({ res, tenantId: tid });
+  res.write(`data: ${JSON.stringify({ type: 'hello', ts: new Date().toISOString() })}\n\n`);
+  const keep = setInterval(() => { try { res.write(':keepalive\n\n'); } catch {} }, 20000);
+  req.on('close', () => {
+    clearInterval(keep);
+    const idx = streamClients.findIndex(c => c.res === res);
+    if (idx >= 0) streamClients.splice(idx, 1);
+  });
+});
+
 // Configure multer storage for member photos
 const uploadDir = path.join(__dirname, '../../uploads/members');
 const storage = multer.diskStorage({
@@ -54,40 +81,115 @@ const importStorage = multer.diskStorage({
 const importUpload = multer({ storage: importStorage });
 
 router.get('/', requireTenant, async (req, res) => {
-  const { q, page, pageSize } = req.query as { q?: string; page?: string; pageSize?: string };
+  const { q, page, pageSize, demographicGroup, departmentId, cellGroupId } = req.query as { q?: string; page?: string; pageSize?: string; demographicGroup?: string; departmentId?: string; cellGroupId?: string };
   const hasPaging = q !== undefined || page !== undefined || pageSize !== undefined;
   const tid = (req as any).tenantId as number;
+  const role = String(((req as any).user?.role ?? '') || '');
+  const isPrivileged = role === 'ADMIN' || role === 'CLERK' || role === 'PASTOR';
+  const canFilter = role === 'ADMIN' || role === 'CLERK';
+  const take = Math.max(1, Math.min(100, Number(pageSize) || 10));
+  const pageNum = Math.max(1, Number(page) || 1);
+  const skip = (pageNum - 1) * take;
 
-  if (hasPaging) {
-    const take = Math.max(1, Math.min(100, Number(pageSize) || 10));
-    const pageNum = Math.max(1, Number(page) || 1);
-    const skip = (pageNum - 1) * take;
-    const where: any = q ? {
-      OR: [
-        { firstName: { contains: q, mode: 'insensitive' } },
-        { lastName: { contains: q, mode: 'insensitive' } },
-        { contact: { contains: q, mode: 'insensitive' } },
-      ]
-    } : {};
-    // Exclude soft-deleted members
-    where.deletedAt = null;
-    where.tenantId = tid;
-    where.membershipStatus = 'APPROVED';
-
-    const [items, total] = await Promise.all([
-      prisma.member.findMany({ where, orderBy: { createdAt: 'desc' }, skip, take }),
-      prisma.member.count({ where }),
-    ]);
-    return res.json({ items, total, page: pageNum, pageSize: take });
+  const where: any = { deletedAt: null, tenantId: tid, NOT: { membershipStatus: 'PENDING' } };
+  const query = String(q || '').trim();
+  if (query) {
+    where.OR = isPrivileged ? [
+      { firstName: { contains: query, mode: 'insensitive' } },
+      { lastName: { contains: query, mode: 'insensitive' } },
+      { contact: { contains: query, mode: 'insensitive' } },
+    ] : [
+      { firstName: { contains: query, mode: 'insensitive' } },
+      { lastName: { contains: query, mode: 'insensitive' } },
+    ];
+  }
+  if (canFilter) {
+    const dg = String(demographicGroup || '').trim();
+    if (dg) where.demographicGroup = dg.toUpperCase();
+    if (cellGroupId !== undefined) {
+      const cgId = Number(cellGroupId);
+      if (!Number.isNaN(cgId) && cgId > 0) {
+        where.AND = [
+          ...(Array.isArray(where.AND) ? where.AND : []),
+          { cellGroupMemberships: { some: { groupId: cgId, leftAt: null, tenantId: tid } } },
+        ];
+      }
+    }
+    if (departmentId !== undefined) {
+      const depId = Number(departmentId);
+      if (!Number.isNaN(depId) && depId > 0) {
+        where.AND = [
+          ...(Array.isArray(where.AND) ? where.AND : []),
+          { OR: [{ departmentId: depId }, { memberDepartments: { some: { departmentId: depId } } }] },
+        ];
+      }
+    }
   }
 
-  const members = await prisma.member.findMany({ where: { deletedAt: null, tenantId: tid, membershipStatus: 'APPROVED' }, orderBy: { createdAt: 'desc' } });
-  res.json(members);
+  const selectPrivileged: any = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    gender: true,
+    demographicGroup: true,
+    dob: true,
+    contact: true,
+    address: true,
+    spiritualStatus: true,
+    dateJoined: true,
+    photoUrl: true,
+    baptized: true,
+    dedicated: true,
+    weddingDate: true,
+    departmentId: true,
+    userId: true,
+    membershipNumber: true,
+    membershipStatus: true,
+    profession: true,
+    talents: true,
+    abilities: true,
+    createdAt: true,
+    updatedAt: true,
+    cellGroupMemberships: { where: { leftAt: null, tenantId: tid }, orderBy: { registeredAt: 'desc' }, take: 1, select: { group: { select: { name: true } } } },
+    memberDepartments: { select: { department: { select: { name: true, tenantId: true } } } },
+  };
+  const selectMember: any = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    gender: true,
+    photoUrl: true,
+    membershipStatus: true,
+    dateJoined: true,
+    cellGroupMemberships: { where: { leftAt: null, tenantId: tid }, orderBy: { registeredAt: 'desc' }, take: 1, select: { group: { select: { name: true } } } },
+    memberDepartments: { select: { department: { select: { name: true, tenantId: true } } } },
+  };
+  const select = isPrivileged ? selectPrivileged : selectMember;
+
+  const mapRow = (m: any) => {
+    const cellGroupName = m?.cellGroupMemberships?.[0]?.group?.name || null;
+    const departmentNames = Array.isArray(m?.memberDepartments)
+      ? m.memberDepartments.map((md: any) => md?.department && md.department.tenantId === tid ? md.department.name : null).filter(Boolean)
+      : [];
+    const { cellGroupMemberships, memberDepartments, ...rest } = m || {};
+    return { ...rest, cellGroupName, departmentNames };
+  };
+
+  if (hasPaging || !isPrivileged) {
+    const [items, total] = await Promise.all([
+      prisma.member.findMany({ where, orderBy: { createdAt: 'desc' }, skip, take, select }),
+      prisma.member.count({ where }),
+    ]);
+    return res.json({ items: items.map(mapRow), total, page: pageNum, pageSize: take });
+  }
+
+  const members = await prisma.member.findMany({ where, orderBy: { createdAt: 'desc' }, select });
+  res.json(members.map(mapRow));
 });
 
 // Pending members list (awaiting admin approval)
 router.get('/pending', requireRole(['ADMIN','CLERK']), requireTenant, async (req, res) => {
-  const { q, page, pageSize } = req.query as { q?: string; page?: string; pageSize?: string };
+  const { q, page, pageSize, demographicGroup, departmentId, cellGroupId } = req.query as { q?: string; page?: string; pageSize?: string; demographicGroup?: string; departmentId?: string; cellGroupId?: string };
   const take = Math.max(1, Math.min(100, Number(pageSize) || 10));
   const pageNum = Math.max(1, Number(page) || 1);
   const skip = (pageNum - 1) * take;
@@ -100,11 +202,69 @@ router.get('/pending', requireRole(['ADMIN','CLERK']), requireTenant, async (req
       { contact: { contains: q, mode: 'insensitive' } },
     ];
   }
+  const dg = String(demographicGroup || '').trim();
+  if (dg) where.demographicGroup = dg.toUpperCase();
+  if (cellGroupId !== undefined) {
+    const cgId = Number(cellGroupId);
+    if (!Number.isNaN(cgId) && cgId > 0) {
+      where.AND = [
+        ...(Array.isArray(where.AND) ? where.AND : []),
+        { cellGroupMemberships: { some: { groupId: cgId, leftAt: null, tenantId: tid } } },
+      ];
+    }
+  }
+  if (departmentId !== undefined) {
+    const depId = Number(departmentId);
+    if (!Number.isNaN(depId) && depId > 0) {
+      where.AND = [
+        ...(Array.isArray(where.AND) ? where.AND : []),
+        { OR: [{ departmentId: depId }, { memberDepartments: { some: { departmentId: depId } } }] },
+      ];
+    }
+  }
+
+  const select: any = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    gender: true,
+    demographicGroup: true,
+    dob: true,
+    contact: true,
+    address: true,
+    spiritualStatus: true,
+    dateJoined: true,
+    photoUrl: true,
+    baptized: true,
+    dedicated: true,
+    weddingDate: true,
+    departmentId: true,
+    userId: true,
+    membershipNumber: true,
+    membershipStatus: true,
+    profession: true,
+    talents: true,
+    abilities: true,
+    createdAt: true,
+    updatedAt: true,
+    cellGroupMemberships: { where: { leftAt: null, tenantId: tid }, orderBy: { registeredAt: 'desc' }, take: 1, select: { group: { select: { name: true } } } },
+    memberDepartments: { select: { departmentId: true, department: { select: { name: true, tenantId: true } } } },
+  };
+
+  const mapRow = (m: any) => {
+    const cellGroupName = m?.cellGroupMemberships?.[0]?.group?.name || null;
+    const departmentNames = Array.isArray(m?.memberDepartments)
+      ? m.memberDepartments.map((md: any) => md?.department && md.department.tenantId === tid ? md.department.name : null).filter(Boolean)
+      : [];
+    const { cellGroupMemberships, memberDepartments, ...rest } = m || {};
+    return { ...rest, cellGroupName, departmentNames };
+  };
+
   const [items, total] = await Promise.all([
-    prisma.member.findMany({ where, orderBy: { createdAt: 'desc' }, skip, take }),
+    prisma.member.findMany({ where, orderBy: { createdAt: 'desc' }, skip, take, select }),
     prisma.member.count({ where }),
   ]);
-  res.json({ items, total, page: pageNum, pageSize: take });
+  res.json({ items: items.map(mapRow), total, page: pageNum, pageSize: take });
 });
 
 // Current member profile for logged-in user
@@ -138,6 +298,7 @@ router.post('/', requireRole(['ADMIN', 'CLERK', 'PASTOR']), requireTenant, async
   const joined = input.dateJoined ? new Date(input.dateJoined) : new Date();
   const data = { ...input, membershipStatus: status, dateJoined: joined, tenantId: tid };
   const member = await prisma.member.create({ data });
+  try { if ((global as any).memberStreamPublish) (global as any).memberStreamPublish(tid, 'created', { id: member.id }); } catch {}
   res.status(201).json(member);
 });
 
@@ -145,6 +306,7 @@ router.put('/:id', requireRole(['ADMIN', 'CLERK', 'PASTOR']), requireTenant, asy
   const id = Number(req.params.id);
   const tid = (req as any).tenantId as number;
   const updated = await prisma.member.update({ where: { id }, data: { ...req.body, tenantId: tid } });
+  try { if ((global as any).memberStreamPublish) (global as any).memberStreamPublish(tid, 'updated', { id }); } catch {}
   res.json(updated);
 });
 
@@ -162,6 +324,7 @@ router.post('/:id/approve', requireRole(['ADMIN','CLERK']), requireTenant, async
   if (!existing.dateJoined) data.dateJoined = new Date();
   const updated = await prisma.member.update({ where: { id }, data });
   await prisma.auditLog.create({ data: { userId: (req as any).user.id, action: 'MEMBER_APPROVED', entityType: 'Member', entityId: id, tenantId: tid } });
+  try { if ((global as any).memberStreamPublish) (global as any).memberStreamPublish(tid, 'approved', { id }); } catch {}
   res.json({ status: 'approved', member: updated });
 });
 
@@ -335,6 +498,7 @@ router.delete('/:id', requireRole(['ADMIN','CLERK']), requireTenant, async (req,
     await tx.member.update({ where: { id }, data: { deletedAt: new Date(), deletedById: actorId } });
     await tx.auditLog.create({ data: { userId: actorId, action: 'MEMBER_SOFT_DELETE', entityType: 'Member', entityId: id, tenantId: tid } });
   });
+  try { if ((global as any).memberStreamPublish) (global as any).memberStreamPublish(tid, 'deleted', { id }); } catch {}
   res.status(204).end();
 });
 
@@ -556,34 +720,124 @@ router.post('/import/preview', requireRole(['ADMIN','CLERK']), requireTenant, im
 router.post('/import/commit', requireRole(['ADMIN','CLERK']), requireTenant, async (req, res) => {
   const { rows } = req.body as { rows: Array<{ data: any }> };
   if (!Array.isArray(rows) || rows.length === 0) return res.status(400).json({ message: 'rows array required from preview' });
-  let created = 0, updated = 0, failed = 0;
-  const results: any[] = [];
   const tid = (req as any).tenantId as number;
+  const columns = await getImportColumns(tid);
+  const prepared = rows.map((item) => {
+    const { errors, data: mapped } = validateAndMap((item as any)?.data || {}, columns);
+    return { errors, mapped };
+  });
+
+  const membershipNumbers = prepared
+    .filter((p) => p.errors.length === 0)
+    .map((p) => String(p.mapped?.membershipNumber || '').trim())
+    .filter((v) => !!v);
+
+  const dupMembershipNumbers = (() => {
+    const seen = new Set<string>();
+    const dups = new Set<string>();
+    for (const n of membershipNumbers) {
+      const k = n.toLowerCase();
+      if (seen.has(k)) dups.add(n);
+      else seen.add(k);
+    }
+    return Array.from(dups.values());
+  })();
+  if (dupMembershipNumbers.length > 0) {
+    return res.status(400).json({ message: `Duplicate membershipNumber values in upload: ${dupMembershipNumbers.slice(0, 10).join(', ')}` });
+  }
+
+  let created = 0, updated = 0, failed = 0;
+  const createdIds: number[] = [];
+  const updatedIds: number[] = [];
+  const results: any[] = [];
+  let memberSyncVersion = 0;
+  const actorId = (req as any).user?.id as number | undefined;
+
   await prisma.$transaction(async (tx) => {
-    for (const item of rows) {
-      const { data } = item || {} as any;
-      const columns = await getImportColumns(tid);
-      const { errors, data: mapped } = validateAndMap(data || {}, columns);
-      if (errors.length) { failed++; results.push({ status: 'error', errors }); continue; }
+    const existingByMembership = new Map<string, { id: number }>();
+    if (membershipNumbers.length > 0) {
+      const existing = await tx.member.findMany({
+        where: { tenantId: tid, membershipNumber: { in: membershipNumbers } },
+        select: { id: true, membershipNumber: true },
+      });
+      for (const e of existing) {
+        const k = String(e.membershipNumber || '').trim().toLowerCase();
+        if (k && !existingByMembership.has(k)) existingByMembership.set(k, { id: e.id });
+      }
+    }
+
+    for (const p of prepared) {
+      if (p.errors.length) {
+        failed++;
+        results.push({ status: 'error', errors: p.errors });
+        continue;
+      }
+      const mappedBase = p.mapped || {};
+      const mapped = {
+        ...mappedBase,
+        membershipStatus: String(mappedBase.membershipStatus || '').trim() || 'APPROVED',
+      };
       try {
-        if (mapped.membershipNumber) {
-          const existing = await tx.member.findFirst({ where: { membershipNumber: mapped.membershipNumber, tenantId: tid } });
+        const membershipNumber = String(mapped.membershipNumber || '').trim();
+        if (membershipNumber) {
+          const existing = existingByMembership.get(membershipNumber.toLowerCase());
           if (existing) {
             await tx.member.update({ where: { id: existing.id }, data: { ...mapped, tenantId: tid } });
-            updated++; results.push({ status: 'updated', id: existing.id });
+            updated++;
+            updatedIds.push(existing.id);
+            results.push({ status: 'updated', id: existing.id });
           } else {
             const m = await tx.member.create({ data: { ...mapped, tenantId: tid } });
-            created++; results.push({ status: 'created', id: m.id });
+            created++;
+            createdIds.push(m.id);
+            existingByMembership.set(membershipNumber.toLowerCase(), { id: m.id });
+            results.push({ status: 'created', id: m.id });
           }
         } else {
           const m = await tx.member.create({ data: { ...mapped, tenantId: tid } });
-          created++; results.push({ status: 'created', id: m.id });
+          created++;
+          createdIds.push(m.id);
+          results.push({ status: 'created', id: m.id });
         }
       } catch (e: any) {
-        failed++; results.push({ status: 'error', error: e?.message });
+        failed++;
+        results.push({ status: 'error', error: e?.message });
       }
     }
-    await tx.auditLog.create({ data: { userId: (req as any).user?.id, action: `MEMBER_IMPORT:${JSON.stringify({ created, updated, failed })}`, entityType: 'Member', tenantId: tid } });
+
+    const syncKey = 'member_sync';
+    const prevSync = await tx.setting.findUnique({ where: { tenantId_key: { tenantId: tid, key: syncKey } } });
+    let nextVersion = 1;
+    try {
+      const parsed = prevSync ? JSON.parse(prevSync.value) : null;
+      const v = Number(parsed?.version || 0);
+      nextVersion = (Number.isFinite(v) ? v : 0) + 1;
+    } catch {
+      nextVersion = 1;
+    }
+    const syncValue = JSON.stringify({
+      version: nextVersion,
+      updatedAt: new Date().toISOString(),
+      lastImport: { created, updated, failed, createdIds: createdIds.slice(0, 200), updatedIds: updatedIds.slice(0, 200) },
+    });
+    if (prevSync) await tx.setting.update({ where: { id: prevSync.id }, data: { value: syncValue } });
+    else await tx.setting.create({ data: { tenantId: tid, key: syncKey, value: syncValue } });
+    memberSyncVersion = nextVersion;
+
+    try {
+      const payload = { created, updated, failed, version: memberSyncVersion };
+      await tx.auditLog.create({ data: { userId: actorId, action: `MEMBER_IMPORT:${JSON.stringify(payload)}`, entityType: 'Member', tenantId: tid } });
+    } catch {}
   });
-  res.json({ created, updated, failed, results });
+
+  const issues: string[] = [];
+  if ((created + updated + failed) !== prepared.length) issues.push('Processed row counts do not match input.');
+  if (membershipNumbers.length > 0) {
+    const dbCount = await prisma.member.count({ where: { tenantId: tid, membershipNumber: { in: membershipNumbers } } });
+    const expected = new Set(membershipNumbers.map((n) => n.toLowerCase())).size;
+    if (dbCount < expected) issues.push(`Database has ${dbCount} of ${expected} expected membershipNumber records after import.`);
+  }
+  const ok = issues.length === 0;
+  try { if ((global as any).memberStreamPublish) (global as any).memberStreamPublish(tid, 'import', { created, updated, failed, memberSyncVersion }); } catch {}
+  res.json({ created, updated, failed, createdIds, updatedIds, memberSyncVersion, consistency: { ok, issues }, results });
 });

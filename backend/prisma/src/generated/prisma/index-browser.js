@@ -126,6 +126,8 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   twoFactorEnabled: 'twoFactorEnabled',
   twoFactorSecret: 'twoFactorSecret',
+  resetTokenHash: 'resetTokenHash',
+  resetTokenExpiresAt: 'resetTokenExpiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   tenantId: 'tenantId'
@@ -315,6 +317,13 @@ exports.Prisma.SettingScalarFieldEnum = {
   tenantId: 'tenantId'
 };
 
+exports.Prisma.SystemSettingScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.FamilyRelationScalarFieldEnum = {
   parentId: 'parentId',
   childId: 'childId',
@@ -465,6 +474,68 @@ exports.Prisma.TenantScalarFieldEnum = {
   archivedAt: 'archivedAt'
 };
 
+exports.Prisma.SubscriptionScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  plan: 'plan',
+  status: 'status',
+  seats: 'seats',
+  period: 'period',
+  price: 'price',
+  provider: 'provider',
+  providerCustomerId: 'providerCustomerId',
+  providerSubscriptionId: 'providerSubscriptionId',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UsageEventScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  featureKey: 'featureKey',
+  event: 'event',
+  meta: 'meta',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ApiMetricScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  method: 'method',
+  path: 'path',
+  status: 'status',
+  durationMs: 'durationMs',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.DynamicPageScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  slug: 'slug',
+  title: 'title',
+  status: 'status',
+  content: 'content',
+  version: 'version',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DynamicPageVersionScalarFieldEnum = {
+  id: 'id',
+  pageId: 'pageId',
+  version: 'version',
+  title: 'title',
+  content: 'content',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  tenantId: 'tenantId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -472,6 +543,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -526,6 +601,12 @@ exports.SermonType = exports.$Enums.SermonType = {
   VIDEO: 'VIDEO'
 };
 
+exports.SubscriptionPlan = exports.$Enums.SubscriptionPlan = {
+  BASIC: 'BASIC',
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Member: 'Member',
@@ -544,6 +625,7 @@ exports.Prisma.ModelName = {
   AuditLog: 'AuditLog',
   MemberDepartment: 'MemberDepartment',
   Setting: 'Setting',
+  SystemSetting: 'SystemSetting',
   FamilyRelation: 'FamilyRelation',
   BoardMinute: 'BoardMinute',
   BoardMinuteVersion: 'BoardMinuteVersion',
@@ -555,7 +637,12 @@ exports.Prisma.ModelName = {
   CommitteeMember: 'CommitteeMember',
   Suggestion: 'Suggestion',
   QRCodeLink: 'QRCodeLink',
-  Tenant: 'Tenant'
+  Tenant: 'Tenant',
+  Subscription: 'Subscription',
+  UsageEvent: 'UsageEvent',
+  ApiMetric: 'ApiMetric',
+  DynamicPage: 'DynamicPage',
+  DynamicPageVersion: 'DynamicPageVersion'
 };
 
 /**

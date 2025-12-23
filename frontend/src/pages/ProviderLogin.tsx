@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import api from '../api/client';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function ProviderLogin() {
   const [email, setEmail] = useState('');
@@ -8,7 +8,12 @@ export default function ProviderLogin() {
   const [otp, setOtp] = useState('');
   const [requireOtp, setRequireOtp] = useState(false);
   const [error, setError] = useState('');
+  const location = useLocation();
   const navigate = useNavigate();
+  const resetDone = useMemo(() => {
+    const p = new URLSearchParams(location.search);
+    return p.get('reset') === '1';
+  }, [location.search]);
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +23,8 @@ export default function ProviderLogin() {
       if (requireOtp && otp) payload.otp = otp;
       const { data } = await api.post('/auth/provider-login', payload);
       localStorage.setItem('fc_token', data.token);
+      if (data?.csrfToken) localStorage.setItem('fc_csrf', String(data.csrfToken));
+      else localStorage.removeItem('fc_csrf');
       localStorage.setItem('fc_role', data.role);
       if (data.tenantId !== undefined && data.tenantId !== null) localStorage.setItem('fc_tenant_id', String(data.tenantId)); else localStorage.removeItem('fc_tenant_id');
       try {
@@ -51,6 +58,7 @@ export default function ProviderLogin() {
     <div className="h-full flex items-center justify-center bg-faith-white dark:bg-gray-900">
       <form onSubmit={login} className="card w-full max-w-md" autoComplete="off">
         <h2 className="text-2xl font-bold mb-4">Provider Admin Login</h2>
+        {resetDone && !error && <div className="text-green-700 mb-2">Password updated. Please log in.</div>}
         {error && <div className="text-red-600 mb-2">{error}</div>}
         <label className="block mb-2">
           <span className="text-sm">Email</span>
@@ -67,7 +75,8 @@ export default function ProviderLogin() {
           </label>
         )}
         <button className="btn-primary w-full" type="submit">Login</button>
-        <div className="mt-3 text-sm">
+        <div className="mt-3 text-sm flex justify-between">
+          <a href="/provider/forgot" className="underline">Forgot password?</a>
           <a href="/login" className="underline">Tenant Admin Login</a>
         </div>
       </form>

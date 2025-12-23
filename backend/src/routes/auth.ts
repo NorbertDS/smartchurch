@@ -2,12 +2,25 @@ import { Router } from 'express';
 import { prisma } from '../config/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { authenticate, requireRole } from '../middleware/auth';
+import crypto from 'crypto';
+import { authenticate, requireRole, signCsrfTokenForJwt, invalidateUserAuthCache } from '../middleware/auth';
 import { tenantContext, requireTenant } from '../middleware/tenant';
 import { authenticator } from 'otplib';
 import QRCode from 'qrcode';
+import { sendEmail } from '../services/email';
 
 const router = Router();
+
+async function upsertDashboardSnapshot(tenantId: number, patch: Record<string, any>) {
+  const key = 'dashboard_snapshot';
+  const existing = await prisma.setting.findUnique({ where: { tenantId_key: { tenantId, key } } });
+  let prev: any = {};
+  try { prev = existing ? JSON.parse(existing.value) : {}; } catch { prev = {}; }
+  const next = { ...(prev && typeof prev === 'object' ? prev : {}), ...patch, updatedAt: new Date().toISOString() };
+  const value = JSON.stringify(next);
+  if (existing) await prisma.setting.update({ where: { id: existing.id }, data: { value } });
+  else await prisma.setting.create({ data: { tenantId, key, value } });
+}
 
 router.post('/provider-login', async (req, res) => {
   const { email, password, otp } = req.body as { email: string; password: string; otp?: string };
@@ -27,7 +40,63 @@ router.post('/provider-login', async (req, res) => {
     process.env.JWT_SECRET || 'changeme-super-secret-key',
     { expiresIn: '8h' }
   );
-  res.json({ token, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: null });
+  const csrfToken = signCsrfTokenForJwt(token);
+  res.json({ token, csrfToken, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: null });
+});
+
+router.post('/provider-forgot-password', async (req, res) => {
+  const email = String((req.body as any)?.email || '').trim().toLowerCase();
+  if (!email) return res.status(400).json({ message: 'Email is required' });
+
+  const user = await prisma.user.findFirst({ where: { email, role: 'PROVIDER_ADMIN' } });
+  if (!user) return res.json({ status: 'ok' });
+
+  const rawToken = crypto.randomBytes(32).toString('hex');
+  const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+  const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { resetTokenHash: tokenHash, resetTokenExpiresAt: expiresAt },
+  });
+
+  const baseUrl = String(process.env.FRONTEND_URL || process.env.APP_BASE_URL || 'http://localhost:5173').replace(/\/+$/, '');
+  const resetUrl = `${baseUrl}/provider/reset?token=${encodeURIComponent(rawToken)}`;
+  const subject = 'FaithConnect: Provider password reset';
+  const text = `A password reset was requested for your provider account.\n\nReset link (valid for 30 minutes):\n${resetUrl}\n\nIf you did not request this, you can ignore this email.`;
+
+  await sendEmail({ to: user.email, subject, text });
+
+  const isProd = String(process.env.NODE_ENV || '').toLowerCase() === 'production';
+  if (!isProd && !process.env.SMTP_HOST) {
+    return res.json({ status: 'ok', resetUrl });
+  }
+  return res.json({ status: 'ok' });
+});
+
+router.post('/provider-reset-password', async (req, res) => {
+  const token = String((req.body as any)?.token || '').trim();
+  const newPassword = String((req.body as any)?.newPassword || '');
+
+  if (!token || !newPassword) return res.status(400).json({ message: 'token and newPassword are required' });
+  if (newPassword.length < 8) return res.status(400).json({ message: 'Password must be at least 8 characters' });
+
+  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  const user = await prisma.user.findFirst({
+    where: {
+      role: 'PROVIDER_ADMIN',
+      resetTokenHash: tokenHash,
+      resetTokenExpiresAt: { gt: new Date() },
+    },
+  });
+  if (!user) return res.status(400).json({ message: 'Invalid or expired reset token' });
+
+  const passwordHash = await bcrypt.hash(newPassword, 10);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { passwordHash, resetTokenHash: null, resetTokenExpiresAt: null },
+  });
+  return res.json({ status: 'password_reset' });
 });
 
 router.post('/login', async (req, res) => {
@@ -84,7 +153,8 @@ router.post('/login', async (req, res) => {
     process.env.JWT_SECRET || 'changeme-super-secret-key',
     { expiresIn: '8h' }
   );
-  res.json({ token, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: user.tenantId || null });
+  const csrfToken = signCsrfTokenForJwt(token);
+  res.json({ token, csrfToken, role: user.role, name: user.name, twoFactorEnabled: !!user.twoFactorEnabled, tenantId: user.tenantId || null });
 });
 
 // Public: resolve tenant by name or slug for validation on signup
@@ -165,6 +235,12 @@ router.put('/users/:id/role', authenticate, tenantContext, requireRole(['ADMIN']
   const user = await prisma.user.findFirst({ where: { id, tenantId: tid } });
   if (!user) return res.status(404).json({ message: 'User not found' });
   const updated = await prisma.user.update({ where: { id }, data: { role } });
+  invalidateUserAuthCache(id);
+  try {
+    const staffUsers = await prisma.user.count({ where: { tenantId: tid, role: { in: ['ADMIN', 'CLERK', 'PASTOR'] } } });
+    await upsertDashboardSnapshot(tid, { staffUsers, lastUserRoleChangeAt: new Date().toISOString() });
+    await prisma.auditLog.create({ data: { userId: (req as any).user?.id, action: 'USER_ROLE_UPDATED', entityType: 'User', entityId: id, tenantId: tid } });
+  } catch {}
   res.json({ id: updated.id, role: updated.role });
 });
 
@@ -177,6 +253,12 @@ router.delete('/users/:id', authenticate, tenantContext, requireRole(['ADMIN']),
   const user = await prisma.user.findFirst({ where: { id, tenantId: tid } });
   if (!user) return res.status(404).json({ message: 'User not found' });
   await prisma.user.delete({ where: { id } });
+  invalidateUserAuthCache(id);
+  try {
+    const staffUsers = await prisma.user.count({ where: { tenantId: tid, role: { in: ['ADMIN', 'CLERK', 'PASTOR'] } } });
+    await upsertDashboardSnapshot(tid, { staffUsers, lastUserDeleteAt: new Date().toISOString() });
+    await prisma.auditLog.create({ data: { userId: actor?.id, action: 'USER_DELETED', entityType: 'User', entityId: id, tenantId: tid } });
+  } catch {}
   res.status(204).end();
 });
 
@@ -314,6 +396,42 @@ router.post('/disable-2fa', authenticate, requireRole(['ADMIN','CLERK','PASTOR']
   const { otp } = req.body as { otp: string };
   const user = await prisma.user.findUnique({ where: { id: userJwt.id } });
   if (!user || !user.twoFactorSecret) return res.status(400).json({ message: '2FA not enabled' });
+  const ok = authenticator.verify({ token: String(otp), secret: user.twoFactorSecret });
+  if (!ok) return res.status(401).json({ message: 'Invalid code' });
+  await prisma.user.update({ where: { id: user.id }, data: { twoFactorEnabled: false, twoFactorSecret: null } });
+  res.json({ status: '2fa_disabled' });
+});
+
+router.post('/provider/setup-2fa', authenticate, requireRole(['PROVIDER_ADMIN']), async (req, res) => {
+  const userJwt = (req as any).user;
+  const user = await prisma.user.findUnique({ where: { id: userJwt.id } });
+  if (!user || user.role !== 'PROVIDER_ADMIN') return res.status(404).json({ message: 'User not found' });
+  const secret = authenticator.generateSecret();
+  const label = encodeURIComponent(`FaithConnect:${user.email}`);
+  const issuer = encodeURIComponent('FaithConnect');
+  const otpauth = `otpauth://totp/${label}?secret=${secret}&issuer=${issuer}`;
+  const qrDataUrl = await QRCode.toDataURL(otpauth);
+  await prisma.user.update({ where: { id: user.id }, data: { twoFactorSecret: secret } });
+  res.json({ otpauth, qrDataUrl });
+});
+
+router.post('/provider/verify-2fa', authenticate, requireRole(['PROVIDER_ADMIN']), async (req, res) => {
+  const userJwt = (req as any).user;
+  const { otp } = req.body as { otp: string };
+  if (!otp) return res.status(400).json({ message: 'otp required' });
+  const user = await prisma.user.findUnique({ where: { id: userJwt.id } });
+  if (!user || user.role !== 'PROVIDER_ADMIN' || !user.twoFactorSecret) return res.status(400).json({ message: '2FA not initialized' });
+  const ok = authenticator.verify({ token: String(otp), secret: user.twoFactorSecret });
+  if (!ok) return res.status(401).json({ message: 'Invalid code' });
+  await prisma.user.update({ where: { id: user.id }, data: { twoFactorEnabled: true } });
+  res.json({ status: '2fa_enabled' });
+});
+
+router.post('/provider/disable-2fa', authenticate, requireRole(['PROVIDER_ADMIN']), async (req, res) => {
+  const userJwt = (req as any).user;
+  const { otp } = req.body as { otp: string };
+  const user = await prisma.user.findUnique({ where: { id: userJwt.id } });
+  if (!user || user.role !== 'PROVIDER_ADMIN' || !user.twoFactorSecret) return res.status(400).json({ message: '2FA not enabled' });
   const ok = authenticator.verify({ token: String(otp), secret: user.twoFactorSecret });
   if (!ok) return res.status(401).json({ message: 'Invalid code' });
   await prisma.user.update({ where: { id: user.id }, data: { twoFactorEnabled: false, twoFactorSecret: null } });

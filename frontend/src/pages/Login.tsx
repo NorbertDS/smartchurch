@@ -60,6 +60,8 @@ export default function Login() {
       const { data } = await api.post('/auth/login', payload);
       // Store session token and role only
       localStorage.setItem('fc_token', data.token);
+      if (data?.csrfToken) localStorage.setItem('fc_csrf', String(data.csrfToken));
+      else localStorage.removeItem('fc_csrf');
       localStorage.setItem('fc_role', data.role);
       if (data.tenantId !== undefined && data.tenantId !== null) localStorage.setItem('fc_tenant_id', String(data.tenantId));
       else localStorage.removeItem('fc_tenant_id');

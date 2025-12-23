@@ -55,6 +55,8 @@ model User {
   role         Role
   twoFactorEnabled Boolean      @default(false)
   twoFactorSecret  String?
+  resetTokenHash String?
+  resetTokenExpiresAt DateTime?
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   auditLogs    AuditLog[]
@@ -75,6 +77,10 @@ model User {
   boardMinuteVersionsCreated BoardMinuteVersion[] @relation("BoardMinuteVersionCreatedBy")
   businessMinuteVersionsCreated BusinessMinuteVersion[] @relation("BusinessMinuteVersionCreatedBy")
   suggestionsCreated Suggestion[] @relation("SuggestionCreatedBy")
+  pagesCreated DynamicPage[] @relation("PageCreatedBy")
+  pagesUpdated DynamicPage[] @relation("PageUpdatedBy")
+  pageVersionsCreated DynamicPageVersion[] @relation("PageVersionCreatedBy")
+  usageEvents UsageEvent[]
   member Member?
   tenant   Tenant?   @relation(fields: [tenantId], references: [id])
   tenantId Int?
@@ -345,6 +351,13 @@ model Setting {
   @@unique([tenantId, key])
 }
 
+model SystemSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
 // Parent-child family relations between members
 model FamilyRelation {
   parent     Member @relation("ParentRelations", fields: [parentId], references: [id])
@@ -572,4 +585,97 @@ model Tenant {
   businessMinutes BusinessMinute[]
   boardMinuteVersions BoardMinuteVersion[]
   businessMinuteVersions BusinessMinuteVersion[]
+  subscription Subscription?
+  usageEvents UsageEvent[]
+  apiMetrics ApiMetric[]
+  pages DynamicPage[]
+  pageVersions DynamicPageVersion[]
+}
+
+enum SubscriptionPlan {
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+model Subscription {
+  id        Int              @id @default(autoincrement())
+  tenant    Tenant           @relation(fields: [tenantId], references: [id])
+  tenantId  Int              @unique
+  plan      SubscriptionPlan @default(BASIC)
+  status    String           @default("ACTIVE")
+  seats     Int              @default(0)
+  period    String           @default("monthly")
+  price     Float            @default(0)
+  provider  String?
+  providerCustomerId String?
+  providerSubscriptionId String?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UsageEvent {
+  id        Int      @id @default(autoincrement())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+  featureKey String
+  event     String
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([tenantId, featureKey, event, createdAt])
+}
+
+model ApiMetric {
+  id         Int      @id @default(autoincrement())
+  tenant     Tenant?  @relation(fields: [tenantId], references: [id])
+  tenantId   Int?
+  method     String
+  path       String
+  status     Int
+  durationMs Int
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([tenantId, createdAt])
+}
+
+model DynamicPage {
+  id        Int      @id @default(autoincrement())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+  slug      String
+  title     String
+  status    String   @default("PUBLISHED")
+  content   Json
+  version   Int      @default(1)
+  createdBy User?    @relation("PageCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  updatedBy User?    @relation("PageUpdatedBy", fields: [updatedById], references: [id])
+  updatedById Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  versions  DynamicPageVersion[]
+
+  @@unique([tenantId, slug])
+}
+
+model DynamicPageVersion {
+  id        Int      @id @default(autoincrement())
+  page      DynamicPage @relation(fields: [pageId], references: [id])
+  pageId    Int
+  version   Int
+  title     String
+  content   Json
+  createdBy User?    @relation("PageVersionCreatedBy", fields: [createdById], references: [id])
+  createdById Int?
+  createdAt DateTime @default(now())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  tenantId  Int
+
+  @@index([tenantId, pageId, createdAt])
 }

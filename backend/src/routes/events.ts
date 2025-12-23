@@ -8,20 +8,24 @@ router.use(authenticate);
 router.use(tenantContext);
 
 // Simple SSE stream for event updates
-const clients: Array<{ res: any }> = [];
-function publish(type: 'created'|'updated'|'deleted', payload: any) {
+const clients: Array<{ res: any; tenantId: number }> = [];
+function publish(tenantId: number, type: 'created'|'updated'|'deleted', payload: any) {
   const msg = JSON.stringify({ type, payload, ts: new Date().toISOString() });
-  clients.forEach(({ res }) => { try { res.write(`data: ${msg}\n\n`); } catch {} });
+  clients.forEach(({ res, tenantId: tid }) => {
+    if (tid !== tenantId) return;
+    try { res.write(`data: ${msg}\n\n`); } catch {}
+  });
 }
 (global as any).eventStreamPublish = publish;
 
-router.get('/stream', async (req, res) => {
+router.get('/stream', requireTenant, async (req, res) => {
+  const tid = (req as any).tenantId as number;
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     Connection: 'keep-alive',
   });
-  clients.push({ res });
+  clients.push({ res, tenantId: tid });
   res.write(`data: ${JSON.stringify({ type: 'hello', ts: new Date().toISOString() })}\n\n`);
   const keep = setInterval(() => { try { res.write(':keepalive\n\n'); } catch {} }, 20000);
   req.on('close', () => {
@@ -54,7 +58,7 @@ router.post('/', requireRole(['ADMIN', 'CLERK', 'PASTOR']), requireTenant, async
     if (typeof departmentId === 'number') data.department = { connect: { id: departmentId } };
     const event = await prisma.event.create({ data });
     // Publish SSE update if stream is enabled
-    try { if ((global as any).eventStreamPublish) (global as any).eventStreamPublish('created', { id: event.id, title: event.title, date: event.date, location: event.location }); } catch {}
+    try { if ((global as any).eventStreamPublish) (global as any).eventStreamPublish(tid, 'created', { id: event.id, title: event.title, date: event.date, location: event.location }); } catch {}
     return res.status(201).json(event);
   } catch (e: any) {
     const msg = e?.message || 'Failed to create event';
@@ -85,7 +89,7 @@ router.put('/:id', requireRole(['ADMIN', 'CLERK', 'PASTOR']), requireTenant, asy
     if (typeof departmentId === 'number') data.department = { connect: { id: departmentId } };
     data.tenantId = tid;
     const updated = await prisma.event.update({ where: { id }, data });
-    try { if ((global as any).eventStreamPublish) (global as any).eventStreamPublish('updated', { id: updated.id, title: updated.title, date: updated.date, location: updated.location }); } catch {}
+    try { if ((global as any).eventStreamPublish) (global as any).eventStreamPublish(tid, 'updated', { id: updated.id, title: updated.title, date: updated.date, location: updated.location }); } catch {}
     return res.json(updated);
   } catch (e: any) {
     const msg = e?.message || 'Failed to update event';
@@ -101,7 +105,7 @@ router.delete('/:id', requireRole(['ADMIN', 'CLERK', 'PASTOR']), requireTenant, 
   const ev = await prisma.event.findFirst({ where: { id, tenantId: tid } });
   if (!ev) return res.status(404).json({ message: 'Event not found' });
   await prisma.event.delete({ where: { id } });
-  try { if ((global as any).eventStreamPublish) (global as any).eventStreamPublish('deleted', { id, title: ev.title }); } catch {}
+  try { if ((global as any).eventStreamPublish) (global as any).eventStreamPublish(tid, 'deleted', { id, title: ev.title }); } catch {}
   res.status(204).end();
 });
 

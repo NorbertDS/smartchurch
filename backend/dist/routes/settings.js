@@ -507,6 +507,7 @@ router.post('/role-permissions', (0, auth_1.requireRole)(['ADMIN']), tenant_1.re
         await prisma_1.prisma.setting.update({ where: { id: exists.id }, data: { value: str } });
     else
         await prisma_1.prisma.setting.create({ data: { key: 'role_permissions', value: str, tenantId: tid } });
+    (0, auth_1.invalidateTenantSettingCache)(tid, 'role_permissions');
     res.json({ status: 'ok' });
 });
 router.put('/titles/:key', (0, auth_1.requireRole)(['ADMIN']), tenant_1.requireTenant, async (req, res) => {

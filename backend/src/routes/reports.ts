@@ -9,11 +9,12 @@ router.use(tenantContext);
 
 router.get('/dashboard', requireRole(['ADMIN', 'CLERK', 'PASTOR']), requireTenant, async (req, res) => {
   const tid = (req as any).tenantId as number;
+  const memberWhere: any = { tenantId: tid, deletedAt: null, NOT: { membershipStatus: 'PENDING' } };
   const [membersCount, eventsUpcoming, financeMonthly, demographicSummary] = await Promise.all([
-    prisma.member.count({ where: { tenantId: tid } }),
+    prisma.member.count({ where: memberWhere }),
     prisma.event.count({ where: { date: { gte: new Date() }, tenantId: tid } }),
     prisma.financeRecord.findMany({ where: { tenantId: tid } }),
-    prisma.member.groupBy({ by: ['demographicGroup'], where: { tenantId: tid }, _count: { _all: true } }),
+    prisma.member.groupBy({ by: ['demographicGroup'], where: memberWhere, _count: { _all: true } }),
   ]);
   const monthKey = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}`;
   const financeMap = new Map<string, { income: number; expense: number }>();

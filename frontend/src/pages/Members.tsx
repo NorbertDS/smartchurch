@@ -16,6 +16,8 @@ interface Member {
   address?: string;
   spiritualStatus?: string;
   dateJoined: string;
+  cellGroupName?: string | null;
+  departmentNames?: string[];
   // Extended fields
   photoUrl?: string;
   baptized?: boolean;
@@ -39,14 +41,16 @@ export default function Members() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [refreshTick, setRefreshTick] = useState(0);
   const [toast, setToast] = useState<string>('');
   const [searchParams, setSearchParams] = useSearchParams();
   const [openRowId, setOpenRowId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'approved'|'pending'>('approved');
   const [pending, setPending] = useState<Member[]>([]);
   const [pendingTotal, setPendingTotal] = useState<number>(0);
-  const [groupNames, setGroupNames] = useState<Record<number, string>>({});
-  const [departmentNames, setDepartmentNames] = useState<Record<number, string[]>>({});
+  const [cellGroupId, setCellGroupId] = useState<string>('');
+  const [departmentId, setDepartmentId] = useState<string>('');
+  const [departments, setDepartments] = useState<{ id: number; name: string }[]>([]);
   // Registration form state
   const [regFirstName, setRegFirstName] = useState('');
   const [regLastName, setRegLastName] = useState('');
@@ -113,15 +117,34 @@ export default function Members() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!(role === 'ADMIN' || role === 'CLERK')) return;
+    (async () => {
+      try {
+        const { data } = await api.get('/departments');
+        setDepartments(Array.isArray(data) ? data : []);
+      } catch {
+        setDepartments([]);
+      }
+    })();
+  }, [role]);
+
   // Unified, professional control styles
   const inputCls = "mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-200 dark:bg-gray-900 dark:text-gray-100";
   const selectCls = inputCls;
+  const filterInputCls = "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-200 dark:bg-gray-900 dark:text-gray-100";
+  const filterSelectCls = filterInputCls;
   const fileCls = "block w-full text-sm file:mr-3 file:px-3 file:py-2 file:border-0 file:bg-gray-100 file:rounded file:text-gray-700 hover:file:bg-gray-200";
   // Server-side members load with q/page/pageSize
   const loadMembers = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/members', { params: { q: query || undefined, page, pageSize } });
+      const params: any = { q: query || undefined, page, pageSize };
+      if (role === 'ADMIN' || role === 'CLERK') {
+        if (cellGroupId) params.cellGroupId = cellGroupId;
+        if (departmentId) params.departmentId = departmentId;
+      }
+      const res = await api.get('/members', { params });
       const data = res.data;
       if (Array.isArray(data)) {
         // Fallback if server returned full list (no paging)
@@ -139,7 +162,12 @@ export default function Members() {
   const loadPending = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/members/pending', { params: { q: query || undefined, page, pageSize } });
+      const params: any = { q: query || undefined, page, pageSize };
+      if (role === 'ADMIN' || role === 'CLERK') {
+        if (cellGroupId) params.cellGroupId = cellGroupId;
+        if (departmentId) params.departmentId = departmentId;
+      }
+      const res = await api.get('/members/pending', { params });
       const data = res.data;
       if (Array.isArray(data)) {
         setPending(data);
@@ -154,28 +182,30 @@ export default function Members() {
   };
 
   useEffect(() => {
-    const list = activeTab === 'approved' ? members : pending;
-    const ids = list.map(m => m.id);
-    if (ids.length === 0) { setGroupNames({}); setDepartmentNames({}); return; }
-    (async () => {
-      const gMap: Record<number, string> = {};
-      const dMap: Record<number, string[]> = {};
-      await Promise.all(list.map(async m => {
-        try {
-          const { data: memberships } = await api.get(`/cell-groups/member/${m.id}`);
-          const active = (Array.isArray(memberships) ? memberships : []).find((x: any) => x && x.group);
-          if (active && active.group && active.group.name) gMap[m.id] = String(active.group.name);
-        } catch {}
-        try {
-          const { data: deps } = await api.get(`/members/${m.id}/departments`);
-          const names = (Array.isArray(deps) ? deps : []).map((d: any) => d && d.name).filter((n: any) => !!n);
-          if (names.length) dMap[m.id] = names as string[];
-        } catch {}
-      }));
-      setGroupNames(gMap);
-      setDepartmentNames(dMap);
-    })();
-  }, [members, pending, activeTab]);
+    try {
+      const token = localStorage.getItem('fc_token');
+      const tenantId = localStorage.getItem('fc_tenant_id');
+      const EventSourceCtor = (window as any).EventSource;
+      const base = String((api as any)?.defaults?.baseURL || '');
+      if (!token || !tenantId || !EventSourceCtor || !base) return;
+      let es: EventSource | null = null;
+      let tries = 0;
+      const connect = () => {
+        const url = `${base}/members/stream?token=${encodeURIComponent(token)}&tenantId=${encodeURIComponent(tenantId)}`;
+        es = new EventSource(url);
+        es.onmessage = () => { setRefreshTick((t) => t + 1); tries = 0; };
+        es.onerror = () => {
+          try { es && es.close(); } catch {}
+          const delay = Math.min(30000, 1000 * Math.pow(2, Math.min(5, ++tries)));
+          setTimeout(connect, delay);
+        };
+      };
+      connect();
+      return () => { try { es && es.close(); } catch {} };
+    } catch {
+      return;
+    }
+  }, []);
 
   // Load cell groups for selection
   const loadCellGroups = async () => {
@@ -187,6 +217,12 @@ export default function Members() {
       setGroups([]);
     }
   };
+
+  useEffect(() => {
+    if (!(role === 'ADMIN' || role === 'CLERK')) return;
+    loadCellGroups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [role]);
 
   const openAddToGroup = async (memberId: number) => {
     setGroupTargetMemberId(memberId);
@@ -204,6 +240,8 @@ export default function Members() {
       await api.post(`/cell-groups/${selectedGroupId}/register`, { memberId: groupTargetMemberId, notes: groupNotes || undefined, registeredAt: groupDate || undefined });
       setToast('Member added to cell group');
       setShowAddToGroupModal(false);
+      if (activeTab === 'approved') await loadMembers();
+      else await loadPending();
     } catch (e: any) {
       alert(e?.response?.data?.message || 'Failed to add member to cell group');
     } finally {
@@ -218,12 +256,12 @@ export default function Members() {
       loadPending();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, page, pageSize, activeTab]);
+  }, [query, page, pageSize, activeTab, cellGroupId, departmentId, refreshTick]);
 
   useEffect(() => {
     // reset page when query or page size changes
     setPage(1);
-  }, [query, pageSize]);
+  }, [query, pageSize, cellGroupId, departmentId]);
 
   const totalPages = useMemo(() => {
     const t = activeTab === 'approved' ? total : pendingTotal;
@@ -285,21 +323,22 @@ export default function Members() {
   };
 
   const exportExcel = () => {
-    const rows = members.map(m => ({
+    const list = activeTab === 'approved' ? members : pending;
+    const rows = list.map(m => ({
       FirstName: m.firstName,
       LastName: m.lastName,
       Gender: m.gender,
       Contact: m.contact || '',
       Address: m.address || '',
       Status: m.spiritualStatus || '',
-      CellGroup: groupNames[m.id] || '',
-      Department: (departmentNames[m.id] || []).join(', '),
-      Joined: new Date(m.dateJoined).toLocaleDateString(),
+      CellGroup: m.cellGroupName || '',
+      Department: (m.departmentNames || []).join(', '),
+      Joined: m.dateJoined ? new Date(m.dateJoined).toLocaleDateString() : '',
     }));
     const ws = XLSX.utils.json_to_sheet(rows);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Members');
-    XLSX.writeFile(wb, 'members.xlsx');
+    XLSX.writeFile(wb, activeTab === 'approved' ? 'members.xlsx' : 'pending-members.xlsx');
   };
 
   const exportPDF = () => {
@@ -311,8 +350,8 @@ export default function Members() {
       m.gender,
       m.contact || '-',
       m.spiritualStatus || '-',
-      groupNames[m.id] || '-',
-      (departmentNames[m.id] || []).join(', ') || '-',
+      m.cellGroupName || '-',
+      (m.departmentNames || []).join(', ') || '-',
       m.dateJoined ? new Date(m.dateJoined).toLocaleDateString() : '-',
     ]);
     autoTable(doc, { head, body });
@@ -470,26 +509,39 @@ export default function Members() {
         </div>
       </div>
 
-      {/* Navigation and filters row */}
-      <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
-        <div className="flex rounded border overflow-hidden">
-          <button
-            className={`px-3 py-2 text-sm ${activeTab==='approved' ? 'bg-faith-blue text-white' : 'bg-gray-100'}`}
-            onClick={()=> setActiveTab('approved')}
-          >Approved</button>
-          <button
-            className={`px-3 py-2 text-sm ${activeTab==='pending' ? 'bg-faith-blue text-white' : 'bg-gray-100'}`}
-            onClick={()=> setActiveTab('pending')}
-          >Pending Approval</button>
+      <div className="mb-4 space-y-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex rounded border overflow-hidden">
+            <button
+              className={`px-3 py-2 text-sm ${activeTab==='approved' ? 'bg-faith-blue text-white' : 'bg-gray-100'}`}
+              onClick={()=> setActiveTab('approved')}
+            >Approved</button>
+            <button
+              className={`px-3 py-2 text-sm ${activeTab==='pending' ? 'bg-faith-blue text-white' : 'bg-gray-100'}`}
+              onClick={()=> setActiveTab('pending')}
+            >Pending Approval</button>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <input
             placeholder="Search name/contact"
-            className={inputCls}
+            className={`${filterInputCls} w-72`}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <select className={selectCls} value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))}>
+          {(role === 'ADMIN' || role === 'CLERK') && (
+            <>
+              <select aria-label="Cell group filter" className={`${filterSelectCls} w-56`} value={cellGroupId} onChange={(e) => setCellGroupId(e.target.value)}>
+                <option value="">All Cell groups</option>
+                {groups.map((g) => (<option key={g.id} value={String(g.id)}>{g.name}</option>))}
+              </select>
+              <select aria-label="Department filter" className={`${filterSelectCls} w-56`} value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
+                <option value="">All Departments</option>
+                {departments.map((d) => (<option key={d.id} value={String(d.id)}>{d.name}</option>))}
+              </select>
+            </>
+          )}
+          <select className={`${filterSelectCls} w-24`} value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))}>
             <option value={10}>10</option>
             <option value={25}>25</option>
             <option value={50}>50</option>
@@ -602,8 +654,8 @@ export default function Members() {
                       <td className="p-2">{m.gender}</td>
                       <td className="p-2">{m.contact || '-'}</td>
                       <td className="p-2">{m.spiritualStatus || (m.membershipStatus || '-')}</td>
-                      <td className="p-2">{groupNames[m.id] || '-'}</td>
-                      <td className="p-2">{(departmentNames[m.id] || []).join(', ') || '-'}</td>
+                      <td className="p-2">{m.cellGroupName || '-'}</td>
+                      <td className="p-2">{(m.departmentNames || []).join(', ') || '-'}</td>
                       <td className="p-2">{m.dateJoined ? new Date(m.dateJoined).toLocaleDateString() : '-'}</td>
                       <td className="px-4 py-2">
                         <div className="flex gap-2">

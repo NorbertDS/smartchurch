@@ -30,12 +30,13 @@ export default function SidebarImageManager({ role }: { role: Role }) {
   useEffect(() => {
     (async () => {
       try {
+        if (role === 'PROVIDER_ADMIN') return;
         const res = await api.get('/settings/info');
         const url: string = res?.data?.logoUrl || '';
         if (url) setImgData(url);
       } catch {}
     })();
-  }, []);
+  }, [role]);
 
   useEffect(() => {
     localStorage.setItem(LS_IMG_ALT, alt);
